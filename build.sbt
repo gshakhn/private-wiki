@@ -6,6 +6,7 @@ organization in ThisBuild := "com.gshakhn"
 
 val shared = project
 
-val client = project.settings(scalaJSSettings:_*)
+val client = project.dependsOn(shared)
+                    .settings(scalaJSSettings:_*)
 
-val server = project
+val server = project.dependsOn(shared)
