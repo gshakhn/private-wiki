@@ -1,3 +1,4 @@
+import scala.scalajs.sbtplugin.ScalaJSPlugin.ScalaJSKeys._
 import scala.scalajs.sbtplugin.ScalaJSPlugin._
 import org.scalastyle.sbt.ScalastylePlugin
 
@@ -34,6 +35,7 @@ val client = project.dependsOn(shared)
                     .settings(scalaJSSettings:_*)
                     .settings(
                       libraryDependencies ++= Seq(
+                        "org.scala-lang.modules.scalajs" %%% "scalajs-dom" % "0.6",
                         "com.scalatags" %%% "scalatags" % "0.4.0"))
 
 val server = project.dependsOn(shared)
@@ -43,4 +45,10 @@ val server = project.dependsOn(shared)
                         "io.spray" %% "spray-can" % "1.3.1",
                         "io.spray" %% "spray-routing" % "1.3.1",
                         "com.scalatags" %% "scalatags" % "0.4.0",
-                        "com.typesafe.akka" %% "akka-actor" % "2.3.2"))
+                        "com.typesafe.akka" %% "akka-actor" % "2.3.2",
+                        "org.webjars" % "bootstrap" % "3.2.0"),
+                      (resources in Compile) += {
+                        (fastOptJS in (client, Compile)).value
+                        (artifactPath in (client, Compile, fastOptJS)).value
+                      }
+                    )
