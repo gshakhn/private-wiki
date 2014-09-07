@@ -10,7 +10,7 @@ object TutorialTest extends TestSuite {
 
   def tests = TestSuite {
     'HelloWorld {
-      assert(jQuery("#foo").text == "File Browsera")
+      assert(jQuery("#foo").text == "File Browser")
     }
   }
 }
