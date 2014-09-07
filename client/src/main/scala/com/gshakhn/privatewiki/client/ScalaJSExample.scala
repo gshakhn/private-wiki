@@ -15,7 +15,7 @@ object ScalaJSExample {
     dom.document.body.appendChild(
       div(
         cls:="container",
-        h1("File Browser"),
+        h1(id:="foo")("File Browser"),
         p("Enter a file path to s"),
         inputBox,
         outputBox

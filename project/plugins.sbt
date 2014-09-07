@@ -5,3 +5,5 @@ addSbtPlugin("org.scala-lang.modules.scalajs" % "scalajs-sbt-plugin" % "0.5.4")
 addSbtPlugin("com.sksamuel.sbt-versions" % "sbt-versions" % "0.2.0")
 
 addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "0.5.0")
+
+addSbtPlugin("com.lihaoyi" % "utest-js-plugin" % "0.2.3")

@@ -1,6 +1,7 @@
 import scala.scalajs.sbtplugin.ScalaJSPlugin.ScalaJSKeys._
 import scala.scalajs.sbtplugin.ScalaJSPlugin._
 import org.scalastyle.sbt.ScalastylePlugin
+import utest.jsrunner.Plugin.utestJsSettings
 
 scalaVersion in ThisBuild := "2.11.2"
 
@@ -33,8 +34,11 @@ val shared = project.settings(commonSettings:_*)
 val client = project.dependsOn(shared)
                     .settings(commonSettings:_*)
                     .settings(scalaJSSettings:_*)
+                    .settings(utestJsSettings:_*)
                     .settings(
+                      ScalaJSKeys.jsDependencies += scala.scalajs.sbtplugin.RuntimeDOM,
                       libraryDependencies ++= Seq(
+                        "org.scala-lang.modules.scalajs" %%% "scalajs-jquery" % "0.6",
                         "org.scala-lang.modules.scalajs" %%% "scalajs-dom" % "0.6",
                         "com.scalatags" %%% "scalatags" % "0.4.0"))
 
