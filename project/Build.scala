@@ -2,7 +2,7 @@ import sbt._
 import scala.scalajs.sbtplugin.ScalaJSPlugin._
 
 object ApplicationBuild extends Build {
-  lazy val common = project
+  lazy val shared = project
 
   lazy val client = project.settings(clientSettings:_*)
 
