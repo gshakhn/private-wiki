@@ -2,7 +2,7 @@ package com.gshakhn.privatewiki.server
 
 import akka.actor.ActorSystem
 import spray.http.{MediaTypes, HttpEntity}
-import spray.routing.{HttpService, SimpleRoutingApp}
+import spray.routing.{Route, HttpService, SimpleRoutingApp}
 
 object Server extends App with SimpleRoutingApp with FooService {
   implicit val system = ActorSystem("my-system")
@@ -37,7 +37,7 @@ object Template{
 }
 
 trait FooService extends HttpService {
-  def baseRoute = get{
+  def baseRoute: Route = get{
     pathSingleSlash {
       complete{
         HttpEntity(
