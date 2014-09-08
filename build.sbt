@@ -2,6 +2,7 @@ import scala.scalajs.sbtplugin.ScalaJSPlugin.ScalaJSKeys._
 import scala.scalajs.sbtplugin.ScalaJSPlugin._
 import org.scalastyle.sbt.ScalastylePlugin
 import utest.jsrunner.Plugin.utestJsSettings
+import utest.jsrunner.Plugin.utestJvmSettings
 
 scalaVersion in ThisBuild := "2.11.2"
 
@@ -44,10 +45,12 @@ val client = project.dependsOn(shared)
 
 val server = project.dependsOn(shared)
                     .settings(commonSettings:_*)
+                    .settings(utestJvmSettings:_*)
                     .settings(
                       libraryDependencies ++= Seq(
                         "io.spray" %% "spray-can" % "1.3.1",
                         "io.spray" %% "spray-routing" % "1.3.1",
+                        "io.spray" %% "spray-testkit" % "1.3.1" % "test",
                         "com.scalatags" %% "scalatags" % "0.4.0",
                         "com.typesafe.akka" %% "akka-actor" % "2.3.2",
                         "org.webjars" % "bootstrap" % "3.2.0"),
