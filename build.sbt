@@ -9,6 +9,9 @@ scalaVersion in ThisBuild := "2.11.2"
 organization in ThisBuild := "com.gshakhn"
 
 val commonSettings = ScalastylePlugin.Settings ++ Seq(
+  libraryDependencies += "com.lihaoyi" %% "acyclic" % "0.1.2" % "provided",
+  autoCompilerPlugins := true,
+  addCompilerPlugin("com.lihaoyi" %% "acyclic" % "0.1.2"),
   scalacOptions ++= Seq(
    "-feature",
    "-deprecation",
