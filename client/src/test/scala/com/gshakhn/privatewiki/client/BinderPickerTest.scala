@@ -1,0 +1,22 @@
+package com.gshakhn.privatewiki.client
+
+import org.scalajs.dom
+import org.scalajs.jquery._
+import utest._
+import utest.framework.TestSuite
+
+import scalatags.JsDom.all._
+
+object BinderPickerTest extends TestSuite {
+
+  val containingDiv = div(id:="containingDiv").render
+  dom.document.body.appendChild(containingDiv)
+  
+  BinderPicker.addPicker(containingDiv)
+  
+  def tests = TestSuite {
+    "Containing div should have a text box"- {
+      assert(jQuery(containingDiv).find(":text").length == 1)
+    }
+  }
+}
