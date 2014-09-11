@@ -24,6 +24,16 @@ object BinderPickerTest extends TestSuite {
       "should exist"- {
         assert(jQuery(containingDiv).find(":button").length == 1)
       }
+      "should have type button"- {
+        assert(jQuery(containingDiv).find(":button").attr("type") == "button")
+      }
+      "should say 'Load Binder'"- {
+        assert(jQuery(containingDiv).find(":button").text() == "Load Binder")
+      }
+      "should be styled with bootstrap"- {
+        assert(jQuery(containingDiv).find(":button").hasClass("btn"))
+        assert(jQuery(containingDiv).find(":button").hasClass("btn-primary"))
+      }
     }
   }
 }
