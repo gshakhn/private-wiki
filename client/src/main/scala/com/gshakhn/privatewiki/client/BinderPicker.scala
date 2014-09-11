@@ -6,14 +6,14 @@ import scala.scalajs.js.annotation.JSExport
 import scalatags.JsDom.all._
 
 object BinderPicker {
-  def addPicker(element: HTMLDivElement): Unit = {
-    element.appendChild(
+  def addPicker(containingDiv: HTMLDivElement): Unit = {
+    containingDiv.appendChild(
       input(
         tpe:="text"
       ).render
     )
 
-    element.appendChild(
+    containingDiv.appendChild(
       button(
         tpe:="button",
         cls:="btn btn-primary"
