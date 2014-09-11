@@ -8,17 +8,21 @@ import scalatags.JsDom.all._
 object BinderPicker {
   def addPicker(containingDiv: HTMLDivElement): Unit = {
     containingDiv.appendChild(
-      input(
-        tpe:="text"
+      div(
+        cls := "input-group",
+        input(
+          tpe := "text",
+          cls := "form-control"
+        ).render,
+        span(
+          cls := "input-group-btn",
+          button(
+            tpe := "button",
+            cls := "btn btn-primary",
+            "Load Binder"
+          ).render
+        ).render
       ).render
-    )
-
-    containingDiv.appendChild(
-      button(
-        tpe:="button",
-        cls:="btn btn-primary"
-      ) ("Load Binder")
-        .render
     )
   }
 }

@@ -15,24 +15,42 @@ object BinderPickerTest extends TestSuite {
   BinderPicker.addPicker(containingDiv)
   
   def tests = TestSuite {
-    "text box"- {
+    "input group"- {
+      val inputGroup = jQuery(containingDiv).find("div.input-group")
       "should exist"- {
-        assert(jQuery(containingDiv).find(":text").length == 1)
+        assert(inputGroup.length == 1)
       }
-    }
-    "button"- {
-      "should exist"- {
-        assert(jQuery(containingDiv).find(":button").length == 1)
+      "inner binder picker text box"- {
+        val textBox = inputGroup.find(":text")
+        "should exist"- {
+          assert(textBox.length == 1)
+        }
+        "should be styled with bootstrap"- {
+          assert(textBox.hasClass("form-control"))
+        }
       }
-      "should have type button"- {
-        assert(jQuery(containingDiv).find(":button").attr("type") == "button")
-      }
-      "should say 'Load Binder'"- {
-        assert(jQuery(containingDiv).find(":button").text() == "Load Binder")
-      }
-      "should be styled with bootstrap"- {
-        assert(jQuery(containingDiv).find(":button").hasClass("btn"))
-        assert(jQuery(containingDiv).find(":button").hasClass("btn-primary"))
+      "input group addon"- {
+        val inputGroupButton = inputGroup.find("span.input-group-btn")
+        "should exist"- {
+          assert(inputGroupButton.length == 1)
+        }
+        "inner button"- {
+          val button = inputGroupButton.find(":button")
+          "should exist"- {
+            assert(button.length == 1)
+          }
+          "should have type button"- {
+            assert(button.attr("type") == "button")
+          }
+          "should say 'Load Binder'"- {
+            assert(button.text() == "Load Binder")
+          }
+          "should be styled with bootstrap"- {
+            assert(button.hasClass("btn"))
+            assert(button.hasClass("btn-primary"))
+          }
+        }
+
       }
     }
   }
