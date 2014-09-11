@@ -1,3 +1,5 @@
+import spray.revolver.RevolverPlugin.Revolver
+
 import scala.scalajs.sbtplugin.ScalaJSPlugin.ScalaJSKeys._
 import scala.scalajs.sbtplugin.ScalaJSPlugin._
 import org.scalastyle.sbt.ScalastylePlugin
@@ -49,6 +51,7 @@ val client = project.dependsOn(shared)
 val server = project.dependsOn(shared)
                     .settings(commonSettings:_*)
                     .settings(utestJvmSettings:_*)
+                    .settings(Revolver.settings:_*)
                     .settings(
                       libraryDependencies ++= Seq(
                         "io.spray" %% "spray-can" % "1.3.1",
