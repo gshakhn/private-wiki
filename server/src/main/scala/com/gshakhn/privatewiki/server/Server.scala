@@ -30,7 +30,7 @@ object Template{
             href:="META-INF/resources/webjars/bootstrap/3.2.0/css/bootstrap.min.css"
           )
         ),
-        body(margin:=0, onload:="ScalaJSExample().main()",
+        body(margin:=0, onload:="PrivateWikiRenderer().render()",
           div("Foo123")
         )
       )
