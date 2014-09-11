@@ -15,8 +15,13 @@ object BinderPickerTest extends TestSuite {
   BinderPicker.addPicker(containingDiv)
   
   def tests = TestSuite {
-    "Containing div should have a text box"- {
-      assert(jQuery(containingDiv).find(":text").length == 1)
+    "text box"- {
+      "should exist"- {
+        assert(jQuery(containingDiv).find(":text").length == 1)
+      }
+      "should have an id"- {
+        assert(jQuery(containingDiv).find(":text").attr("id") == "binderNameInput")
+      }
     }
   }
 }
