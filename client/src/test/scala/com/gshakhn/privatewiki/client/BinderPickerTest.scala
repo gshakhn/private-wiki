@@ -23,5 +23,10 @@ object BinderPickerTest extends TestSuite {
         assert(jQuery(containingDiv).find(":text").attr("id") == "binderNameInput")
       }
     }
+    "button"- {
+      "should exist"- {
+        assert(jQuery(containingDiv).find(":button").length == 1)
+      }
+    }
   }
 }
