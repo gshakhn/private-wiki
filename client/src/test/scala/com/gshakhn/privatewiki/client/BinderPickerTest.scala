@@ -29,7 +29,7 @@ object BinderPickerTest extends TestSuite {
           assert(textBox.hasClass("form-control"))
         }
       }
-      "input group addon"- {
+      "input group button"- {
         val inputGroupButton = inputGroup.find("span.input-group-btn")
         "should exist"- {
           assert(inputGroupButton.length == 1)
