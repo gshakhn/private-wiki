@@ -7,7 +7,7 @@ import scalatags.JsDom.all._
 
 object BinderPicker {
   def addPicker(element: HTMLDivElement): Unit = {
-    element.appendChild(input(tpe:="text",id:="binderNameInput").render)
+    element.appendChild(input(tpe:="text").render)
     element.appendChild(button.render)
   }
 }
