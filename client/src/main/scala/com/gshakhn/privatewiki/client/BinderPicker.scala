@@ -13,15 +13,15 @@ object BinderPicker {
         input(
           tpe := "text",
           cls := "form-control"
-        ).render,
+        ),
         span(
           cls := "input-group-btn",
           button(
             tpe := "button",
             cls := "btn btn-primary",
             "Load Binder"
-          ).render
-        ).render
+          )
+        )
       ).render
     )
   }
