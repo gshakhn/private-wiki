@@ -10,7 +10,10 @@ import org.scalajs.dom
 object PrivateWikiRenderer {
   @JSExport
   def render(): Unit = {
-    val mainContainer: HTMLDivElement = div().render
+    val mainContainer = div(
+      id:="mainContainer",
+      cls:="container"
+    ).render
     dom.document.body.appendChild(mainContainer)
     BinderPicker.addPicker(mainContainer)
   }
