@@ -1,10 +1,10 @@
 package com.gshakhn.privatewiki.client
 
-import org.scalajs.dom.HTMLDivElement
+import com.gshakhn.privatewiki.client.uicomponents.BinderPicker
+import org.scalajs.dom
 
 import scala.scalajs.js.annotation.JSExport
 import scalatags.JsDom.all._
-import org.scalajs.dom
 
 @JSExport
 object PrivateWikiRenderer {

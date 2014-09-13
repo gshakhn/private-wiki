@@ -1,4 +1,4 @@
-package com.gshakhn.privatewiki.client
+package com.gshakhn.privatewiki.client.uicomponents
 
 import org.scalajs.dom.HTMLDivElement
 
