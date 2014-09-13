@@ -14,32 +14,45 @@ object Server extends App with SimpleRoutingApp with FooService {
   }
 }
 
-object Template{
+object Template {
+
   import scalatags.Text.all._
   import scalatags.Text.tags2.title
+
   val txt =
     "<!DOCTYPE html>" +
       html(
         head(
           title("Example Scala.js application"),
-          meta(httpEquiv:="Content-Type", content:="text/html; charset=UTF-8"),
-          script(`type`:="text/javascript", src:="/client-fastopt.js"),
+          meta(
+            charset := "utf-8"
+          ),
+          meta(
+            httpEquiv := "X-UA-Compatible",
+            content := "IE=edge"
+          ),
+          meta(
+            name := "viewport",
+            content := "width=device-width, initial-scale=1"
+          ),
+          script(`type` := "text/javascript", src := "/client-fastopt.js"),
           link(
-            rel:="stylesheet",
-            `type`:="text/css",
-            href:="META-INF/resources/webjars/bootstrap/3.2.0/css/bootstrap.min.css"
+            rel := "stylesheet",
+            `type` := "text/css",
+            href := "META-INF/resources/webjars/bootstrap/3.2.0/css/bootstrap.css"
           )
         ),
-        body(margin:=0, onload:="PrivateWikiRenderer().render()",
-          div("Foo123")
+        body(margin := 0, onload := "PrivateWikiRenderer().render()",
+          script(src := "META-INF/resources/webjars/jquery/1.11.1/jquery.js"),
+          script(src := "META-INF/resources/webjars/bootstrap/3.2.0/js/bootstrap.js")
         )
       )
 }
 
 trait FooService extends HttpService {
-  def baseRoute: Route = get{
+  def baseRoute: Route = get {
     pathSingleSlash {
-      complete{
+      complete {
         HttpEntity(
           MediaTypes.`text/html`,
           Template.txt

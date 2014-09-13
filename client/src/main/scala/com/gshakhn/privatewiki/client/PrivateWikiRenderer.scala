@@ -10,11 +10,20 @@ import scalatags.JsDom.all._
 object PrivateWikiRenderer {
   @JSExport
   def render(): Unit = {
+    val col_1_1 = div(
+      id := "col-1-1",
+      cls := "col-md-4"
+    ).render
     val mainContainer = div(
-      id:="mainContainer",
-      cls:="container"
+      id := "mainContainer",
+      cls := "container",
+      div(
+        id := "row-1",
+        cls := "row",
+        col_1_1
+      )
     ).render
     dom.document.body.appendChild(mainContainer)
-    BinderPicker.addPicker(mainContainer)
+    BinderPicker.addPicker(col_1_1)
   }
 }
