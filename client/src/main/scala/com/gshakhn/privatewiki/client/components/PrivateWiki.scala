@@ -19,7 +19,15 @@ object PrivateWiki {
                 cls := "col-md-4",
                 BinderPicker()
               )
-            ))).createU
+            ),div(
+                id := "row-2",
+                cls := "row",
+                div(
+                  id := "col-2-1",
+                  cls := "col-md-4",
+                  BinderList(Seq("test1", "test2"))
+                )
+              ))).createU
     component()
   }
 }
