@@ -16,42 +16,53 @@ object BinderPickerTest extends TestSuite {
   React.renderComponent(BinderPicker(), containingDiv)
   
   def tests = TestSuite {
-    "input group"- {
-      val inputGroup = jQuery(containingDiv).find("div.input-group")
+    "form"- {
+      val form = jQuery(containingDiv).find("form")
       "should exist"- {
-        assert(inputGroup.length == 1)
+        assert(form.length == 1)
       }
-      "inner binder picker text box"- {
-        val textBox = inputGroup.find(":text")
+      "form-group"- {
+        val formGroup = form.find("div.form-group")
         "should exist"- {
-          assert(textBox.length == 1)
+          assert(formGroup.length == 1)
         }
-        "should be styled with bootstrap"- {
-          assert(textBox.hasClass("form-control"))
-        }
-      }
-      "input group button"- {
-        val inputGroupButton = inputGroup.find("span.input-group-btn")
-        "should exist"- {
-          assert(inputGroupButton.length == 1)
-        }
-        "inner button"- {
-          val button = inputGroupButton.find(":button")
+        "input group"- {
+          val inputGroup = formGroup.find("div.input-group")
           "should exist"- {
-            assert(button.length == 1)
+            assert(inputGroup.length == 1)
           }
-          "should have type button"- {
-            assert(button.attr("type") == "button")
+          "inner binder picker text box"- {
+            val textBox = inputGroup.find(":text")
+            "should exist"- {
+              assert(textBox.length == 1)
+            }
+            "should be styled with bootstrap"- {
+              assert(textBox.hasClass("form-control"))
+            }
           }
-          "should say 'Load Binder'"- {
-            assert(button.text() == "Load Binder")
-          }
-          "should be styled with bootstrap"- {
-            assert(button.hasClass("btn"))
-            assert(button.hasClass("btn-primary"))
+          "input group button"- {
+            val inputGroupButton = inputGroup.find("span.input-group-btn")
+            "should exist"- {
+              assert(inputGroupButton.length == 1)
+            }
+            "inner button"- {
+              val button = inputGroupButton.find(":button")
+              "should exist"- {
+                assert(button.length == 1)
+              }
+              "should have type button"- {
+                assert(button.attr("type") == "button")
+              }
+              "should say 'Load Binder'"- {
+                assert(button.text() == "Load Binder")
+              }
+              "should be styled with bootstrap"- {
+                assert(button.hasClass("btn"))
+                assert(button.hasClass("btn-primary"))
+              }
+            }
           }
         }
-
       }
     }
   }

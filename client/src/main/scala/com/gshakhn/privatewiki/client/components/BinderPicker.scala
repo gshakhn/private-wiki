@@ -8,18 +8,23 @@ object BinderPicker {
     val component = ReactComponentB[Unit]("BinderPicker")
       .render(
         (_) =>
-          div(
-            cls := "input-group",
-            input(
-              tpe := "text",
-              cls := "form-control"
-            ),
-            span(
-              cls := "input-group-btn",
-              button(
-                tpe := "button",
-                cls := "btn btn-primary",
-                "Load Binder"
+          form(
+            div(
+              cls := "form-group",
+              div(
+                cls := "input-group",
+                input(
+                  tpe := "text",
+                  cls := "form-control"
+                ),
+                span(
+                  cls := "input-group-btn",
+                  button(
+                    tpe := "button",
+                    cls := "btn btn-primary",
+                    "Load Binder"
+                  )
+                )
               )
             )
           )).createU
