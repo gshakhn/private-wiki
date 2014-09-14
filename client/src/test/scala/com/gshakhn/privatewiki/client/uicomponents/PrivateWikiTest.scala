@@ -1,16 +1,23 @@
-package com.gshakhn.privatewiki.client
+package com.gshakhn.privatewiki.client.uicomponents
 
+import japgolly.scalajs.react.React
+import org.scalajs.dom
 import org.scalajs.jquery._
 import utest._
 import utest.framework.TestSuite
 
-object PrivateWikiRendererTest extends TestSuite {
+import scalatags.JsDom.all._
 
-  PrivateWikiRenderer.render()
+object PrivateWikiTest extends TestSuite {
+
+  val containingDiv = div(id:="containingDiv").render
+  dom.document.body.appendChild(containingDiv)
+
+  React.renderComponent(PrivateWiki(), containingDiv)
   
   def tests = TestSuite {
     "container div"- {
-      val mainContainer = jQuery("div#mainContainer")
+      val mainContainer = jQuery(containingDiv).find("div#mainContainer")
       "should exist"- {
         assert(mainContainer.length == 1)
       }
