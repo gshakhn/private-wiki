@@ -35,6 +35,7 @@ object Template {
             name := "viewport",
             content := "width=device-width, initial-scale=1"
           ),
+          script(`type` := "text/javascript", src := "/client-jsdeps.js"),
           script(`type` := "text/javascript", src := "/client-fastopt.js"),
           link(
             rel := "stylesheet",
@@ -42,10 +43,7 @@ object Template {
             href := "META-INF/resources/webjars/bootstrap/3.2.0/css/bootstrap.css"
           )
         ),
-        body(margin := 0, onload := "PrivateWikiRenderer().render()",
-          script(src := "META-INF/resources/webjars/jquery/1.11.1/jquery.js"),
-          script(src := "META-INF/resources/webjars/bootstrap/3.2.0/js/bootstrap.js")
-        )
+        body(margin := 0, onload := "PrivateWikiRenderer().render()")
       )
 }
 

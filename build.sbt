@@ -43,10 +43,15 @@ val client = project.dependsOn(shared)
                     .settings(utestJsSettings:_*)
                     .settings(
                       ScalaJSKeys.jsDependencies += scala.scalajs.sbtplugin.RuntimeDOM,
+                      skip in ScalaJSKeys.packageJSDependencies := false,
+                      ScalaJSKeys.jsDependencies ++= Seq(
+                        "org.webjars" % "bootstrap" % "3.2.0" / "bootstrap.js"
+                      ),
                       libraryDependencies ++= Seq(
                         "org.scala-lang.modules.scalajs" %%% "scalajs-jquery" % "0.6",
                         "org.scala-lang.modules.scalajs" %%% "scalajs-dom" % "0.6",
-                        "com.scalatags" %%% "scalatags" % "0.4.0"))
+                        "com.scalatags" %%% "scalatags" % "0.4.0",
+                        "org.webjars" % "bootstrap" % "3.2.0"))
 
 val server = project.dependsOn(shared)
                     .settings(commonSettings:_*)
@@ -60,8 +65,7 @@ val server = project.dependsOn(shared)
                         "com.scalatags" %% "scalatags" % "0.4.0",
                         "com.typesafe.akka" %% "akka-actor" % "2.3.2",
                         "org.webjars" % "bootstrap" % "3.2.0"),
-                      (resources in Compile) += {
-                        (fastOptJS in (client, Compile)).value
-                        (artifactPath in (client, Compile, fastOptJS)).value
-                      }
+                      managedResources in Compile <<= (managedResources in Compile).dependsOn(fastOptJS in (client, Compile)),
+                      managedResources in Compile += (artifactPath in (client, Compile, fastOptJS)).value,
+                      managedResources in Compile += (packageJSDependencies in Compile in client).value
                     )
