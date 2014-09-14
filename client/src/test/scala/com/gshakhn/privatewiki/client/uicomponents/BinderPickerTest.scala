@@ -1,5 +1,6 @@
 package com.gshakhn.privatewiki.client.uicomponents
 
+import japgolly.scalajs.react.React
 import org.scalajs.dom
 import org.scalajs.jquery._
 import utest._
@@ -11,8 +12,8 @@ object BinderPickerTest extends TestSuite {
 
   val containingDiv = div(id:="containingDiv").render
   dom.document.body.appendChild(containingDiv)
-  
-  BinderPicker.addPicker(containingDiv)
+
+  React.renderComponent(BinderPicker(), containingDiv)
   
   def tests = TestSuite {
     "input group"- {

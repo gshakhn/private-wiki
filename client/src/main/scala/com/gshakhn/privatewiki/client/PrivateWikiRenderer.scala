@@ -1,6 +1,7 @@
 package com.gshakhn.privatewiki.client
 
 import com.gshakhn.privatewiki.client.uicomponents.BinderPicker
+import japgolly.scalajs.react.React
 import org.scalajs.dom
 
 import scala.scalajs.js.annotation.JSExport
@@ -24,6 +25,6 @@ object PrivateWikiRenderer {
       )
     ).render
     dom.document.body.appendChild(mainContainer)
-    BinderPicker.addPicker(col_1_1)
+    React.renderComponent(BinderPicker(), col_1_1)
   }
 }

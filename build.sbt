@@ -45,12 +45,15 @@ val client = project.dependsOn(shared)
                       ScalaJSKeys.jsDependencies += scala.scalajs.sbtplugin.RuntimeDOM,
                       skip in ScalaJSKeys.packageJSDependencies := false,
                       ScalaJSKeys.jsDependencies ++= Seq(
-                        "org.webjars" % "bootstrap" % "3.2.0" / "bootstrap.js"
+                        "org.webjars" % "bootstrap" % "3.2.0" / "bootstrap.js",
+                        "org.webjars" % "react" % "0.11.1" / "react-with-addons.js" commonJSName "React"
                       ),
                       libraryDependencies ++= Seq(
+                        "com.github.japgolly.scalajs-react" %%% "core" % "0.4.1-SNAPSHOT",
+                        "com.github.japgolly.scalajs-react" %%% "test" % "0.4.1-SNAPSHOT" % "test",
+                        "com.scalatags" %%% "scalatags" % "0.4.0",
                         "org.scala-lang.modules.scalajs" %%% "scalajs-jquery" % "0.6",
                         "org.scala-lang.modules.scalajs" %%% "scalajs-dom" % "0.6",
-                        "com.scalatags" %%% "scalatags" % "0.4.0",
                         "org.webjars" % "bootstrap" % "3.2.0"))
 
 val server = project.dependsOn(shared)
