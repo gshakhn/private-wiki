@@ -1,4 +1,4 @@
-package com.gshakhn.privatewiki.client.uicomponents
+package com.gshakhn.privatewiki.client.components
 
 import japgolly.scalajs.react.{ReactComponentU, ReactComponentB}
 import japgolly.scalajs.react.vdom.ReactVDom.all._

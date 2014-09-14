@@ -1,6 +1,6 @@
 package com.gshakhn.privatewiki.client
 
-import com.gshakhn.privatewiki.client.uicomponents.PrivateWiki
+import com.gshakhn.privatewiki.client.components.PrivateWiki
 import japgolly.scalajs.react.React
 import org.scalajs.dom
 
