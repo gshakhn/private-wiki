@@ -13,6 +13,6 @@ object PrivateWikiRenderer {
   def render(): Unit = {
     val mainDiv = div().render
     dom.document.body.appendChild(mainDiv)
-    React.renderComponent(PrivateWiki(), mainDiv)
+    React.renderComponent(PrivateWiki(new Backend(_)), mainDiv)
   }
 }
