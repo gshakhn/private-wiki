@@ -12,64 +12,62 @@ import scalatags.JsDom.all._
 
 object PrivateWikiTest extends TestSuite {
 
-  val containingDiv = div(id := "containingDiv").render
+  private val containingDiv = div(id := "containingDiv").render
   dom.document.body.appendChild(containingDiv)
-
-  React.renderComponent(PrivateWiki(new Backend(_)), containingDiv)
 
   def tests = TestSuite {
     "Binder Picker" - {
       "form" - {
-        val form = jQuery(containingDiv).find("form")
-        "should exist" - {
+        def form = jQuery(containingDiv).find("form")
+        "should exist" - reactTest { () =>
           assert(form.length == 1)
         }
-        "should have a unique id" - {
+        "should have a unique id" - reactTest { () =>
           assert(form.attr("id") == "binder-form")
         }
         "form-group" - {
-          val formGroup = form.find("div.form-group")
-          "should exist" - {
+          def formGroup = form.find("div.form-group")
+          "should exist" - reactTest { () =>
             assert(formGroup.length == 1)
           }
           "input group" - {
-            val inputGroup = formGroup.find("div.input-group")
-            "should exist" - {
+            def inputGroup = formGroup.find("div.input-group")
+            "should exist" - reactTest { () =>
               assert(inputGroup.length == 1)
             }
             "inner binder picker text box" - {
-              val textBox = inputGroup.find(":text")
-              "should exist" - {
+              def textBox = inputGroup.find(":text")
+              "should exist" - reactTest { () =>
                 assert(textBox.length == 1)
               }
-              "should be styled with bootstrap" - {
+              "should be styled with bootstrap" - reactTest { () =>
                 assert(textBox.hasClass("form-control"))
               }
-              "should have a unique id" - {
+              "should have a unique id" - reactTest { () =>
                 assert(textBox.attr("id") == "binder-input")
               }
-              "should have the default text" - {
+              "should have the default text" - reactTest { () =>
                 println(s"text is ${textBox.text()}")
                 assert(textBox.value().toString == "")
               }
             }
             "input group button" - {
-              val inputGroupButton = inputGroup.find("span.input-group-btn")
-              "should exist" - {
+              def inputGroupButton = inputGroup.find("span.input-group-btn")
+              "should exist" - reactTest { () =>
                 assert(inputGroupButton.length == 1)
               }
               "inner button" - {
-                val button = inputGroupButton.find(":button")
-                "should exist" - {
+                def button = inputGroupButton.find(":button")
+                "should exist" - reactTest { () =>
                   assert(button.length == 1)
                 }
-                "should have type button" - {
+                "should have type button" - reactTest { () =>
                   assert(button.attr("type") == "button")
                 }
-                "should say 'Load Binder'" - {
+                "should say 'Load Binder'" - reactTest { () =>
                   assert(button.text() == "Load Binder")
                 }
-                "should be styled with bootstrap" - {
+                "should be styled with bootstrap" - reactTest { () =>
                   assert(button.hasClass("btn"))
                   assert(button.hasClass("btn-primary"))
                 }
@@ -79,19 +77,22 @@ object PrivateWikiTest extends TestSuite {
         }
       }
       "interaction" - {
-        "should let you change text" - {
+        "should let you change text" - reactTest { () =>
           val input = dom.document.getElementById("binder-input")
           ReactTestUtils.Simulate.change(input, ChangeEventData("new text"))
           assert(jQuery("#binder-input").value().toString == "new text")
+        }
+        "should have fresh state after each test" - reactTest { () =>
+          assert(jQuery("#binder-input").value().toString == "")
         }
       }
     }
 
     "binder interaction" - {
-      "should have 0 binders to start with" - {
+      "should have 0 binders to start with" - reactTest { () =>
         assert(jQuery(".binder-list-item").length == 0)
       }
-      "submitting the form should add another list item" - {
+      "submitting the form should add another list item" - reactTest { () =>
         val input = dom.document.getElementById("binder-input")
         ReactTestUtils.Simulate.change(input, ChangeEventData("new binder"))
         val form = dom.document.getElementById("binder-form")
@@ -100,5 +101,11 @@ object PrivateWikiTest extends TestSuite {
         assert(jQuery(".binder-list-item").text() == "new binder")
       }
     }
+  }
+
+  private def reactTest(x: () => Any) = {
+    React.renderComponent(PrivateWiki(new Backend(_)), containingDiv)
+    x()
+    React.unmountComponentAtNode(containingDiv)
   }
 }
