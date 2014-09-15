@@ -18,15 +18,15 @@ object BinderListTest extends TestSuite {
       React.renderComponent(BinderList(Seq()), containingDiv)
       "unordered list" - {
         val ul = jQuery("ul")
-        "should exist"- {
+        "should exist" - {
           assert(ul.length == 1)
         }
-        "should be styled with bootstrap"- {
+        "should be styled with bootstrap" - {
           assert(ul.hasClass("list-group"))
         }
-        "inner list items"- {
+        "inner list items" - {
           val li = ul.find("li")
-          "should not exist"- {
+          "should not exist" - {
             assert(li.length == 0)
           }
         }
@@ -36,18 +36,18 @@ object BinderListTest extends TestSuite {
       React.renderComponent(BinderList(Seq("binder1")), containingDiv)
       "unordered list" - {
         val ul = jQuery("ul")
-        "should exist"- {
+        "should exist" - {
           assert(ul.length == 1)
         }
-        "should be styled with bootstrap"- {
+        "should be styled with bootstrap" - {
           assert(ul.hasClass("list-group"))
         }
-        "inner list items"- {
+        "inner list items" - {
           val li = ul.find("li")
-          "should have 1 exist"- {
+          "should have 1 exist" - {
             assert(li.length == 1)
           }
-          "should be styled with bootstrap"- {
+          "should be styled with bootstrap" - {
             assert(li.hasClass("list-group-item"))
           }
         }
