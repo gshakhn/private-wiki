@@ -10,9 +10,9 @@ object BinderList {
         binders =>
           ul(
             cls := "list-group",
-            binders.map{ binderName =>
+            binders.map { binderName =>
               li(
-                cls:="list-group-item",
+                cls := "list-group-item binder-list-item",
                 binderName
               )
             }

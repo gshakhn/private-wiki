@@ -50,6 +50,9 @@ object BinderListTest extends TestSuite {
           "should be styled with bootstrap" - {
             assert(li.hasClass("list-group-item"))
           }
+          "should have class binder-list-item" - {
+            assert(li.hasClass("binder-list-item"))
+          }
         }
       }
     }
