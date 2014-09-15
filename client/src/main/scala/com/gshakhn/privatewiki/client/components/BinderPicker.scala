@@ -7,12 +7,14 @@ import org.scalajs.dom.HTMLInputElement
 
 class BinderPicker {
   private var onChangeHandler: SyntheticEvent[HTMLInputElement] => Unit = _
+  private var onSubmitHandler: SyntheticEvent[HTMLInputElement] => Unit = _
 
   private val component = ReactComponentB[String]("BinderPicker")
     .render(
       newBinderName =>
         form(
           id := "binder-form",
+          onsubmit ==> onSubmitHandler,
           div(
             cls := "form-group",
             div(
@@ -36,8 +38,11 @@ class BinderPicker {
           )
         )).create
 
-  def apply(onChangeHandler: SyntheticEvent[HTMLInputElement] => Unit): CompCtorP[String, Unit, Unit] = {
+  def apply(onChangeHandler: SyntheticEvent[HTMLInputElement] => Unit,
+            onSubmitHandler: SyntheticEvent[HTMLInputElement] => Unit,
+            newBinderName: String): ReactComponentU[String, Unit, Unit] = {
     this.onChangeHandler = onChangeHandler
-    component
+    this.onSubmitHandler = onSubmitHandler
+    component(newBinderName)
   }
 }

@@ -91,12 +91,14 @@ object PrivateWikiTest extends TestSuite {
       "should have 0 binders to start with" - {
         assert(jQuery(".binder-list-item").length == 0)
       }
-//      "submitting the form should add another list item" - {
-//        val form = jQuery("#binder-form")
-//        jQuery("#binder-input").text("new binder")
-//        form.submit()
-//        assert(jQuery(".binder-list-item").length == 1)
-//      }
+      "submitting the form should add another list item" - {
+        val input = dom.document.getElementById("binder-input")
+        ReactTestUtils.Simulate.change(input, ChangeEventData("new binder"))
+        val form = dom.document.getElementById("binder-form")
+        ReactTestUtils.Simulate.submit(form)
+        assert(jQuery(".binder-list-item").length == 1)
+        assert(jQuery(".binder-list-item").text() == "new binder")
+      }
     }
   }
 }

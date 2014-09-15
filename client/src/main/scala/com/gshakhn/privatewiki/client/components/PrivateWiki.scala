@@ -22,7 +22,7 @@ object PrivateWiki {
               div(
                 id := "col-1-1",
                 cls := "col-md-4",
-                binderPicker(B.newBinderChange)(S.newBinderName)
+                binderPicker(B.newBinderChange, B.newBinderSubmit, S.newBinderName)
               )
             ),
             div(
