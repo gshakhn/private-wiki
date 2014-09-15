@@ -10,7 +10,7 @@ class Backend(t: BackendScope[_, State]) {
     t.modState(_.copy(newBinderName = e.target.value))
   }
 
-  def newBinderSubmit(e: SyntheticEvent[HTMLInputElement]) = {
+  def newBinderSubmit(e: SyntheticEvent[HTMLInputElement]): Unit = {
     e.preventDefault()
     t.modState(s => State(s.binderList :+ s.newBinderName, ""))
   }
