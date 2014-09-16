@@ -32,7 +32,8 @@ object BinderPicker {
                 button(
                   id := "binder-button",
                   tpe := "button",
-                  cls := "btn btn-primary",
+                  classSet("btn btn-primary",
+                    "disabled" -> props.newBinderName.isEmpty),
                   onclick ==> props.newBinderAdd,
                   "Load Binder"
                 )
