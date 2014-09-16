@@ -6,6 +6,9 @@ import japgolly.scalajs.react.vdom.ReactVDom.all._
 import org.scalajs.dom.HTMLInputElement
 
 object BinderPicker {
+  val binderNameInputId: String = "binder-name-input"
+  val binderServerPasswordId: String = "binder-password-input"
+
   case class BinderPickerProps(newBinderName: String,
                                newBinderNameChange: SyntheticEvent[HTMLInputElement] => Unit,
                                newBinderAdd: SyntheticEvent[HTMLInputElement] => Unit)
@@ -18,29 +21,42 @@ object BinderPicker {
           onsubmit ==> props.newBinderAdd,
           div(
             cls := "form-group",
-            div(
-              cls := "input-group",
-              input(
-                id := "binder-input",
-                tpe := "text",
-                cls := "form-control",
-                onchange ==> props.newBinderNameChange,
-                value := props.newBinderName
-              ),
-              span(
-                cls := "input-group-btn",
-                button(
-                  id := "binder-button",
-                  tpe := "button",
-                  classSet("btn btn-primary",
-                    "disabled" -> props.newBinderName.isEmpty),
-                  onclick ==> props.newBinderAdd,
-                  "Load Binder"
-                )
-              )
+            label(
+              `for` := binderNameInputId,
+              "Binder Name"
+            ),
+            input(
+              id := binderNameInputId,
+              tpe := "text",
+              cls := "form-control",
+              onchange ==> props.newBinderNameChange,
+              value := props.newBinderName
             )
+          ),
+          div(
+            cls := "form-group",
+            label(
+              `for` := binderServerPasswordId,
+              "Binder Password"
+            ),
+            input(
+              id := binderServerPasswordId,
+              tpe := "password",
+              cls := "form-control"
+//              onchange ==> props.newBinderNameChange,
+//              value := props.newBinderName
+            )
+          ),
+          button(
+            id := "binder-button",
+            tpe := "button",
+            classSet("btn btn-primary",
+              "disabled" -> props.newBinderName.isEmpty),
+            onclick ==> props.newBinderAdd,
+            "Load Binder"
           )
-        )).create
+        )
+    ).create
 
   def apply(newBinderName: String,
             newBinderNameChange: SyntheticEvent[HTMLInputElement] => Unit,

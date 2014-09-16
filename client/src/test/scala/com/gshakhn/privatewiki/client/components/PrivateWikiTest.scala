@@ -23,7 +23,7 @@ object PrivateWikiTest extends TestSuite {
       "submitting form" - {
         "with a binder name" - {
           "should add another list item" - reactTest { () =>
-            val input = dom.document.getElementById("binder-input")
+            val input = dom.document.getElementById(BinderPicker.binderNameInputId)
             ReactTestUtils.Simulate.change(input, ChangeEventData("new binder"))
             val form = dom.document.getElementById("binder-form")
             ReactTestUtils.Simulate.submit(form)
@@ -31,7 +31,7 @@ object PrivateWikiTest extends TestSuite {
             assert(jQuery(".binder-list-item").text() == "new binder")
           }
           "via button click should add another list item" - reactTest { () =>
-            val input = dom.document.getElementById("binder-input")
+            val input = dom.document.getElementById(BinderPicker.binderNameInputId)
             ReactTestUtils.Simulate.change(input, ChangeEventData("new binder"))
             val button = dom.document.getElementById("binder-button")
             ReactTestUtils.Simulate.click(button)
@@ -41,14 +41,14 @@ object PrivateWikiTest extends TestSuite {
         }
         "without a binder name" - {
           "should not add another list item" - reactTest { () =>
-            val input = dom.document.getElementById("binder-input")
+            val input = dom.document.getElementById(BinderPicker.binderNameInputId)
             ReactTestUtils.Simulate.change(input, ChangeEventData(""))
             val form = dom.document.getElementById("binder-form")
             ReactTestUtils.Simulate.submit(form)
             assert(jQuery(".binder-list-item").length == 0)
           }
           "via button click should not add another list item" - reactTest { () =>
-            val input = dom.document.getElementById("binder-input")
+            val input = dom.document.getElementById(BinderPicker.binderNameInputId)
             ReactTestUtils.Simulate.change(input, ChangeEventData(""))
             val button = dom.document.getElementById("binder-button")
             ReactTestUtils.Simulate.click(button)
@@ -58,12 +58,12 @@ object PrivateWikiTest extends TestSuite {
       }
       "button style" - {
         "with no text should be disabled" - reactTest{ () =>
-          val input = dom.document.getElementById("binder-input")
+          val input = dom.document.getElementById(BinderPicker.binderNameInputId)
           ReactTestUtils.Simulate.change(input, ChangeEventData(""))
           assert(jQuery("#binder-button").hasClass("disabled"))
         }
         "with text should be enabled" - reactTest{ () =>
-          val input = dom.document.getElementById("binder-input")
+          val input = dom.document.getElementById(BinderPicker.binderNameInputId)
           ReactTestUtils.Simulate.change(input, ChangeEventData("new binder"))
           assert(!jQuery("#binder-button").hasClass("disabled"))
         }
