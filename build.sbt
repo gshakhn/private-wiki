@@ -49,8 +49,8 @@ val client = project.dependsOn(shared)
                         "org.webjars" % "react" % "0.11.1" / "react-with-addons.js" commonJSName "React"
                       ),
                       libraryDependencies ++= Seq(
-                        "com.github.japgolly.scalajs-react" %%% "core" % "0.4.1-SNAPSHOT",
-                        "com.github.japgolly.scalajs-react" %%% "test" % "0.4.1-SNAPSHOT" % "test",
+                        "com.github.japgolly.scalajs-react" %%% "core" % "0.4.1",
+                        "com.github.japgolly.scalajs-react" %%% "test" % "0.4.1" % "test",
                         "com.scalatags" %%% "scalatags" % "0.4.0",
                         "org.scala-lang.modules.scalajs" %%% "scalajs-jquery" % "0.6",
                         "org.scala-lang.modules.scalajs" %%% "scalajs-dom" % "0.6",
