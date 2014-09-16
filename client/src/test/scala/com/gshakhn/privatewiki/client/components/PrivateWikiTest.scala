@@ -55,7 +55,6 @@ object PrivateWikiTest extends TestSuite {
             assert(jQuery(".binder-list-item").length == 0)
           }
         }
-
       }
       "button style" - {
         "with no text should be disabled" - reactTest{ () =>
