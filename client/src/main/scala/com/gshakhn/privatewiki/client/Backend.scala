@@ -12,6 +12,13 @@ class Backend(t: BackendScope[_, State]) {
 
   def newBinderAdd(e: SyntheticEvent[HTMLInputElement]): Unit = {
     e.preventDefault()
-    t.modState(s => State(s.binderList :+ s.newBinderName, ""))
+    t.modState { s =>
+      if (s.newBinderName.isEmpty) {
+        s
+      }
+      else {
+        State(s.binderList :+ s.newBinderName, "")
+      }
+    }
   }
 }
