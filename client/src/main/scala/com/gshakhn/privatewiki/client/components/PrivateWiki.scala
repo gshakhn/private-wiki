@@ -6,8 +6,6 @@ import japgolly.scalajs.react.{BackendScope, ReactComponentB, ReactComponentU}
 
 object PrivateWiki {
   def apply(backend: BackendScope[_, State] => Backend): ReactComponentU[Unit, State, Backend] = {
-    val binderPicker = new BinderPicker
-
     val component = ReactComponentB[Unit]("PrivateWiki")
       .initialState(State(Seq(), ""))
       .backend(backend)
@@ -22,7 +20,7 @@ object PrivateWiki {
               div(
                 id := "col-1-1",
                 cls := "col-md-4",
-                binderPicker(B.newBinderChange, B.newBinderSubmit, S.newBinderName)
+                BinderPicker(B.newBinderChange, B.newBinderSubmit, S.newBinderName)
               )
             ),
             div(

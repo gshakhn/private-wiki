@@ -5,8 +5,8 @@ import japgolly.scalajs.react.vdom.ReactVDom._
 import japgolly.scalajs.react.vdom.ReactVDom.all._
 import org.scalajs.dom.HTMLInputElement
 
-class BinderPicker {
-  private case class BinderPickerProps(newBinderName: String,
+object BinderPicker {
+  case class BinderPickerProps(newBinderName: String,
                                onChangeHandler: SyntheticEvent[HTMLInputElement] => Unit,
                                onSubmitHandler: SyntheticEvent[HTMLInputElement] => Unit)
 
