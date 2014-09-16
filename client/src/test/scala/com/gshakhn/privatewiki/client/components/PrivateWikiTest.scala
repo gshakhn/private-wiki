@@ -71,6 +71,9 @@ object PrivateWikiTest extends TestSuite {
                   assert(button.hasClass("btn"))
                   assert(button.hasClass("btn-primary"))
                 }
+                "should have a unique id" - reactTest { () =>
+                  assert(button.attr("id") == "binder-button")
+                }
               }
             }
           }
@@ -97,6 +100,14 @@ object PrivateWikiTest extends TestSuite {
         ReactTestUtils.Simulate.change(input, ChangeEventData("new binder"))
         val form = dom.document.getElementById("binder-form")
         ReactTestUtils.Simulate.submit(form)
+        assert(jQuery(".binder-list-item").length == 1)
+        assert(jQuery(".binder-list-item").text() == "new binder")
+      }
+      "submitting the form via button click should add another list item" - reactTest { () =>
+        val input = dom.document.getElementById("binder-input")
+        ReactTestUtils.Simulate.change(input, ChangeEventData("new binder"))
+        val button = dom.document.getElementById("binder-button")
+        ReactTestUtils.Simulate.click(button)
         assert(jQuery(".binder-list-item").length == 1)
         assert(jQuery(".binder-list-item").text() == "new binder")
       }

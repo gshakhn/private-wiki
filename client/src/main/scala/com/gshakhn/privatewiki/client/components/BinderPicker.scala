@@ -29,8 +29,10 @@ class BinderPicker {
               span(
                 cls := "input-group-btn",
                 button(
+                  id := "binder-button",
                   tpe := "button",
                   cls := "btn btn-primary",
+                  onclick ==> onSubmitHandler,
                   "Load Binder"
                 )
               )
