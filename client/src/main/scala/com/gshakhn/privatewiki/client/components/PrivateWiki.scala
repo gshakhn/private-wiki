@@ -20,7 +20,7 @@ object PrivateWiki {
               div(
                 id := "col-1-1",
                 cls := "col-md-4",
-                BinderPicker(B.newBinderChange, B.newBinderSubmit, S.newBinderName)
+                BinderPicker(S.newBinderName, B.newBinderNameChange, B.newBinderAdd)
               )
             ),
             div(

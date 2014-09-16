@@ -7,15 +7,15 @@ import org.scalajs.dom.HTMLInputElement
 
 object BinderPicker {
   case class BinderPickerProps(newBinderName: String,
-                               onChangeHandler: SyntheticEvent[HTMLInputElement] => Unit,
-                               onSubmitHandler: SyntheticEvent[HTMLInputElement] => Unit)
+                               newBinderNameChange: SyntheticEvent[HTMLInputElement] => Unit,
+                               newBinderAdd: SyntheticEvent[HTMLInputElement] => Unit)
 
   private val component = ReactComponentB[BinderPickerProps]("BinderPicker")
     .render(
       props =>
         form(
           id := "binder-form",
-          onsubmit ==> props.onSubmitHandler,
+          onsubmit ==> props.newBinderAdd,
           div(
             cls := "form-group",
             div(
@@ -24,7 +24,7 @@ object BinderPicker {
                 id := "binder-input",
                 tpe := "text",
                 cls := "form-control",
-                onchange ==> props.onChangeHandler,
+                onchange ==> props.newBinderNameChange,
                 value := props.newBinderName
               ),
               span(
@@ -33,7 +33,7 @@ object BinderPicker {
                   id := "binder-button",
                   tpe := "button",
                   cls := "btn btn-primary",
-                  onclick ==> props.onSubmitHandler,
+                  onclick ==> props.newBinderAdd,
                   "Load Binder"
                 )
               )
@@ -41,9 +41,9 @@ object BinderPicker {
           )
         )).create
 
-  def apply(onChangeHandler: SyntheticEvent[HTMLInputElement] => Unit,
-            onSubmitHandler: SyntheticEvent[HTMLInputElement] => Unit,
-            newBinderName: String): ReactComponentU[BinderPickerProps, Unit, Unit] = {
-    component(BinderPickerProps(newBinderName, onChangeHandler, onSubmitHandler))
+  def apply(newBinderName: String,
+            newBinderNameChange: SyntheticEvent[HTMLInputElement] => Unit,
+            newBinderAdd: SyntheticEvent[HTMLInputElement] => Unit): ReactComponentU[BinderPickerProps, Unit, Unit] = {
+    component(BinderPickerProps(newBinderName, newBinderNameChange, newBinderAdd))
   }
 }
