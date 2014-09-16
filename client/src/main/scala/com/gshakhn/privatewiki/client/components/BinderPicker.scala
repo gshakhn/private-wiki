@@ -6,15 +6,16 @@ import japgolly.scalajs.react.vdom.ReactVDom.all._
 import org.scalajs.dom.HTMLInputElement
 
 class BinderPicker {
-  private var onChangeHandler: SyntheticEvent[HTMLInputElement] => Unit = _
-  private var onSubmitHandler: SyntheticEvent[HTMLInputElement] => Unit = _
+  private case class BinderPickerProps(newBinderName: String,
+                               onChangeHandler: SyntheticEvent[HTMLInputElement] => Unit,
+                               onSubmitHandler: SyntheticEvent[HTMLInputElement] => Unit)
 
-  private val component = ReactComponentB[String]("BinderPicker")
+  private val component = ReactComponentB[BinderPickerProps]("BinderPicker")
     .render(
-      newBinderName =>
+      props =>
         form(
           id := "binder-form",
-          onsubmit ==> onSubmitHandler,
+          onsubmit ==> props.onSubmitHandler,
           div(
             cls := "form-group",
             div(
@@ -23,8 +24,8 @@ class BinderPicker {
                 id := "binder-input",
                 tpe := "text",
                 cls := "form-control",
-                onchange ==> onChangeHandler,
-                value := newBinderName
+                onchange ==> props.onChangeHandler,
+                value := props.newBinderName
               ),
               span(
                 cls := "input-group-btn",
@@ -32,7 +33,7 @@ class BinderPicker {
                   id := "binder-button",
                   tpe := "button",
                   cls := "btn btn-primary",
-                  onclick ==> onSubmitHandler,
+                  onclick ==> props.onSubmitHandler,
                   "Load Binder"
                 )
               )
@@ -42,9 +43,7 @@ class BinderPicker {
 
   def apply(onChangeHandler: SyntheticEvent[HTMLInputElement] => Unit,
             onSubmitHandler: SyntheticEvent[HTMLInputElement] => Unit,
-            newBinderName: String): ReactComponentU[String, Unit, Unit] = {
-    this.onChangeHandler = onChangeHandler
-    this.onSubmitHandler = onSubmitHandler
-    component(newBinderName)
+            newBinderName: String): ReactComponentU[BinderPickerProps, Unit, Unit] = {
+    component(BinderPickerProps(newBinderName, onChangeHandler, onSubmitHandler))
   }
 }
