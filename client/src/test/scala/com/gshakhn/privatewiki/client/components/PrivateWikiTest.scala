@@ -117,7 +117,6 @@ object PrivateWikiTest extends TestSuite {
 class TestClient extends Client {
   def doCall(req: Request): Future[String] = {
     Future {
-      println("test client here")
       write(WrongPassword)
     }
   }

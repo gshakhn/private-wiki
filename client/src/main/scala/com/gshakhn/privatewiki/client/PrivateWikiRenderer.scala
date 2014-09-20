@@ -22,7 +22,6 @@ object PrivateWikiRenderer {
 object ActualClient extends Client {
   def doCall(req: Request): Future[String] = {
     Future {
-      println("actual client here")
       write(WrongPassword)
     }
 //    dom.extensions.Ajax.post(

@@ -37,7 +37,6 @@ class Backend(t: BackendScope[_, State], client : Client) {
         case Success(result) =>
           result match {
             case WrongPassword =>
-              println("wrong password!")
               t.modState(s => s.copy(binderPickerData = s.binderPickerData.copy(wrongPassword = true)))
           }
       }
