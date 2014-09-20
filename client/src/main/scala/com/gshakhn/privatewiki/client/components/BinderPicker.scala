@@ -9,6 +9,7 @@ import org.scalajs.dom.HTMLInputElement
 object BinderPicker {
   val binderNameInputId: String = "binder-name-input"
   val binderServerPasswordId: String = "binder-password-input"
+  val binderServerPasswordFormId: String = "binder-password-form"
 
   case class BinderPickerProps(data: BinderPickerData,
                                binderNameChange: SyntheticEvent[HTMLInputElement] => Unit,
@@ -36,6 +37,7 @@ object BinderPicker {
             )
           ),
           div(
+            id := binderServerPasswordFormId,
             classSet("form-group",
               "has-error" -> props.data.wrongPassword
             ),

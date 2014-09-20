@@ -91,8 +91,15 @@ object PrivateWikiTest extends TestSuite {
 
       "submitting form" - {
         "for an existing binder on the server" - {
-          "with the wrong password" - {
-
+          "with the wrong password should show error on password field" - reactTest{ (testClient) =>
+            val input = dom.document.getElementById(BinderPicker.binderNameInputId)
+            ReactTestUtils.Simulate.change(input, ChangeEventData("new binder"))
+            val binderPassword = dom.document.getElementById(BinderPicker.binderServerPasswordId)
+            ReactTestUtils.Simulate.change(binderPassword, ChangeEventData("secure"))
+            val button = dom.document.getElementById("binder-button")
+            ReactTestUtils.Simulate.click(button)
+            val passwordForm: JQuery = jQuery(s"#${BinderPicker.binderServerPasswordFormId}")
+            assert(passwordForm.hasClass("has-error"))
           }
         }
       }
