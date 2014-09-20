@@ -36,6 +36,7 @@ val commonSettings = ScalastylePlugin.Settings ++ Seq(
 )
 
 val shared = project.settings(commonSettings:_*)
+                    .settings(scalaJSSettings:_*)
 
 val client = project.dependsOn(shared)
                     .settings(commonSettings:_*)
@@ -51,6 +52,8 @@ val client = project.dependsOn(shared)
                       libraryDependencies ++= Seq(
                         "com.github.japgolly.scalajs-react" %%% "core" % "0.4.1",
                         "com.github.japgolly.scalajs-react" %%% "test" % "0.4.1" % "test",
+                        "com.lihaoyi" %%% "upickle" % "0.2.2",
+                        "com.lihaoyi" %%% "autowire" % "0.2.1",
                         "com.scalatags" %%% "scalatags" % "0.4.0",
                         "org.scala-lang.modules.scalajs" %%% "scalajs-jquery" % "0.6",
                         "org.scala-lang.modules.scalajs" %%% "scalajs-dom" % "0.6",

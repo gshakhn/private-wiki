@@ -1,5 +1,6 @@
 package com.gshakhn.privatewiki.client.components
 
+import com.gshakhn.privatewiki.client.BinderPickerData
 import japgolly.scalajs.react.{ReactComponentB, _}
 import japgolly.scalajs.react.vdom.ReactVDom._
 import japgolly.scalajs.react.vdom.ReactVDom.all._
@@ -9,8 +10,7 @@ object BinderPicker {
   val binderNameInputId: String = "binder-name-input"
   val binderServerPasswordId: String = "binder-password-input"
 
-  case class BinderPickerProps(binderName: String,
-                               binderPassword: String,
+  case class BinderPickerProps(data: BinderPickerData,
                                binderNameChange: SyntheticEvent[HTMLInputElement] => Unit,
                                binderPasswordChange: SyntheticEvent[HTMLInputElement] => Unit,
                                binderAdd: SyntheticEvent[HTMLInputElement] => Unit)
@@ -32,11 +32,13 @@ object BinderPicker {
               tpe := "text",
               cls := "form-control",
               onchange ==> props.binderNameChange,
-              value := props.binderName
+              value := props.data.binderName
             )
           ),
           div(
-            cls := "form-group",
+            classSet("form-group",
+              "has-error" -> props.data.wrongPassword
+            ),
             label(
               `for` := binderServerPasswordId,
               "Binder Password"
@@ -46,25 +48,24 @@ object BinderPicker {
               tpe := "password",
               cls := "form-control",
               onchange ==> props.binderPasswordChange,
-              value := props.binderPassword
+              value := props.data.binderPassword
             )
           ),
           button(
             id := "binder-button",
             tpe := "button",
             classSet("btn btn-primary",
-              "disabled" -> (props.binderName.isEmpty || props.binderPassword.isEmpty)),
+              "disabled" -> (props.data.binderName.isEmpty || props.data.binderPassword.isEmpty)),
             onclick ==> props.binderAdd,
             "Load Binder"
           )
         )
     ).create
 
-  def apply(binderName: String,
-            binderPassword: String,
+  def apply(data: BinderPickerData,
             binderNameChange: SyntheticEvent[HTMLInputElement] => Unit,
             binderPasswordChange: SyntheticEvent[HTMLInputElement] => Unit,
             binderAdd: SyntheticEvent[HTMLInputElement] => Unit): ReactComponentU[BinderPickerProps, Unit, Unit] = {
-    component(BinderPickerProps(binderName, binderPassword, binderNameChange, binderPasswordChange, binderAdd))
+    component(BinderPickerProps(data, binderNameChange, binderPasswordChange, binderAdd))
   }
 }
