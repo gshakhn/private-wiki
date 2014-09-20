@@ -12,8 +12,8 @@ case class BinderPickerData(binderName: String, binderPassword: String, wrongPas
 case class State(binderList: Seq[String], binderPickerData: BinderPickerData)
 
 trait Client extends autowire.Client[String, upickle.Reader, upickle.Writer]{
-  def read[Result: upickle.Reader](p: String) = upickle.read[Result](p)
-  def write[Result: upickle.Writer](r: Result) = upickle.write(r)
+  def read[Result: upickle.Reader](p: String): Result = upickle.read[Result](p)
+  def write[Result: upickle.Writer](r: Result): String = upickle.write(r)
 }
 
 class Backend(t: BackendScope[_, State], client : Client) {
