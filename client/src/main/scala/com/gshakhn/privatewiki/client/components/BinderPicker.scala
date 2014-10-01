@@ -59,7 +59,7 @@ object BinderPicker {
             id := "binder-button",
             tpe := "button",
             classSet("btn btn-primary",
-              "disabled" -> (props.data.binderName.isEmpty || props.data.binderPassword.isEmpty)),
+              "disabled" -> (!props.data.hasData)),
             onclick ==> props.binderAdd,
             "Load Binder"
           )
