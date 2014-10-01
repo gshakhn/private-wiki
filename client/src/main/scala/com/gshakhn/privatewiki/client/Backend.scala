@@ -8,7 +8,7 @@ import scala.util.{Success, Failure}
 import scalajs.concurrent.JSExecutionContext.Implicits.runNow
 
 case class BinderPickerData(binderName: String, binderPassword: String, wrongPassword: Boolean) {
-  def hasData = !binderName.isEmpty && !binderPassword.isEmpty
+  def hasData: Boolean = !binderName.isEmpty && !binderPassword.isEmpty
 }
 
 case class State(binderList: Seq[String], binderPickerData: BinderPickerData)
