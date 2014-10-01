@@ -47,7 +47,7 @@ val client = project.dependsOn(shared)
                       skip in ScalaJSKeys.packageJSDependencies := false,
                       ScalaJSKeys.jsDependencies ++= Seq(
                         "org.webjars" % "bootstrap" % "3.2.0" / "bootstrap.js",
-                        "org.webjars" % "react" % "0.11.1" / "react-with-addons.js" commonJSName "React"
+                        "org.webjars" % "react" % "0.11.2" / "react-with-addons.js" commonJSName "React"
                       ),
                       libraryDependencies ++= Seq(
                         "com.github.japgolly.scalajs-react" %%% "core" % "0.4.1",
