@@ -1,7 +1,7 @@
 package com.gshakhn.privatewiki.client
 
 import autowire._
-import com.gshakhn.privatewiki.shared.{WrongPassword, Api}
+import com.gshakhn.privatewiki.shared.{BinderLoaded, WrongPassword, Api}
 import japgolly.scalajs.react.{BackendScope, SyntheticEvent}
 import org.scalajs.dom.HTMLInputElement
 import scala.util.{Success, Failure}
@@ -38,6 +38,9 @@ class Backend(t: BackendScope[_, State], client : Client) {
           result match {
             case WrongPassword =>
               t.modState(s => s.copy(binderPickerData = s.binderPickerData.copy(wrongPassword = true)))
+            case BinderLoaded(binderName) => {
+              t.modState(s => s.copy(binderList = s.binderList :+ binderName))
+            }
           }
       }
     }

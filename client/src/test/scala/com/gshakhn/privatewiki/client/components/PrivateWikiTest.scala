@@ -1,7 +1,7 @@
 package com.gshakhn.privatewiki.client.components
 
 import com.gshakhn.privatewiki.client.{Backend, Client}
-import com.gshakhn.privatewiki.shared.WrongPassword
+import com.gshakhn.privatewiki.shared.{BinderLoaded, AuthenticationResponse, WrongPassword}
 import japgolly.scalajs.react.React
 import japgolly.scalajs.react.test.{ChangeEventData, ReactTestUtils}
 import org.scalajs.dom
@@ -92,6 +92,7 @@ object PrivateWikiTest extends TestSuite {
       "submitting form" - {
         "for an existing binder on the server" - {
           "with the wrong password should show error on password field" - reactTest{ (testClient) =>
+            testClient.response = WrongPassword
             val input = dom.document.getElementById(BinderPicker.binderNameInputId)
             ReactTestUtils.Simulate.change(input, ChangeEventData("new binder"))
             val binderPassword = dom.document.getElementById(BinderPicker.binderServerPasswordId)
@@ -100,6 +101,17 @@ object PrivateWikiTest extends TestSuite {
             ReactTestUtils.Simulate.click(button)
             val passwordForm: JQuery = jQuery(s"#${BinderPicker.binderServerPasswordFormId}")
             assert(passwordForm.hasClass("has-error"))
+          }
+          "with the right password should add the binder to the list" - reactTest{ (testClient) =>
+            testClient.response = BinderLoaded("new binder")
+            val input = dom.document.getElementById(BinderPicker.binderNameInputId)
+            ReactTestUtils.Simulate.change(input, ChangeEventData("new binder"))
+            val binderPassword = dom.document.getElementById(BinderPicker.binderServerPasswordId)
+            ReactTestUtils.Simulate.change(binderPassword, ChangeEventData("secure"))
+            val button = dom.document.getElementById("binder-button")
+            ReactTestUtils.Simulate.click(button)
+            assert(jQuery(".binder-list-item").length == 1)
+            assert(jQuery(".binder-list-item").text() == "new binder")
           }
         }
       }
@@ -115,9 +127,11 @@ object PrivateWikiTest extends TestSuite {
 }
 
 class TestClient extends Client {
+  var response: AuthenticationResponse = _
+
   def doCall(req: Request): Future[String] = {
     Future {
-      write(WrongPassword)
+      write(response)
     }
   }
 }

@@ -6,3 +6,4 @@ trait Api {
 
 sealed trait AuthenticationResponse
 case object WrongPassword extends AuthenticationResponse
+case class BinderLoaded(binderName: String) extends AuthenticationResponse
