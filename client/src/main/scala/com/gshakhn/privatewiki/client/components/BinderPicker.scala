@@ -26,6 +26,7 @@ object BinderPicker {
             cls := "form-group",
             label(
               "htmlFor".attr := binderNameInputId,
+              cls := "control-label",
               "Binder Name"
             ),
             input(
@@ -43,6 +44,7 @@ object BinderPicker {
             ),
             label(
               "htmlFor".attr := binderServerPasswordId,
+              cls := "control-label",
               "Binder Password"
             ),
             input(
