@@ -1,10 +1,11 @@
-package com.gshakhn.privatewiki.server
+package com.gshakhn.privatewiki.server.services
 
 import akka.actor.ActorRefFactory
+import com.gshakhn.privatewiki.server.uTestRouteTest
 import utest._
 import utest.framework.TestSuite
 
-object FooServiceTest extends uTestRouteTest with FooService {
+object StaticServiceTest extends uTestRouteTest with StaticService {
 
   def actorRefFactory: ActorRefFactory = system
 
@@ -17,5 +18,4 @@ object FooServiceTest extends uTestRouteTest with FooService {
       }
     }
   }
-
 }
