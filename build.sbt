@@ -59,17 +59,19 @@ val client = project.dependsOn(shared)
                         "org.scala-lang.modules.scalajs" %%% "scalajs-dom" % "0.6",
                         "org.webjars" % "bootstrap" % "3.2.0"))
 
+val sprayVersion = "1.3.2"
+
 val server = project.dependsOn(shared)
                     .settings(commonSettings:_*)
                     .settings(utestJvmSettings:_*)
                     .settings(Revolver.settings:_*)
                     .settings(
                       libraryDependencies ++= Seq(
-                        "io.spray" %% "spray-can" % "1.3.1",
-                        "io.spray" %% "spray-routing" % "1.3.1",
-                        "io.spray" %% "spray-testkit" % "1.3.1" % "test",
+                        "io.spray" %% "spray-can" % sprayVersion,
+                        "io.spray" %% "spray-routing" % sprayVersion,
+                        "io.spray" %% "spray-testkit" % sprayVersion % "test",
                         "com.scalatags" %% "scalatags" % "0.4.0",
-                        "com.typesafe.akka" %% "akka-actor" % "2.3.2",
+                        "com.typesafe.akka" %% "akka-actor" % "2.3.6",
                         "org.webjars" % "bootstrap" % "3.2.0"),
                       managedResources in Compile <<= (managedResources in Compile).dependsOn(fastOptJS in (client, Compile)),
                       // add  in fast opts JS
