@@ -1,8 +1,10 @@
 package com.gshakhn.privatewiki.shared
 
 trait Api {
-  def authenticateBinder(binderName: String, binderPassword: String): AuthenticationResponse
+  def authenticateBinder(request: AuthenticationRequest): AuthenticationResponse
 }
+
+case class AuthenticationRequest(binderName: String, binderPassword: String)
 
 sealed trait AuthenticationResponse
 case object WrongPassword extends AuthenticationResponse

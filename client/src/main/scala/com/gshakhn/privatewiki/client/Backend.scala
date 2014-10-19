@@ -1,9 +1,9 @@
 package com.gshakhn.privatewiki.client
 
-import autowire._
-import com.gshakhn.privatewiki.shared.{BinderLoaded, WrongPassword, Api}
+import com.gshakhn.privatewiki.shared._
 import japgolly.scalajs.react.{BackendScope, SyntheticEvent}
 import org.scalajs.dom.HTMLInputElement
+import scala.concurrent.Future
 import scala.util.{Success, Failure}
 import scalajs.concurrent.JSExecutionContext.Implicits.runNow
 
@@ -13,9 +13,8 @@ case class BinderPickerData(binderName: String, binderPassword: String, wrongPas
 
 case class State(binderList: Seq[String], binderPickerData: BinderPickerData)
 
-trait Client extends autowire.Client[String, upickle.Reader, upickle.Writer]{
-  def read[Result: upickle.Reader](p: String): Result = upickle.read[Result](p)
-  def write[Result: upickle.Writer](r: Result): String = upickle.write(r)
+trait Client {
+  def authenticateBinder(request: AuthenticationRequest): Future[AuthenticationResponse]
 }
 
 class Backend(t: BackendScope[_, State], client : Client) {
@@ -33,7 +32,7 @@ class Backend(t: BackendScope[_, State], client : Client) {
     e.preventDefault()
 
     if (t.state.binderPickerData.hasData) {
-      client[Api].authenticateBinder("foo", "bar").call().onComplete {
+      client.authenticateBinder(AuthenticationRequest("foo", "bar")).onComplete {
         case Failure(_) =>
           // todo - do something
         case Success(result) =>

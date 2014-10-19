@@ -1,7 +1,7 @@
 package com.gshakhn.privatewiki.client.components
 
 import com.gshakhn.privatewiki.client.{Backend, Client}
-import com.gshakhn.privatewiki.shared.{BinderLoaded, AuthenticationResponse, WrongPassword}
+import com.gshakhn.privatewiki.shared.{AuthenticationRequest, BinderLoaded, AuthenticationResponse, WrongPassword}
 import japgolly.scalajs.react.React
 import japgolly.scalajs.react.test.{ChangeEventData, ReactTestUtils}
 import org.scalajs.dom
@@ -129,9 +129,7 @@ object PrivateWikiTest extends TestSuite {
 class TestClient extends Client {
   var response: AuthenticationResponse = _
 
-  def doCall(req: Request): Future[String] = {
-    Future {
-      write(response)
-    }
+  def authenticateBinder(request: AuthenticationRequest): Future[AuthenticationResponse] = {
+    Future(response)
   }
 }

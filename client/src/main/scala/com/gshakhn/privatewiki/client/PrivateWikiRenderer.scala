@@ -1,7 +1,7 @@
 package com.gshakhn.privatewiki.client
 
 import com.gshakhn.privatewiki.client.components.PrivateWiki
-import com.gshakhn.privatewiki.shared.WrongPassword
+import com.gshakhn.privatewiki.shared.{AuthenticationResponse, AuthenticationRequest, WrongPassword}
 import japgolly.scalajs.react.React
 import org.scalajs.dom
 import scala.concurrent.Future
@@ -20,13 +20,9 @@ object PrivateWikiRenderer {
 }
 
 object ActualClient extends Client {
-  def doCall(req: Request): Future[String] = {
+  def authenticateBinder(request: AuthenticationRequest): Future[AuthenticationResponse] = {
     Future {
-      write(WrongPassword)
+      WrongPassword
     }
-//    dom.extensions.Ajax.post(
-//      url = "/api/" + req.path.mkString("/"),
-//      data = upickle.write(req.args)
-//    ).map(_.responseText)
   }
 }
