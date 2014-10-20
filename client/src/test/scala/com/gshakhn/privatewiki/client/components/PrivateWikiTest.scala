@@ -8,6 +8,7 @@ import org.scalajs.dom
 import org.scalajs.jquery._
 import utest._
 import utest.framework.TestSuite
+import scala.scalajs.js.UndefOr
 import scalajs.concurrent.JSExecutionContext.Implicits.runNow
 import scala.concurrent.Future
 import scalatags.JsDom.all._
@@ -60,31 +61,23 @@ object PrivateWikiTest extends TestSuite {
 //      }
       "button style" - {
         "with no binder name nor password should be disabled" - reactTest{ (testClient) =>
-          val binderName = dom.document.getElementById(BinderPicker.binderNameInputId)
-          ReactTestUtils.Simulate.change(binderName, ChangeEventData(""))
-          val binderPassword = dom.document.getElementById(BinderPicker.binderServerPasswordId)
-          ReactTestUtils.Simulate.change(binderPassword, ChangeEventData(""))
+          enterBinderName("")
+          enterBinderPassword("")
           assert(jQuery("#binder-button").hasClass("disabled"))
         }
         "with binder name but no password should be disabled" - reactTest{ (testClient) =>
-          val input = dom.document.getElementById(BinderPicker.binderNameInputId)
-          ReactTestUtils.Simulate.change(input, ChangeEventData("new binder"))
-          val binderPassword = dom.document.getElementById(BinderPicker.binderServerPasswordId)
-          ReactTestUtils.Simulate.change(binderPassword, ChangeEventData(""))
+          enterBinderName("new binder")
+          enterBinderPassword("")
           assert(jQuery("#binder-button").hasClass("disabled"))
         }
         "with no binder name but with password should be disabled" - reactTest{ (testClient) =>
-          val input = dom.document.getElementById(BinderPicker.binderNameInputId)
-          ReactTestUtils.Simulate.change(input, ChangeEventData(""))
-          val binderPassword = dom.document.getElementById(BinderPicker.binderServerPasswordId)
-          ReactTestUtils.Simulate.change(binderPassword, ChangeEventData("secure"))
+          enterBinderName("")
+          enterBinderPassword("secure")
           assert(jQuery("#binder-button").hasClass("disabled"))
         }
         "with binder name and password password should be disabled" - reactTest{ (testClient) =>
-          val input = dom.document.getElementById(BinderPicker.binderNameInputId)
-          ReactTestUtils.Simulate.change(input, ChangeEventData("new binder"))
-          val binderPassword = dom.document.getElementById(BinderPicker.binderServerPasswordId)
-          ReactTestUtils.Simulate.change(binderPassword, ChangeEventData("secure"))
+          enterBinderName("new binder")
+          enterBinderPassword("secure")
           assert(!jQuery("#binder-button").hasClass("disabled"))
         }
       }
@@ -93,24 +86,18 @@ object PrivateWikiTest extends TestSuite {
         "for an existing binder on the server" - {
           "with the wrong password should show error on password field" - reactTest{ (testClient) =>
             testClient.response = WrongPassword
-            val input = dom.document.getElementById(BinderPicker.binderNameInputId)
-            ReactTestUtils.Simulate.change(input, ChangeEventData("new binder"))
-            val binderPassword = dom.document.getElementById(BinderPicker.binderServerPasswordId)
-            ReactTestUtils.Simulate.change(binderPassword, ChangeEventData("secure"))
-            val button = dom.document.getElementById("binder-button")
-            ReactTestUtils.Simulate.click(button)
-            val passwordForm: JQuery = jQuery(s"#${BinderPicker.binderServerPasswordFormId}")
+            enterBinderName("new binder")
+            enterBinderPassword("secure")
+            clickLoadBinder()
+            val passwordForm = jQuery(s"#${BinderPicker.binderServerPasswordFormId}")
             assert(passwordForm.hasClass("has-error"))
             assert(testClient.requestReceived == AuthenticationRequest("new binder", "secure"))
           }
           "with the right password should add the binder to the list" - reactTest{ (testClient) =>
             testClient.response = BinderLoaded("new binder")
-            val input = dom.document.getElementById(BinderPicker.binderNameInputId)
-            ReactTestUtils.Simulate.change(input, ChangeEventData("new binder"))
-            val binderPassword = dom.document.getElementById(BinderPicker.binderServerPasswordId)
-            ReactTestUtils.Simulate.change(binderPassword, ChangeEventData("secure"))
-            val button = dom.document.getElementById("binder-button")
-            ReactTestUtils.Simulate.click(button)
+            enterBinderName("new binder")
+            enterBinderPassword("secure")
+            clickLoadBinder()
             assert(jQuery(".binder-list-item").length == 1)
             assert(jQuery(".binder-list-item").text() == "new binder")
             assert(testClient.requestReceived == AuthenticationRequest("new binder", "secure"))
@@ -118,6 +105,21 @@ object PrivateWikiTest extends TestSuite {
         }
       }
     }
+  }
+
+  def clickLoadBinder(): Unit = {
+    val button = dom.document.getElementById("binder-button")
+    ReactTestUtils.Simulate.click(button)
+  }
+
+  def enterBinderPassword(password: String): Unit = {
+    val binderPasswordNode = dom.document.getElementById(BinderPicker.binderServerPasswordId)
+    ReactTestUtils.Simulate.change(binderPasswordNode, ChangeEventData(password))
+  }
+
+  def enterBinderName(name: String): Unit = {
+    val binderNameNode = dom.document.getElementById(BinderPicker.binderNameInputId)
+    ReactTestUtils.Simulate.change(binderNameNode, ChangeEventData(name))
   }
 
   private def reactTest(x: (TestClient) => Any) = {
