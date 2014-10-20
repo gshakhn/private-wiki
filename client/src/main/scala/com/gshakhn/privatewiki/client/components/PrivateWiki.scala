@@ -2,10 +2,10 @@ package com.gshakhn.privatewiki.client.components
 
 import com.gshakhn.privatewiki.client.{BinderPickerData, State, Backend}
 import japgolly.scalajs.react.vdom.ReactVDom.all._
-import japgolly.scalajs.react.{BackendScope, ReactComponentB, ReactComponentU}
+import japgolly.scalajs.react.{TopNode, BackendScope, ReactComponentB, ReactComponentU}
 
 object PrivateWiki {
-  def apply(backend: BackendScope[_, State] => Backend): ReactComponentU[Unit, State, Backend] = {
+  def apply(backend: BackendScope[_, State] => Backend): ReactComponentU[Unit, State, Backend, TopNode] = {
     val component = ReactComponentB[Unit]("PrivateWiki")
       .initialState(State(Seq(), BinderPickerData("", "", wrongPassword = false)))
       .backend(backend)
@@ -32,7 +32,7 @@ object PrivateWiki {
                 BinderList(S.binderList)
               )
             )
-          )}).createU
+          )}).buildU
     component()
   }
 }

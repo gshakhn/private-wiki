@@ -37,8 +37,8 @@ val commonSettings = ScalastylePlugin.Settings ++ Seq(
 
 val sprayVersion = "1.3.2"
 val upickleVersion = "0.2.5"
-val scalatagsVersion = "0.4.0"
-val scalajsReactVersion = "0.4.1"
+val scalatagsVersion = "0.4.2"
+val scalajsReactVersion = "0.5.0"
 
 val shared = project.settings(commonSettings:_*)
                     .settings(scalaJSSettings:_*)

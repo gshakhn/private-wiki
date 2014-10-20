@@ -1,10 +1,10 @@
 package com.gshakhn.privatewiki.client.components
 
 import japgolly.scalajs.react.vdom.ReactVDom.all._
-import japgolly.scalajs.react.{ReactComponentB, ReactComponentU}
+import japgolly.scalajs.react.{TopNode, ReactComponentB, ReactComponentU}
 
 object BinderList {
-  def apply(s: Seq[String]): ReactComponentU[Seq[String], Unit, Unit] = {
+  def apply(s: Seq[String]): ReactComponentU[Seq[String], Unit, Unit, TopNode] = {
     val component = ReactComponentB[Seq[String]]("BinderList")
       .render(
         binders =>
@@ -16,8 +16,7 @@ object BinderList {
                 binderName
               )
             }
-          )).create
+          )).build
     component(s)
   }
-
 }

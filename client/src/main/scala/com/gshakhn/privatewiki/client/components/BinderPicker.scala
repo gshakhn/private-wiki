@@ -64,12 +64,12 @@ object BinderPicker {
             "Load Binder"
           )
         )
-    ).create
+    ).build
 
   def apply(data: BinderPickerData,
             binderNameChange: SyntheticEvent[HTMLInputElement] => Unit,
             binderPasswordChange: SyntheticEvent[HTMLInputElement] => Unit,
-            binderAdd: SyntheticEvent[HTMLInputElement] => Unit): ReactComponentU[BinderPickerProps, Unit, Unit] = {
+            binderAdd: SyntheticEvent[HTMLInputElement] => Unit): ReactComponentU[BinderPickerProps, Unit, Unit, TopNode] = {
     component(BinderPickerProps(data, binderNameChange, binderPasswordChange, binderAdd))
   }
 }
