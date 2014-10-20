@@ -25,7 +25,7 @@ object BinderPicker {
           div(
             cls := "form-group",
             label(
-              "htmlFor".attr := binderNameInputId,
+              `for` := binderNameInputId,
               cls := "control-label",
               "Binder Name"
             ),
@@ -43,7 +43,7 @@ object BinderPicker {
               "has-error" -> props.data.wrongPassword
             ),
             label(
-              "htmlFor".attr := binderServerPasswordId,
+              `for` := binderServerPasswordId,
               cls := "control-label",
               "Binder Password"
             ),
