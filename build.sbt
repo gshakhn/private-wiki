@@ -2,7 +2,6 @@ import spray.revolver.RevolverPlugin.Revolver
 
 import scala.scalajs.sbtplugin.ScalaJSPlugin.ScalaJSKeys._
 import scala.scalajs.sbtplugin.ScalaJSPlugin._
-import org.scalastyle.sbt.ScalastylePlugin
 import utest.jsrunner.Plugin.utestJsSettings
 import utest.jsrunner.Plugin.utestJvmSettings
 
@@ -10,7 +9,7 @@ scalaVersion in ThisBuild := "2.11.2"
 
 organization in ThisBuild := "com.gshakhn"
 
-val commonSettings = ScalastylePlugin.Settings ++ Seq(
+val commonSettings = Seq(
   libraryDependencies += "com.lihaoyi" %% "acyclic" % "0.1.2" % "provided",
   autoCompilerPlugins := true,
   addCompilerPlugin("com.lihaoyi" %% "acyclic" % "0.1.2"),
