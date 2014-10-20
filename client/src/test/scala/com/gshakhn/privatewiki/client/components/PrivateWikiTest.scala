@@ -21,7 +21,7 @@ object PrivateWikiTest extends TestSuite {
   def tests = TestSuite {
     "binder interaction" - {
       "should have 0 binders to start with" - reactTest { (testClient) =>
-        assert(jQuery(".binder-list-item").length == 0)
+        assertBinderList()
       }
 //      "submitting form" - {
 //        "with a binder name" - {
@@ -89,35 +89,46 @@ object PrivateWikiTest extends TestSuite {
             enterBinderName("new binder")
             enterBinderPassword("secure")
             clickLoadBinder()
+            assertBinderList()
             val passwordForm = jQuery(s"#${BinderPicker.binderServerPasswordFormId}")
             assert(passwordForm.hasClass("has-error"))
-            assert(testClient.requestReceived == AuthenticationRequest("new binder", "secure"))
+            assertAuthenticationRequest(testClient, AuthenticationRequest("new binder", "secure"))
           }
           "with the right password should add the binder to the list" - reactTest{ (testClient) =>
             testClient.response = BinderLoaded("new binder")
             enterBinderName("new binder")
             enterBinderPassword("secure")
             clickLoadBinder()
-            assert(jQuery(".binder-list-item").length == 1)
-            assert(jQuery(".binder-list-item").text() == "new binder")
-            assert(testClient.requestReceived == AuthenticationRequest("new binder", "secure"))
+            assertBinderList("new binder")
+            assertAuthenticationRequest(testClient, AuthenticationRequest("new binder", "secure"))
           }
         }
       }
     }
   }
 
-  def clickLoadBinder(): Unit = {
+  private def assertAuthenticationRequest(testClient: TestClient, expectedRequest: AuthenticationRequest) {
+    assert(testClient.requestReceived == expectedRequest)
+  }
+
+  private def assertBinderList(binderNames: String*): Unit = {
+    assert(jQuery(".binder-list-item").length == binderNames.length)
+    binderNames.zipWithIndex.foreach{case (binderName, index) =>
+      assert(jQuery(".binder-list-item").eq(index).text() == binderName)
+    }
+  }
+
+  private def clickLoadBinder(): Unit = {
     val button = dom.document.getElementById("binder-button")
     ReactTestUtils.Simulate.click(button)
   }
 
-  def enterBinderPassword(password: String): Unit = {
+  private def enterBinderPassword(password: String): Unit = {
     val binderPasswordNode = dom.document.getElementById(BinderPicker.binderServerPasswordId)
     ReactTestUtils.Simulate.change(binderPasswordNode, ChangeEventData(password))
   }
 
-  def enterBinderName(name: String): Unit = {
+  private def enterBinderName(name: String): Unit = {
     val binderNameNode = dom.document.getElementById(BinderPicker.binderNameInputId)
     ReactTestUtils.Simulate.change(binderNameNode, ChangeEventData(name))
   }
