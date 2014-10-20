@@ -52,7 +52,7 @@ val client = project.dependsOn(shared)
                       libraryDependencies ++= Seq(
                         "com.github.japgolly.scalajs-react" %%% "core" % "0.4.1",
                         "com.github.japgolly.scalajs-react" %%% "test" % "0.4.1" % "test",
-                        "com.lihaoyi" %% "upickle" % "0.2.5",
+                        "com.lihaoyi" %%% "upickle" % "0.2.5",
                         "com.scalatags" %%% "scalatags" % "0.4.0",
                         "org.scala-lang.modules.scalajs" %%% "scalajs-jquery" % "0.6",
                         "org.scala-lang.modules.scalajs" %%% "scalajs-dom" % "0.6",
