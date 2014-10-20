@@ -5,7 +5,8 @@ import com.gshakhn.privatewiki.server.interactors.AuthenticationInteractorCompon
 import com.gshakhn.privatewiki.server.uTestRouteTest
 import com.gshakhn.privatewiki.shared.{BinderLoaded, WrongPassword, AuthenticationResponse, AuthenticationRequest}
 import utest._
-import utest.framework.TestSuite
+import utest.framework.{Test, TestSuite}
+import utest.util.Tree
 
 object AuthenticationServiceTest extends uTestRouteTest with AuthenticationService with AuthenticationInteractorComponentSpy {
 
@@ -13,7 +14,7 @@ object AuthenticationServiceTest extends uTestRouteTest with AuthenticationServi
 
   val expectedRequest: AuthenticationRequest = AuthenticationRequest("foo", "bar")
 
-  def tests = TestSuite {
+  def tests: Tree[Test] = TestSuite {
     "should pass the request to the interactor"- {
       Post("/authenticateBinder", upickle.write(expectedRequest)) ~> authRoute ~> check {
         assert(lastRequest == Some(expectedRequest))

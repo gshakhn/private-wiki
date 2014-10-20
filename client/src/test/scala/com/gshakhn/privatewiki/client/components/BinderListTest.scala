@@ -4,7 +4,8 @@ import japgolly.scalajs.react.React
 import org.scalajs.dom
 import org.scalajs.jquery._
 import utest._
-import utest.framework.TestSuite
+import utest.framework.{Test, TestSuite}
+import utest.util.Tree
 
 import scalatags.JsDom.all._
 
@@ -13,7 +14,7 @@ object BinderListTest extends TestSuite {
   val containingDiv = div(id := "containingDiv").render
   dom.document.body.appendChild(containingDiv)
 
-  def tests = TestSuite {
+  def tests: Tree[Test] = TestSuite {
     "with no binders" - {
       React.renderComponent(BinderList(Seq()), containingDiv)
       "unordered list" - {

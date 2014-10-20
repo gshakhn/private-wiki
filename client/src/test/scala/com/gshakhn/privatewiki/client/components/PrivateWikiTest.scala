@@ -7,7 +7,8 @@ import japgolly.scalajs.react.test.{ChangeEventData, ReactTestUtils}
 import org.scalajs.dom
 import org.scalajs.jquery._
 import utest._
-import utest.framework.TestSuite
+import utest.framework.{Test, TestSuite}
+import utest.util.Tree
 
 import scala.concurrent.Future
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
@@ -18,7 +19,7 @@ object PrivateWikiTest extends TestSuite {
   private val containingDiv = div(id := "containingDiv").render
   dom.document.body.appendChild(containingDiv)
 
-  def tests = TestSuite {
+  def tests: Tree[Test] = TestSuite {
     "binder interaction" - {
       "should have 0 binders to start with" - reactTest { (testClient) =>
         assertBinderList()
