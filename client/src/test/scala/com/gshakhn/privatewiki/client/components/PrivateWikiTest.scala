@@ -60,22 +60,22 @@ object PrivateWikiTest extends TestSuite {
 //        }
 //      }
       "button style" - {
-        "with no binder name nor password should be disabled" - reactTest{ (testClient) =>
+        "with no binder name nor password should be disabled" - reactTest{ (_) =>
           enterBinderName("")
           enterBinderPassword("")
           assert(jQuery("#binder-button").hasClass("disabled"))
         }
-        "with binder name but no password should be disabled" - reactTest{ (testClient) =>
+        "with binder name but no password should be disabled" - reactTest{ (_) =>
           enterBinderName("new binder")
           enterBinderPassword("")
           assert(jQuery("#binder-button").hasClass("disabled"))
         }
-        "with no binder name but with password should be disabled" - reactTest{ (testClient) =>
+        "with no binder name but with password should be disabled" - reactTest{ (_) =>
           enterBinderName("")
           enterBinderPassword("secure")
           assert(jQuery("#binder-button").hasClass("disabled"))
         }
-        "with binder name and password password should be disabled" - reactTest{ (testClient) =>
+        "with binder name and password password should be disabled" - reactTest{ (_) =>
           enterBinderName("new binder")
           enterBinderPassword("secure")
           assert(!jQuery("#binder-button").hasClass("disabled"))
