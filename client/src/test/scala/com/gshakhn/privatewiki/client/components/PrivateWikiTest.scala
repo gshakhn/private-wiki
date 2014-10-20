@@ -1,16 +1,16 @@
 package com.gshakhn.privatewiki.client.components
 
 import com.gshakhn.privatewiki.client.{Backend, Client}
-import com.gshakhn.privatewiki.shared.{AuthenticationRequest, BinderLoaded, AuthenticationResponse, WrongPassword}
+import com.gshakhn.privatewiki.shared.{AuthenticationRequest, AuthenticationResponse, BinderLoaded, WrongPassword}
 import japgolly.scalajs.react.React
 import japgolly.scalajs.react.test.{ChangeEventData, ReactTestUtils}
 import org.scalajs.dom
 import org.scalajs.jquery._
 import utest._
 import utest.framework.TestSuite
-import scala.scalajs.js.UndefOr
-import scalajs.concurrent.JSExecutionContext.Implicits.runNow
+
 import scala.concurrent.Future
+import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
 import scalatags.JsDom.all._
 
 object PrivateWikiTest extends TestSuite {
