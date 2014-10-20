@@ -35,6 +35,11 @@ val commonSettings = ScalastylePlugin.Settings ++ Seq(
   )
 )
 
+val sprayVersion = "1.3.2"
+val upickleVersion = "0.2.5"
+val scalatagsVersion = "0.4.0"
+val scalajsReactVersion = "0.4.1"
+
 val shared = project.settings(commonSettings:_*)
                     .settings(scalaJSSettings:_*)
 
@@ -50,15 +55,13 @@ val client = project.dependsOn(shared)
                         "org.webjars" % "react" % "0.11.2" / "react-with-addons.js" commonJSName "React"
                       ),
                       libraryDependencies ++= Seq(
-                        "com.github.japgolly.scalajs-react" %%% "core" % "0.4.1",
-                        "com.github.japgolly.scalajs-react" %%% "test" % "0.4.1" % "test",
-                        "com.lihaoyi" %%% "upickle" % "0.2.5",
-                        "com.scalatags" %%% "scalatags" % "0.4.0",
+                        "com.github.japgolly.scalajs-react" %%% "core" % scalajsReactVersion,
+                        "com.github.japgolly.scalajs-react" %%% "test" % scalajsReactVersion % "test",
+                        "com.lihaoyi" %%% "upickle" % upickleVersion,
+                        "com.scalatags" %%% "scalatags" % scalatagsVersion,
                         "org.scala-lang.modules.scalajs" %%% "scalajs-jquery" % "0.6",
                         "org.scala-lang.modules.scalajs" %%% "scalajs-dom" % "0.6",
                         "org.webjars" % "bootstrap" % "3.2.0"))
-
-val sprayVersion = "1.3.2"
 
 val server = project.dependsOn(shared)
                     .settings(commonSettings:_*)
@@ -69,8 +72,8 @@ val server = project.dependsOn(shared)
                         "io.spray" %% "spray-can" % sprayVersion,
                         "io.spray" %% "spray-routing" % sprayVersion,
                         "io.spray" %% "spray-testkit" % sprayVersion % "test",
-                        "com.lihaoyi" %% "upickle" % "0.2.5",
-                        "com.scalatags" %% "scalatags" % "0.4.0",
+                        "com.lihaoyi" %% "upickle" % upickleVersion,
+                        "com.scalatags" %% "scalatags" % scalatagsVersion,
                         "com.typesafe.akka" %% "akka-actor" % "2.3.6",
                         "org.webjars" % "bootstrap" % "3.2.0"),
                       managedResources in Compile <<= (managedResources in Compile).dependsOn(fastOptJS in (client, Compile)),
