@@ -7,7 +7,7 @@ import com.gshakhn.privatewiki.shared.{BinderLoaded, WrongPassword, Authenticati
 import utest._
 import utest.framework.TestSuite
 
-object AuthenticationServiceTest extends uTestRouteTest with AuthenticationService with TestAuthenticationInteractorComponent {
+object AuthenticationServiceTest extends uTestRouteTest with AuthenticationService with AuthenticationInteractorComponentSpy {
 
   def actorRefFactory: ActorRefFactory = system
 
@@ -38,7 +38,7 @@ object AuthenticationServiceTest extends uTestRouteTest with AuthenticationServi
   }
 }
 
-trait TestAuthenticationInteractorComponent extends AuthenticationInteractorComponent {
+trait AuthenticationInteractorComponentSpy extends AuthenticationInteractorComponent {
   val authenticationInteractor: TestAuthenticationInteractor = new TestAuthenticationInteractor
 
   var lastRequest: Option[AuthenticationRequest] = None
