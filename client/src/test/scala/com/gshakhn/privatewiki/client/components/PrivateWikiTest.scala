@@ -101,6 +101,7 @@ object PrivateWikiTest extends TestSuite {
             ReactTestUtils.Simulate.click(button)
             val passwordForm: JQuery = jQuery(s"#${BinderPicker.binderServerPasswordFormId}")
             assert(passwordForm.hasClass("has-error"))
+            assert(testClient.requestReceived == AuthenticationRequest("new binder", "secure"))
           }
           "with the right password should add the binder to the list" - reactTest{ (testClient) =>
             testClient.response = BinderLoaded("new binder")
@@ -112,6 +113,7 @@ object PrivateWikiTest extends TestSuite {
             ReactTestUtils.Simulate.click(button)
             assert(jQuery(".binder-list-item").length == 1)
             assert(jQuery(".binder-list-item").text() == "new binder")
+            assert(testClient.requestReceived == AuthenticationRequest("new binder", "secure"))
           }
         }
       }
@@ -128,8 +130,10 @@ object PrivateWikiTest extends TestSuite {
 
 class TestClient extends Client {
   var response: AuthenticationResponse = _
+  var requestReceived: AuthenticationRequest = _
 
   def authenticateBinder(request: AuthenticationRequest): Future[AuthenticationResponse] = {
+    requestReceived = request
     Future(response)
   }
 }

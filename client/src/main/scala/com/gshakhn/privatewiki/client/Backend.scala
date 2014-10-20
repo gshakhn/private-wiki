@@ -31,8 +31,9 @@ class Backend(t: BackendScope[_, State], client : Client) {
   def newBinderAdd(e: SyntheticEvent[HTMLInputElement]): Unit = {
     e.preventDefault()
 
-    if (t.state.binderPickerData.hasData) {
-      client.authenticateBinder(AuthenticationRequest("foo", "bar")).onComplete {
+    val binderPickerData = t.state.binderPickerData
+    if (binderPickerData.hasData) {
+      client.authenticateBinder(AuthenticationRequest(binderPickerData.binderName, binderPickerData.binderPassword)).onComplete {
         case Failure(_) =>
           // todo - do something
         case Success(result) =>
