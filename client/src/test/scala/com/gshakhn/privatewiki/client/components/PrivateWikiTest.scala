@@ -63,22 +63,22 @@ object PrivateWikiTest extends TestSuite {
         "with no binder name nor password should be disabled" - reactTest{ (_) =>
           enterBinderName("")
           enterBinderPassword("")
-          assert(jQuery("#binder-button").hasClass("disabled"))
+          assertDisabledButton()
         }
         "with binder name but no password should be disabled" - reactTest{ (_) =>
           enterBinderName("new binder")
           enterBinderPassword("")
-          assert(jQuery("#binder-button").hasClass("disabled"))
+          assertDisabledButton()
         }
         "with no binder name but with password should be disabled" - reactTest{ (_) =>
           enterBinderName("")
           enterBinderPassword("secure")
-          assert(jQuery("#binder-button").hasClass("disabled"))
+          assertDisabledButton()
         }
         "with binder name and password password should be disabled" - reactTest{ (_) =>
           enterBinderName("new binder")
           enterBinderPassword("secure")
-          assert(!jQuery("#binder-button").hasClass("disabled"))
+          assertEnabledButton()
         }
       }
 
@@ -90,8 +90,7 @@ object PrivateWikiTest extends TestSuite {
             enterBinderPassword("secure")
             clickLoadBinder()
             assertBinderList()
-            val passwordForm = jQuery(s"#${BinderPicker.binderServerPasswordFormId}")
-            assert(passwordForm.hasClass("has-error"))
+            assertPasswordError()
             assertAuthenticationRequest(testClient, AuthenticationRequest("new binder", "secure"))
           }
           "with the right password should add the binder to the list" - reactTest{ (testClient) =>
@@ -107,7 +106,20 @@ object PrivateWikiTest extends TestSuite {
     }
   }
 
-  private def assertAuthenticationRequest(testClient: TestClient, expectedRequest: AuthenticationRequest) {
+  private def assertEnabledButton(): Unit = {
+    assert(!jQuery("#binder-button").hasClass("disabled"))
+  }
+
+  private def assertDisabledButton(): Unit = {
+    assert(jQuery("#binder-button").hasClass("disabled"))
+  }
+
+  private def assertPasswordError(): Unit = {
+    val passwordForm = jQuery(s"#${BinderPicker.binderServerPasswordFormId}")
+    assert(passwordForm.hasClass("has-error"))
+  }
+
+  private def assertAuthenticationRequest(testClient: TestClient, expectedRequest: AuthenticationRequest): Unit = {
     assert(testClient.requestReceived == expectedRequest)
   }
 
