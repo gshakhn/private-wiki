@@ -112,9 +112,13 @@ object PrivateWikiTest extends TestSuite {
   }
 
   private def assertBinderList(binderNames: String*): Unit = {
-    assert(jQuery(".binder-list-item").length == binderNames.length)
-    binderNames.zipWithIndex.foreach{case (binderName, index) =>
-      assert(jQuery(".binder-list-item").eq(index).text() == binderName)
+    val listItems = jQuery(".binder-list-item")
+    val actualLength: Int = listItems.length
+    val expectedLength: Int = binderNames.length
+    assert(actualLength == expectedLength)
+    binderNames.zipWithIndex.foreach{case (expectedName, index) =>
+      val actualText: String = listItems.eq(index).text()
+      assert(actualText == expectedName)
     }
   }
 
