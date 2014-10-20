@@ -8,6 +8,5 @@ jdk:
   - openjdk6
 script:
   - sbt ++$TRAVIS_SCALA_VERSION scalastyle
-  - sbt ++$TRAVIS_SCALA_VERSION test:scalastyle
   - sbt ++$TRAVIS_SCALA_VERSION "client/fullOptStage::test-only -- --throw"
   - sbt ++$TRAVIS_SCALA_VERSION "server/test-only -- --throw"
