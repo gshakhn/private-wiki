@@ -21,8 +21,9 @@ object PrivateWikiRenderer {
 
 object ActualClient extends Client {
   def authenticateBinder(request: AuthenticationRequest): Future[AuthenticationResponse] = {
-    Future {
-      WrongPassword
-    }
+    dom.extensions.Ajax.post(
+      url = "/authenticateBinder",
+      data = upickle.write(request)
+    ).map(response => upickle.read[AuthenticationResponse](response.responseText))
   }
 }
