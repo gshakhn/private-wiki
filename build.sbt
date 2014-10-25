@@ -1,6 +1,9 @@
+import org.scalastyle.sbt.ScalastylePlugin
+import sbt.Keys._
 import spray.revolver.RevolverPlugin.Revolver
 
 import scala.scalajs.sbtplugin.ScalaJSPlugin.ScalaJSKeys._
+import org.scalastyle.sbt.ScalastylePlugin._
 import scala.scalajs.sbtplugin.ScalaJSPlugin._
 import utest.jsrunner.Plugin.utestJsSettings
 import utest.jsrunner.Plugin.utestJvmSettings
@@ -31,7 +34,8 @@ val commonSettings = Seq(
    "-Xlint:private-shadow",
    "-Xlint:unsound-match",
    "-Xfatal-warnings"
-  )
+  ),
+  scalastyleConfig in Test := baseDirectory.value / "scalastyle-test-config.xml"
 )
 
 val sprayVersion = "1.3.2"
