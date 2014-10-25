@@ -57,7 +57,7 @@ object BinderPicker {
           ),
           button(
             id := "binder-button",
-            tpe := "button",
+            tpe := "submit",
             classSet("btn btn-primary",
               "disabled" -> (!props.data.hasData)),
             onclick ==> props.binderAdd,
