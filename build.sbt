@@ -38,6 +38,8 @@ val commonSettings = Seq(
   scalastyleConfig in Test := baseDirectory.value / "scalastyle-test-config.xml"
 )
 
+scalastyleConfig in Test := baseDirectory.value / "scalastyle-test-config.xml"
+
 val sprayVersion = "1.3.2"
 val upickleVersion = "0.2.5"
 val scalatagsVersion = "0.4.2"
