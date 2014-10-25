@@ -1,23 +1,11 @@
 package com.gshakhn.privatewiki.client.components
 
-import com.gshakhn.privatewiki.client.{Backend, Client}
-import com.gshakhn.privatewiki.shared.{AuthenticationRequest, AuthenticationResponse, BinderLoaded, WrongPassword}
-import japgolly.scalajs.react.React
-import japgolly.scalajs.react.test.{ChangeEventData, ReactTestUtils}
-import org.scalajs.dom
-import org.scalajs.jquery._
+import com.gshakhn.privatewiki.shared.{AuthenticationRequest, BinderLoaded, WrongPassword}
 import utest._
 import utest.framework.{Test, TestSuite}
 import utest.util.Tree
 
-import scala.concurrent.Future
-import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
-import scalatags.JsDom.all._
-
-object PrivateWikiTest extends TestSuite {
-
-  private val containingDiv = div(id := "containingDiv").render
-  dom.document.body.appendChild(containingDiv)
+object PrivateWikiTest extends TestSuite with TestHelpers {
 
   def tests: Tree[Test] = TestSuite {
     "binder interaction" - {
@@ -105,65 +93,5 @@ object PrivateWikiTest extends TestSuite {
         }
       }
     }
-  }
-
-  private def assertEnabledButton(): Unit = {
-    assert(!jQuery("#binder-button").hasClass("disabled"))
-  }
-
-  private def assertDisabledButton(): Unit = {
-    assert(jQuery("#binder-button").hasClass("disabled"))
-  }
-
-  private def assertPasswordError(): Unit = {
-    val passwordForm = jQuery(s"#${BinderPicker.binderServerPasswordFormId}")
-    assert(passwordForm.hasClass("has-error"))
-  }
-
-  private def assertAuthenticationRequest(testClient: TestClient, expectedRequest: AuthenticationRequest): Unit = {
-    assert(testClient.requestReceived == expectedRequest)
-  }
-
-  private def assertBinderList(binderNames: String*): Unit = {
-    val listItems = jQuery(".binder-list-item")
-    val actualLength: Int = listItems.length
-    val expectedLength: Int = binderNames.length
-    assert(actualLength == expectedLength)
-    binderNames.zipWithIndex.foreach{case (expectedName, index) =>
-      val actualText: String = listItems.eq(index).text()
-      assert(actualText == expectedName)
-    }
-  }
-
-  private def clickLoadBinder(): Unit = {
-    val button = dom.document.getElementById("binder-button")
-    ReactTestUtils.Simulate.click(button)
-  }
-
-  private def enterBinderPassword(password: String): Unit = {
-    val binderPasswordNode = dom.document.getElementById(BinderPicker.binderServerPasswordId)
-    ReactTestUtils.Simulate.change(binderPasswordNode, ChangeEventData(password))
-  }
-
-  private def enterBinderName(name: String): Unit = {
-    val binderNameNode = dom.document.getElementById(BinderPicker.binderNameInputId)
-    ReactTestUtils.Simulate.change(binderNameNode, ChangeEventData(name))
-  }
-
-  private def reactTest(x: (TestClient) => Any) = {
-    val client = new TestClient()
-    React.renderComponent(PrivateWiki(new Backend(_, client)), containingDiv)
-    x(client)
-    React.unmountComponentAtNode(containingDiv)
-  }
-}
-
-class TestClient extends Client {
-  var response: AuthenticationResponse = _
-  var requestReceived: AuthenticationRequest = _
-
-  def authenticateBinder(request: AuthenticationRequest): Future[AuthenticationResponse] = {
-    requestReceived = request
-    Future(response)
   }
 }
