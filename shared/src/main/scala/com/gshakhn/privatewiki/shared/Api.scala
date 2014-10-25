@@ -1,9 +1,5 @@
 package com.gshakhn.privatewiki.shared
 
-trait Api {
-  def authenticateBinder(request: AuthenticationRequest): AuthenticationResponse
-}
-
 case class AuthenticationRequest(binderName: String, binderPassword: String)
 
 sealed trait AuthenticationResponse
