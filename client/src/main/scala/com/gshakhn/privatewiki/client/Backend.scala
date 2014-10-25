@@ -41,7 +41,8 @@ class Backend(t: BackendScope[_, State], client : Client) {
             case WrongPassword =>
               t.modState(s => s.copy(binderPickerData = s.binderPickerData.copy(wrongPassword = true)))
             case BinderLoaded(binderName) => {
-              t.modState(s => s.copy(binderList = s.binderList :+ binderName))
+              t.modState(s => s.copy(binderList = s.binderList :+ binderName,
+                                    binderPickerData = BinderPickerData("", "", wrongPassword = false)))
             }
           }
       }

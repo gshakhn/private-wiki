@@ -29,6 +29,16 @@ trait TestHelpers {
     assert(passwordForm.hasClass("has-error"))
   }
 
+  def assertNoBinderName(): Unit = {
+    val binderName = jQuery(s"#${BinderPicker.binderNameInputId}").value().toString
+    assert(binderName == "")
+  }
+
+  def assertNoPassword(): Unit = {
+    val password = jQuery(s"#${BinderPicker.binderServerPasswordId}").value().toString
+    assert(password == "")
+  }
+
   def assertAuthenticationRequest(testClient: TestClient, expectedRequest: AuthenticationRequest): Unit = {
     assert(testClient.requestReceived == expectedRequest)
   }

@@ -34,8 +34,7 @@ object PrivateWikiTest extends TestSuite with TestHelpers {
           assertEnabledButton()
         }
       }
-
-      "submitting form" - {
+      "loading binder" - {
         "for an existing binder on the server" - {
           "with the wrong password should show error on password field" - reactTest{ (testClient) =>
             testClient.response = WrongPassword
@@ -46,12 +45,14 @@ object PrivateWikiTest extends TestSuite with TestHelpers {
             assertPasswordError()
             assertAuthenticationRequest(testClient, AuthenticationRequest("new binder", "secure"))
           }
-          "with the right password should add the binder to the list" - reactTest{ (testClient) =>
+          "with the right password should add the binder to the list and clear input" - reactTest{ (testClient) =>
             testClient.response = BinderLoaded("new binder")
             enterBinderName("new binder")
             enterBinderPassword("secure")
             clickLoadBinder()
             assertBinderList("new binder")
+            assertNoBinderName()
+            assertNoPassword()
             assertAuthenticationRequest(testClient, AuthenticationRequest("new binder", "secure"))
           }
         }
