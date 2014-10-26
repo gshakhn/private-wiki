@@ -1,6 +1,6 @@
 package com.gshakhn.privatewiki.client.components
 
-import com.gshakhn.privatewiki.client.LockedBinder
+import com.gshakhn.privatewiki.client.{UnlockedBinder, LockedBinder}
 import japgolly.scalajs.react.React
 import org.scalajs.dom
 import org.scalajs.jquery._
@@ -63,5 +63,20 @@ object BinderListTest extends TestSuite {
         }
       }
     }
+    "with 1 unlocked binder" - {
+      React.renderComponent(BinderList(Seq(UnlockedBinder("binder1"))), containingDiv)
+      "unordered list" - {
+        val ul = jQuery("ul")
+        "inner list items" - {
+          val li = ul.find("li")
+          "should be marked unlocked" - {
+            val span = li.find("span")
+            assert(!span.hasClass("glyphicon"))
+            assert(!span.hasClass("glyphicon-lock"))
+          }
+        }
+      }
+    }
+
   }
 }

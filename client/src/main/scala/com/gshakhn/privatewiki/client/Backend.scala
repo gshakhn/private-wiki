@@ -20,6 +20,10 @@ case class LockedBinder(name: String, data: String) extends Binder {
   def locked: Boolean = true
 }
 
+case class UnlockedBinder(name: String) extends Binder {
+  def locked: Boolean = false
+}
+
 case class State(binderList: Seq[Binder], binderPickerData: BinderPickerData)
 
 trait Client {
