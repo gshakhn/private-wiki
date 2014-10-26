@@ -1,8 +1,9 @@
 package com.gshakhn.privatewiki.client.components
 
 import com.gshakhn.privatewiki.client.{UnlockedBinder, LockedBinder}
-import japgolly.scalajs.react.React
+import japgolly.scalajs.react.{SyntheticEvent, React}
 import org.scalajs.dom
+import org.scalajs.dom.HTMLInputElement
 import org.scalajs.jquery._
 import utest._
 import utest.framework.{Test, TestSuite}
@@ -15,9 +16,13 @@ object BinderListTest extends TestSuite {
   val containingDiv = div(id := "containingDiv").render
   dom.document.body.appendChild(containingDiv)
 
+  def noopUnlock: LockedBinder => (SyntheticEvent[HTMLInputElement] => Unit) = {
+    b => e => Unit
+  }
+
   def tests: Tree[Test] = TestSuite {
     "with no binders" - {
-      React.renderComponent(BinderList(Seq()), containingDiv)
+      React.renderComponent(BinderList(Seq(), noopUnlock), containingDiv)
       "unordered list" - {
         val ul = jQuery("ul")
         "should exist" - {
@@ -35,7 +40,7 @@ object BinderListTest extends TestSuite {
       }
     }
     "with 1 locked binder" - {
-      React.renderComponent(BinderList(Seq(LockedBinder("binder1", ""))), containingDiv)
+      React.renderComponent(BinderList(Seq(LockedBinder("binder1", "")), noopUnlock), containingDiv)
       "unordered list" - {
         val ul = jQuery("ul")
         "should exist" - {
@@ -57,6 +62,7 @@ object BinderListTest extends TestSuite {
           }
           "should be marked locked" - {
             val span = li.find("span")
+            assert(li.hasClass("locked-binder"))
             assert(span.hasClass("glyphicon"))
             assert(span.hasClass("glyphicon-lock"))
           }
@@ -64,13 +70,14 @@ object BinderListTest extends TestSuite {
       }
     }
     "with 1 unlocked binder" - {
-      React.renderComponent(BinderList(Seq(UnlockedBinder("binder1"))), containingDiv)
+      React.renderComponent(BinderList(Seq(UnlockedBinder("binder1")), noopUnlock), containingDiv)
       "unordered list" - {
         val ul = jQuery("ul")
         "inner list items" - {
           val li = ul.find("li")
           "should be marked unlocked" - {
             val span = li.find("span")
+            assert(li.hasClass("unlocked-binder"))
             assert(!span.hasClass("glyphicon"))
             assert(!span.hasClass("glyphicon-lock"))
           }

@@ -54,9 +54,19 @@ trait TestHelpers {
     }
   }
 
+  def assertUnlockedBinder(binderIndex: Int): Unit = {
+    val li = jQuery(".binder-list-item").eq(binderIndex)
+    assert(li.hasClass("unlocked-binder"))
+  }
+
   def clickLoadBinder(): Unit = {
     val button = dom.document.getElementById("binder-button")
     ReactTestUtils.Simulate.click(button)
+  }
+
+  def clickUnlockBinder(binderIndex: Int): Unit = {
+    val li = dom.document.getElementsByClassName("binder-list-item")(0)
+    ReactTestUtils.Simulate.click(li)
   }
 
   def enterBinderPassword(password: String): Unit = {

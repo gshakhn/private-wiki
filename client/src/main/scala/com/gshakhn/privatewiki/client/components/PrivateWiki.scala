@@ -29,7 +29,7 @@ object PrivateWiki {
               div(
                 id := "col-2-1",
                 cls := "col-md-4",
-                BinderList(S.binderList)
+                BinderList(S.binderList, B.unlockBinder)
               )
             )
           )}).buildU

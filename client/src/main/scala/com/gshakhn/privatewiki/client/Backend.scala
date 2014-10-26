@@ -3,9 +3,10 @@ package com.gshakhn.privatewiki.client
 import com.gshakhn.privatewiki.shared._
 import japgolly.scalajs.react.{BackendScope, SyntheticEvent}
 import org.scalajs.dom.HTMLInputElement
+
 import scala.concurrent.Future
-import scala.util.{Success, Failure}
-import scalajs.concurrent.JSExecutionContext.Implicits.runNow
+import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
+import scala.util.{Failure, Success}
 
 case class BinderPickerData(binderName: String, binderPassword: String, wrongPassword: Boolean) {
   def hasData: Boolean = !binderName.isEmpty && !binderPassword.isEmpty
@@ -59,6 +60,18 @@ class Backend(t: BackendScope[_, State], client : Client) {
             }
           }
       }
+    }
+  }
+
+  def unlockBinder(binder: LockedBinder): SyntheticEvent[HTMLInputElement] => Unit = {
+    def replaceBinder(binderList: Seq[Binder]): Seq[Binder] = {
+      binderList.map {
+        case x if x == binder => UnlockedBinder(x.name)
+        case x => x
+      }
+    }
+    _ => {
+      t.modState(s => s.copy(binderList = replaceBinder(s.binderList)))
     }
   }
 }
