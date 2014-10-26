@@ -1,6 +1,6 @@
 package com.gshakhn.privatewiki.client.components
 
-import com.gshakhn.privatewiki.client.Binder
+import com.gshakhn.privatewiki.client.{LockedBinder, Binder}
 import japgolly.scalajs.react.vdom.ReactVDom.all._
 import japgolly.scalajs.react.{TopNode, ReactComponentB, ReactComponentU}
 
@@ -11,7 +11,19 @@ object BinderList {
         binders =>
           ul(
             cls := "list-group",
-            binders.map { binder =>
+            binders.map {
+              case lb: LockedBinder => LockedBinderComponent(lb)
+            }
+          )).build
+    component(s)
+  }
+}
+
+object LockedBinderComponent {
+  def apply(b: LockedBinder): ReactComponentU[LockedBinder, Unit, Unit, TopNode] = {
+    val component = ReactComponentB[LockedBinder]("LockedBinder")
+      .render(
+          binder =>
               li(
                 cls := "list-group-item binder-list-item",
                 binder.name,
@@ -19,8 +31,7 @@ object BinderList {
                   classSet("glyphicon glyphicon-lock pull-right" -> binder.locked)
                 )
               )
-            }
-          )).build
-    component(s)
+          ).build
+    component(b)
   }
 }
