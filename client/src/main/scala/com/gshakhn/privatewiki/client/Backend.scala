@@ -11,7 +11,16 @@ case class BinderPickerData(binderName: String, binderPassword: String, wrongPas
   def hasData: Boolean = !binderName.isEmpty && !binderPassword.isEmpty
 }
 
-case class State(binderList: Seq[String], binderPickerData: BinderPickerData)
+sealed trait Binder {
+  def name: String
+  def locked: Boolean
+}
+
+case class LockedBinder(name: String, data: String) extends Binder {
+  def locked: Boolean = true
+}
+
+case class State(binderList: Seq[Binder], binderPickerData: BinderPickerData)
 
 trait Client {
   def authenticateBinder(request: AuthenticationRequest): Future[AuthenticationResponse]
@@ -40,8 +49,8 @@ class Backend(t: BackendScope[_, State], client : Client) {
           result match {
             case WrongPassword =>
               t.modState(s => s.copy(binderPickerData = s.binderPickerData.copy(wrongPassword = true)))
-            case BinderLoaded(binderName) => {
-              t.modState(s => s.copy(binderList = s.binderList :+ binderName,
+            case BinderLoaded(binderName, binderData) => {
+              t.modState(s => s.copy(binderList = s.binderList :+ LockedBinder(binderName, binderData),
                                     binderPickerData = BinderPickerData("", "", wrongPassword = false)))
             }
           }

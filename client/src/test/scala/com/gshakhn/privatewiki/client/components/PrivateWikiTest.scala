@@ -46,7 +46,7 @@ object PrivateWikiTest extends TestSuite with TestHelpers {
             assertAuthenticationRequest(testClient, AuthenticationRequest("new binder", "secure"))
           }
           "with the right password should add the binder to the list and clear input" - reactTest{ (testClient) =>
-            testClient.response = BinderLoaded("new binder")
+            testClient.response = BinderLoaded("new binder", "")
             enterBinderName("new binder")
             enterBinderPassword("secure")
             clickLoadBinder()

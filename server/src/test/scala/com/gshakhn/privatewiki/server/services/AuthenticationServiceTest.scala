@@ -29,7 +29,7 @@ object AuthenticationServiceTest extends uTestRouteTest with AuthenticationServi
       }
     }
     "with a binder loaded response"- {
-      respondWith = BinderLoaded("foo")
+      respondWith = BinderLoaded("foo", "bar")
       "should return the response"-{
         Post("/authenticateBinder", upickle.write(expectedRequest)) ~> authRoute ~> check {
           assert(upickle.read[AuthenticationResponse](responseAs[String]) == respondWith)

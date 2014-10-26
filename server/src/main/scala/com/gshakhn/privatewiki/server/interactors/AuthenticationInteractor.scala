@@ -15,8 +15,8 @@ trait FakeAuthenticationInteractorComponent extends AuthenticationInteractorComp
 
   class FakeAuthenticationInteractor extends AuthenticationInteractor {
     def authenticateBinder(request: AuthenticationRequest): AuthenticationResponse = request match {
-      case AuthenticationRequest("secure", "password") => BinderLoaded("secure")
-      case AuthenticationRequest("unsecure", _) => BinderLoaded("unsecure")
+      case AuthenticationRequest("secure", "password") => BinderLoaded("secure", "")
+      case AuthenticationRequest("unsecure", _) => BinderLoaded("unsecure", "")
       case _ => WrongPassword
     }
   }
