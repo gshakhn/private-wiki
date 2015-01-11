@@ -10,3 +10,4 @@ script:
   - sbt ++$TRAVIS_SCALA_VERSION scalastyle
   - sbt ++$TRAVIS_SCALA_VERSION "client/fullOptStage::test-only -- --throw"
   - sbt ++$TRAVIS_SCALA_VERSION "server/test-only -- --throw"
+sudo: false
