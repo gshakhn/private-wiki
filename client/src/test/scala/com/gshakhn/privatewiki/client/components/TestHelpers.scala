@@ -13,7 +13,7 @@ import scalatags.JsDom.all._
 
 trait TestHelpers {
 
-  private val containingDiv = div(id := "containingDiv").render
+  private[this] val containingDiv = div(id := "containingDiv").render
   dom.document.body.appendChild(containingDiv)
 
   def assertEnabledButton(): Unit = {
