@@ -50,7 +50,7 @@ val client = project.dependsOn(shared)
                       ScalaJSKeys.jsDependencies += scala.scalajs.sbtplugin.RuntimeDOM,
                       skip in ScalaJSKeys.packageJSDependencies := false,
                       ScalaJSKeys.jsDependencies ++= Seq(
-                        "org.webjars" % "bootstrap" % "3.2.0" / "bootstrap.js",
+                        "org.webjars" % "bootstrap" % "3.3.1" / "bootstrap.js",
                         "org.webjars" % "react" % "0.12.2" / "react-with-addons.js" commonJSName "React"
                       ),
                       libraryDependencies ++= Seq(
