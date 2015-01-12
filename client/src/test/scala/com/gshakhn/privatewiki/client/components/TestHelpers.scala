@@ -81,7 +81,7 @@ trait TestHelpers {
 
   def reactTest(x: (TestClient) => Any) = {
     val client = new TestClient()
-    React.renderComponent(PrivateWiki(new Backend(_, client)), containingDiv)
+    React.render(PrivateWiki(new Backend(_, client)), containingDiv)
     x(client)
     React.unmountComponentAtNode(containingDiv)
   }

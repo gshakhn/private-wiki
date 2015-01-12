@@ -22,7 +22,7 @@ object BinderListTest extends TestSuite {
 
   def tests: Tree[Test] = TestSuite {
     "with no binders" - {
-      React.renderComponent(BinderList(Seq(), noopUnlock), containingDiv)
+      React.render(BinderList(Seq(), noopUnlock), containingDiv)
       "unordered list" - {
         val ul = jQuery("ul")
         "should exist" - {
@@ -40,7 +40,7 @@ object BinderListTest extends TestSuite {
       }
     }
     "with 1 locked binder" - {
-      React.renderComponent(BinderList(Seq(LockedBinder("binder1", "")), noopUnlock), containingDiv)
+      React.render(BinderList(Seq(LockedBinder("binder1", "")), noopUnlock), containingDiv)
       "unordered list" - {
         val ul = jQuery("ul")
         "should exist" - {
@@ -70,7 +70,7 @@ object BinderListTest extends TestSuite {
       }
     }
     "with 1 unlocked binder" - {
-      React.renderComponent(BinderList(Seq(UnlockedBinder("binder1")), noopUnlock), containingDiv)
+      React.render(BinderList(Seq(UnlockedBinder("binder1")), noopUnlock), containingDiv)
       "unordered list" - {
         val ul = jQuery("ul")
         "inner list items" - {

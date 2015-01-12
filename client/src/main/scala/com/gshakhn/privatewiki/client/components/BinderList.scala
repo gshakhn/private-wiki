@@ -1,8 +1,7 @@
 package com.gshakhn.privatewiki.client.components
 
 import com.gshakhn.privatewiki.client.{UnlockedBinder, LockedBinder, Binder}
-import japgolly.scalajs.react.vdom.ReactVDom._
-import japgolly.scalajs.react.vdom.ReactVDom.all._
+import japgolly.scalajs.react.vdom.prefix_<^._
 import japgolly.scalajs.react.{SyntheticEvent, TopNode, ReactComponentB, ReactComponentU}
 import org.scalajs.dom.HTMLInputElement
 
@@ -13,8 +12,8 @@ object BinderList {
   private val component = ReactComponentB[BinderListProps]("BinderList")
     .render(
       props =>
-        ul(
-          cls := "list-group",
+        <.ul(
+          ^.cls := "list-group",
           props.binders.map {
             case b: LockedBinder => LockedBinderComponent(b, props.unlockBinder)
             case b: UnlockedBinder => UnlockedBinderComponent(b)
@@ -34,12 +33,12 @@ object LockedBinderComponent {
   private val component = ReactComponentB[LockedBinderProps]("LockedBinder")
     .render(
       props =>
-        li(
-          cls := "list-group-item binder-list-item locked-binder",
+        <.li(
+          ^.cls := "list-group-item binder-list-item locked-binder",
           props.binder.name,
-          onclick ==> props.unlockBinder(props.binder),
-          span(
-            cls := "glyphicon glyphicon-lock pull-right"
+        ^.onClick ==> props.unlockBinder(props.binder),
+        <.span(
+            ^.cls := "glyphicon glyphicon-lock pull-right"
           )
         )
     ).build
@@ -55,8 +54,8 @@ object UnlockedBinderComponent {
     val component = ReactComponentB[UnlockedBinder]("UnlockedBinder")
       .render(
         binder =>
-          li(
-            cls := "list-group-item binder-list-item unlocked-binder",
+          <.li(
+            ^.cls := "list-group-item binder-list-item unlocked-binder",
             binder.name
           )
       ).build

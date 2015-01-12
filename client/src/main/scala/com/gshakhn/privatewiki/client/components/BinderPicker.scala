@@ -2,8 +2,7 @@ package com.gshakhn.privatewiki.client.components
 
 import com.gshakhn.privatewiki.client.BinderPickerData
 import japgolly.scalajs.react.{ReactComponentB, _}
-import japgolly.scalajs.react.vdom.ReactVDom._
-import japgolly.scalajs.react.vdom.ReactVDom.all._
+import japgolly.scalajs.react.vdom.prefix_<^._
 import org.scalajs.dom.HTMLInputElement
 
 object BinderPicker {
@@ -19,48 +18,48 @@ object BinderPicker {
   private val component = ReactComponentB[BinderPickerProps]("BinderPicker")
     .render(
       props =>
-        form(
-          id := "binder-form",
-          onsubmit ==> props.binderAdd,
-          div(
-            cls := "form-group",
-            label(
-              `for` := binderNameInputId,
-              cls := "control-label",
+        <.form(
+          ^.id := "binder-form",
+          ^.onSubmit ==> props.binderAdd,
+          <.div(
+            ^.cls := "form-group",
+            <.label(
+              ^.htmlFor := binderNameInputId,
+              ^.cls := "control-label",
               "Binder Name"
             ),
-            input(
-              id := binderNameInputId,
-              tpe := "text",
-              cls := "form-control",
-              onchange ==> props.binderNameChange,
-              value := props.data.binderName
+            <.input(
+              ^.id := binderNameInputId,
+              ^.tpe := "text",
+              ^.cls := "form-control",
+              ^.onChange ==> props.binderNameChange,
+              ^.value := props.data.binderName
             )
           ),
-          div(
-            id := binderServerPasswordFormId,
-            classSet("form-group",
+          <.div(
+            ^.id := binderServerPasswordFormId,
+            ^.classSet1("form-group",
               "has-error" -> props.data.wrongPassword
             ),
-            label(
-              `for` := binderServerPasswordId,
-              cls := "control-label",
+            <.label(
+              ^.htmlFor := binderServerPasswordId,
+              ^.cls := "control-label",
               "Binder Password"
             ),
-            input(
-              id := binderServerPasswordId,
-              tpe := "password",
-              cls := "form-control",
-              onchange ==> props.binderPasswordChange,
-              value := props.data.binderPassword
+            <.input(
+              ^.id := binderServerPasswordId,
+              ^.tpe := "password",
+              ^.cls := "form-control",
+              ^.onChange ==> props.binderPasswordChange,
+              ^.value := props.data.binderPassword
             )
           ),
-          button(
-            id := "binder-button",
-            tpe := "submit",
-            classSet("btn btn-primary",
+          <.button(
+            ^.id := "binder-button",
+            ^.tpe := "submit",
+            ^.classSet1("btn btn-primary",
               "disabled" -> (!props.data.hasData)),
-            onclick ==> props.binderAdd,
+            ^.onClick ==> props.binderAdd,
             "Load Binder"
           )
         )

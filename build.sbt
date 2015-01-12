@@ -37,7 +37,7 @@ val commonSettings = Seq(
 val sprayVersion = "1.3.2"
 val upickleVersion = "0.2.5"
 val scalatagsVersion = "0.4.2"
-val scalajsReactVersion = "0.5.0"
+val scalajsReactVersion = "0.7.1"
 
 val shared = project.settings(commonSettings:_*)
                     .settings(scalaJSSettings:_*)
@@ -51,7 +51,7 @@ val client = project.dependsOn(shared)
                       skip in ScalaJSKeys.packageJSDependencies := false,
                       ScalaJSKeys.jsDependencies ++= Seq(
                         "org.webjars" % "bootstrap" % "3.2.0" / "bootstrap.js",
-                        "org.webjars" % "react" % "0.11.2" / "react-with-addons.js" commonJSName "React"
+                        "org.webjars" % "react" % "0.12.2" / "react-with-addons.js" commonJSName "React"
                       ),
                       libraryDependencies ++= Seq(
                         "com.github.japgolly.scalajs-react" %%% "core" % scalajsReactVersion,
