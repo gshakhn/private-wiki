@@ -1,5 +1,7 @@
 package com.gshakhn.privatewiki.server.services
 
+import scalatags.Text.all._
+import scalatags.Text.tags2.title
 import spray.http.{HttpEntity, MediaTypes}
 import spray.routing._
 
@@ -18,9 +20,6 @@ trait StaticService extends HttpService {
 }
 
 object Template {
-
-  import scalatags.Text.all._
-  import scalatags.Text.tags2.title
 
   val txt =
     "<!DOCTYPE html>" +
