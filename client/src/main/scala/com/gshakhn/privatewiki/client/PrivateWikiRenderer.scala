@@ -1,13 +1,13 @@
 package com.gshakhn.privatewiki.client
 
 import com.gshakhn.privatewiki.client.components.PrivateWiki
-import com.gshakhn.privatewiki.shared.{AuthenticationResponse, AuthenticationRequest, WrongPassword}
+import com.gshakhn.privatewiki.shared.{AuthenticationRequest, AuthenticationResponse}
 import japgolly.scalajs.react.React
 import org.scalajs.dom
 import scala.concurrent.Future
+import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
 import scala.scalajs.js.annotation.JSExport
 import scalatags.JsDom.all._
-import scalajs.concurrent.JSExecutionContext.Implicits.runNow
 
 @JSExport("PrivateWikiRenderer")
 object PrivateWikiRenderer {

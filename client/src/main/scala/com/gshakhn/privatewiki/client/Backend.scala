@@ -3,7 +3,6 @@ package com.gshakhn.privatewiki.client
 import com.gshakhn.privatewiki.shared._
 import japgolly.scalajs.react.{BackendScope, SyntheticEvent}
 import org.scalajs.dom.HTMLInputElement
-
 import scala.concurrent.Future
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
 import scala.util.{Failure, Success}

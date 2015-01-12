@@ -1,8 +1,8 @@
 package com.gshakhn.privatewiki.client.components
 
-import com.gshakhn.privatewiki.client.{UnlockedBinder, LockedBinder, Binder}
+import com.gshakhn.privatewiki.client.{Binder, LockedBinder, UnlockedBinder}
 import japgolly.scalajs.react.vdom.prefix_<^._
-import japgolly.scalajs.react.{SyntheticEvent, TopNode, ReactComponentB, ReactComponentU}
+import japgolly.scalajs.react.{ReactComponentB, ReactComponentU, SyntheticEvent, TopNode}
 import org.scalajs.dom.HTMLInputElement
 
 object BinderList {

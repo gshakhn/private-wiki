@@ -1,15 +1,14 @@
 package com.gshakhn.privatewiki.client.components
 
-import com.gshakhn.privatewiki.client.{UnlockedBinder, LockedBinder}
-import japgolly.scalajs.react.{SyntheticEvent, React}
+import com.gshakhn.privatewiki.client.{LockedBinder, UnlockedBinder}
+import japgolly.scalajs.react.{React, SyntheticEvent}
 import org.scalajs.dom
 import org.scalajs.dom.HTMLInputElement
 import org.scalajs.jquery._
+import scalatags.JsDom.all._
 import utest._
 import utest.framework.{Test, TestSuite}
 import utest.util.Tree
-
-import scalatags.JsDom.all._
 
 object BinderListTest extends TestSuite {
 
