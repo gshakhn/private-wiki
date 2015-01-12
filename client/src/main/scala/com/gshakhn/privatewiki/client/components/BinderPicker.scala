@@ -15,7 +15,7 @@ object BinderPicker {
                                binderPasswordChange: SyntheticEvent[HTMLInputElement] => Unit,
                                binderAdd: SyntheticEvent[HTMLInputElement] => Unit)
 
-  private val component = ReactComponentB[BinderPickerProps]("BinderPicker")
+  private[this] val component = ReactComponentB[BinderPickerProps]("BinderPicker")
     .render(
       props =>
         <.form(

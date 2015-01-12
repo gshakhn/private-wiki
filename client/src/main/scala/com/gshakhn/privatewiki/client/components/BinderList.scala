@@ -9,7 +9,7 @@ object BinderList {
   case class BinderListProps(binders: Seq[Binder],
                              unlockBinder: LockedBinder => (SyntheticEvent[HTMLInputElement] => Unit))
   
-  private val component = ReactComponentB[BinderListProps]("BinderList")
+  private[this] val component = ReactComponentB[BinderListProps]("BinderList")
     .render(
       props =>
         <.ul(
@@ -30,7 +30,7 @@ object LockedBinderComponent {
   case class LockedBinderProps(binder: LockedBinder,
                                unlockBinder: LockedBinder => (SyntheticEvent[HTMLInputElement] => Unit))
 
-  private val component = ReactComponentB[LockedBinderProps]("LockedBinder")
+  private[this] val component = ReactComponentB[LockedBinderProps]("LockedBinder")
     .render(
       props =>
         <.li(
