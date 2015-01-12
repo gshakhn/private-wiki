@@ -79,7 +79,7 @@ trait TestHelpers {
     ReactTestUtils.Simulate.change(binderNameNode, ChangeEventData(name))
   }
 
-  def reactTest(x: (TestClient) => Any) = {
+  def reactTest(x: (TestClient) => Any): Unit = {
     val client = new TestClient()
     React.render(PrivateWiki(new Backend(_, client)), containingDiv)
     x(client)
