@@ -9,7 +9,7 @@ import scala.scalajs.js.annotation.JSExport
 import scalatags.JsDom.all._
 import scalajs.concurrent.JSExecutionContext.Implicits.runNow
 
-@JSExport
+@JSExport("PrivateWikiRenderer")
 object PrivateWikiRenderer {
   @JSExport
   def render(): Unit = {
