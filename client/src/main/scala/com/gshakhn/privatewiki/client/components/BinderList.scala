@@ -1,10 +1,9 @@
 package com.gshakhn.privatewiki.client.components
 
-import com.gshakhn.privatewiki.client.Events.UnlockBinder
 import com.gshakhn.privatewiki.client.{Binder, LockedBinder, UnlockedBinder}
-import japgolly.scalajs.react.{ReactComponentB, ReactComponentU, SyntheticEvent, TopNode}
+import com.gshakhn.privatewiki.client.Events.UnlockBinder
 import japgolly.scalajs.react.vdom.prefix_<^._
-import org.scalajs.dom.HTMLInputElement
+import japgolly.scalajs.react.{ReactComponentB, ReactComponentU, TopNode}
 
 object BinderList {
   case class BinderListProps(binders: Seq[Binder],

@@ -1,7 +1,7 @@
 package com.gshakhn.privatewiki.client.components
 
-import com.gshakhn.privatewiki.client.Events.UnlockBinder
 import com.gshakhn.privatewiki.client.{LockedBinder, UnlockedBinder}
+import com.gshakhn.privatewiki.client.Events.UnlockBinder
 import japgolly.scalajs.react.{React, SyntheticEvent}
 import org.scalajs.dom
 import org.scalajs.dom.HTMLInputElement
