@@ -1,5 +1,6 @@
 package com.gshakhn.privatewiki.client.components
 
+import com.gshakhn.privatewiki.client.Events.UnlockBinder
 import com.gshakhn.privatewiki.client.{Binder, LockedBinder, UnlockedBinder}
 import japgolly.scalajs.react.{ReactComponentB, ReactComponentU, SyntheticEvent, TopNode}
 import japgolly.scalajs.react.vdom.prefix_<^._
@@ -7,7 +8,7 @@ import org.scalajs.dom.HTMLInputElement
 
 object BinderList {
   case class BinderListProps(binders: Seq[Binder],
-                             unlockBinder: LockedBinder => (SyntheticEvent[HTMLInputElement] => Unit))
+                             unlockBinder: LockedBinder => UnlockBinder)
   
   private[this] val component = ReactComponentB[BinderListProps]("BinderList")
     .render(
@@ -21,14 +22,14 @@ object BinderList {
         )).build
   
   def apply(binders: Seq[Binder],
-            unlockBinder: LockedBinder => (SyntheticEvent[HTMLInputElement] => Unit)): ReactComponentU[BinderListProps, Unit, Unit, TopNode] = {
+            unlockBinder: LockedBinder => UnlockBinder): ReactComponentU[BinderListProps, Unit, Unit, TopNode] = {
     component(BinderListProps(binders, unlockBinder))
   }
 }
 
 object LockedBinderComponent {
   case class LockedBinderProps(binder: LockedBinder,
-                               unlockBinder: LockedBinder => (SyntheticEvent[HTMLInputElement] => Unit))
+                               unlockBinder: LockedBinder => UnlockBinder)
 
   private[this] val component = ReactComponentB[LockedBinderProps]("LockedBinder")
     .render(
@@ -44,7 +45,7 @@ object LockedBinderComponent {
     ).build
   
   def apply(binder: LockedBinder,
-            unlockBinder: LockedBinder => (SyntheticEvent[HTMLInputElement] => Unit)): ReactComponentU[LockedBinderProps, Unit, Unit, TopNode] = {
+            unlockBinder: LockedBinder => UnlockBinder): ReactComponentU[LockedBinderProps, Unit, Unit, TopNode] = {
     component(LockedBinderProps(binder, unlockBinder))
   }
 }

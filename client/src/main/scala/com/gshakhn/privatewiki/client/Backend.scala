@@ -1,5 +1,6 @@
 package com.gshakhn.privatewiki.client
 
+import com.gshakhn.privatewiki.client.Events.{UnlockBinder, BinderAdd, BinderPasswordChange, BinderNameChange}
 import com.gshakhn.privatewiki.shared._
 import japgolly.scalajs.react.{BackendScope, SyntheticEvent}
 import org.scalajs.dom.HTMLInputElement
@@ -30,47 +31,68 @@ trait Client {
   def authenticateBinder(request: AuthenticationRequest): Future[AuthenticationResponse]
 }
 
+object Events {
+  trait BinderNameChange extends (SyntheticEvent[HTMLInputElement] => Unit)
+  trait BinderPasswordChange extends (SyntheticEvent[HTMLInputElement] => Unit)
+  trait BinderAdd extends (SyntheticEvent[HTMLInputElement] => Unit)
+  trait UnlockBinder extends (SyntheticEvent[HTMLInputElement] => Unit)
+}
+
 class Backend(t: BackendScope[_, State], client : Client) {
-  def newBinderNameChange(e: SyntheticEvent[HTMLInputElement]): Unit = {
-    // todo - play with lens to make this easier
-    t.modState(s => s.copy(binderPickerData = s.binderPickerData.copy(binderName = e.target.value)))
+  def newBinderNameChange: BinderNameChange = {
+      new BinderNameChange {
+        // todo - play with lens to make this easier
+        override def apply(e: SyntheticEvent[HTMLInputElement]): Unit = {
+          t.modState(s => s.copy(binderPickerData = s.binderPickerData.copy(binderName = e.target.value)))
+        }
+      }
   }
 
-  def newBinderPasswordChange(e: SyntheticEvent[HTMLInputElement]): Unit = {
-    // todo - play with lens to make this easier
-    t.modState(s => s.copy(binderPickerData = s.binderPickerData.copy(binderPassword = e.target.value)))
-  }
-
-  def newBinderAdd(e: SyntheticEvent[HTMLInputElement]): Unit = {
-    e.preventDefault()
-
-    val binderPickerData = t.state.binderPickerData
-    if (binderPickerData.hasData) {
-      client.authenticateBinder(AuthenticationRequest(binderPickerData.binderName, binderPickerData.binderPassword)).onComplete {
-        case Failure(_) =>
-          // todo - do something
-        case Success(result) =>
-          result match {
-            case WrongPassword =>
-              t.modState(s => s.copy(binderPickerData = s.binderPickerData.copy(wrongPassword = true)))
-            case BinderLoaded(binderName, binderData) => {
-              t.modState(s => s.copy(binderList = s.binderList :+ LockedBinder(binderName, binderData),
-                                    binderPickerData = BinderPickerData("", "", wrongPassword = false)))
-            }
-          }
+  def newBinderPasswordChange: BinderPasswordChange = {
+    new BinderPasswordChange {
+      // todo - play with lens to make this easier
+      override def apply(e: SyntheticEvent[HTMLInputElement]): Unit = {
+        t.modState(s => s.copy(binderPickerData = s.binderPickerData.copy(binderPassword = e.target.value)))
       }
     }
   }
 
-  def unlockBinder(binder: LockedBinder): SyntheticEvent[HTMLInputElement] => Unit = {
+  def newBinderAdd: BinderAdd = {
+    new BinderAdd {
+      override def apply(e: SyntheticEvent[HTMLInputElement]): Unit = {
+        e.preventDefault()
+
+        val binderPickerData = t.state.binderPickerData
+        if (binderPickerData.hasData) {
+          client.authenticateBinder(AuthenticationRequest(binderPickerData.binderName, binderPickerData.binderPassword)).onComplete {
+            case Failure(_) =>
+            // todo - do something
+            case Success(result) =>
+              result match {
+                case WrongPassword =>
+                  t.modState(s => s.copy(binderPickerData = s.binderPickerData.copy(wrongPassword = true)))
+                case BinderLoaded(binderName, binderData) =>
+                  t.modState(s => s.copy(binderList = s.binderList :+ LockedBinder(binderName, binderData),
+                    binderPickerData = BinderPickerData("", "", wrongPassword = false)))
+              }
+          }
+        }
+      }
+    }
+  }
+
+  def unlockBinder(binder: LockedBinder): UnlockBinder = {
     def replaceBinder(binderList: Seq[Binder]): Seq[Binder] = {
       binderList.map {
         case x if x == binder => UnlockedBinder(x.name)
         case x => x
       }
     }
-    _ => {
-      t.modState(s => s.copy(binderList = replaceBinder(s.binderList)))
+
+    new UnlockBinder {
+      override def apply(v1: SyntheticEvent[HTMLInputElement]): Unit = {
+        t.modState(s => s.copy(binderList = replaceBinder(s.binderList)))
+      }
     }
   }
 }

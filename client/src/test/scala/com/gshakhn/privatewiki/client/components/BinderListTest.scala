@@ -1,5 +1,6 @@
 package com.gshakhn.privatewiki.client.components
 
+import com.gshakhn.privatewiki.client.Events.UnlockBinder
 import com.gshakhn.privatewiki.client.{LockedBinder, UnlockedBinder}
 import japgolly.scalajs.react.{React, SyntheticEvent}
 import org.scalajs.dom
@@ -15,8 +16,12 @@ object BinderListTest extends TestSuite {
   val containingDiv = div(id := "containingDiv").render
   dom.document.body.appendChild(containingDiv)
 
-  def noopUnlock: LockedBinder => (SyntheticEvent[HTMLInputElement] => Unit) = {
-    b => e => Unit
+  def noopUnlock: LockedBinder => UnlockBinder = {
+    b => new UnlockBinder {
+      override def apply(e: SyntheticEvent[HTMLInputElement]): Unit = {
+
+      }
+    }
   }
 
   def tests: Tree[Test] = TestSuite {

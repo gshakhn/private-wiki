@@ -1,7 +1,8 @@
 package com.gshakhn.privatewiki.client.components
 
 import com.gshakhn.privatewiki.client.BinderPickerData
-import japgolly.scalajs.react.{ReactComponentB, _}
+import com.gshakhn.privatewiki.client.Events.{BinderAdd, BinderPasswordChange, BinderNameChange}
+import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import org.scalajs.dom.HTMLInputElement
 
@@ -9,11 +10,10 @@ object BinderPicker {
   val binderNameInputId: String = "binder-name-input"
   val binderServerPasswordId: String = "binder-password-input"
   val binderServerPasswordFormId: String = "binder-password-form"
-
   case class BinderPickerProps(data: BinderPickerData,
-                               binderNameChange: SyntheticEvent[HTMLInputElement] => Unit,
-                               binderPasswordChange: SyntheticEvent[HTMLInputElement] => Unit,
-                               binderAdd: SyntheticEvent[HTMLInputElement] => Unit)
+                               binderNameChange: BinderNameChange,
+                               binderPasswordChange: BinderPasswordChange,
+                               binderAdd: BinderAdd)
 
   private[this] val component = ReactComponentB[BinderPickerProps]("BinderPicker")
     .render(
@@ -66,9 +66,9 @@ object BinderPicker {
     ).build
 
   def apply(data: BinderPickerData,
-            binderNameChange: SyntheticEvent[HTMLInputElement] => Unit,
-            binderPasswordChange: SyntheticEvent[HTMLInputElement] => Unit,
-            binderAdd: SyntheticEvent[HTMLInputElement] => Unit): ReactComponentU[BinderPickerProps, Unit, Unit, TopNode] = {
+            binderNameChange: BinderNameChange,
+            binderPasswordChange: BinderPasswordChange,
+            binderAdd: BinderAdd): ReactComponentU[BinderPickerProps, Unit, Unit, TopNode] = {
     component(BinderPickerProps(data, binderNameChange, binderPasswordChange, binderAdd))
   }
 }
