@@ -5,7 +5,7 @@ import scala.scalajs.sbtplugin.ScalaJSPlugin._
 import utest.jsrunner.Plugin.utestJsSettings
 import utest.jsrunner.Plugin.utestJvmSettings
 
-scalaVersion in ThisBuild := "2.11.5"
+scalaVersion in ThisBuild := "2.11.6"
 
 organization in ThisBuild := "com.gshakhn"
 
