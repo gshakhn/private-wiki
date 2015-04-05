@@ -57,16 +57,16 @@ object PrivateWikiTest extends TestSuite with TestHelpers {
           }
         }
       }
-//      "unlocking binder that has been loaded" - {
-//        "clicking the locked binder should unlock it" - reactTest{ (testClient) =>
-//          testClient.response = BinderLoaded("new binder", "")
-//          enterBinderName("new binder")
-//          enterBinderPassword("secure")
-//          clickLoadBinder()
-//          clickUnlockBinder(0)
-//          assertUnlockedBinder(0)
-//        }
-//      }
+      "unlocking binder that has been loaded" - {
+        "clicking the locked binder should unlock it" - reactTest{ (testClient) =>
+          testClient.response = BinderLoaded("new binder", "")
+          enterBinderName("new binder")
+          enterBinderPassword("secure")
+          clickLoadBinder()
+          clickUnlockBinder(0)
+          assertUnlockedBinder(0)
+        }
+      }
     }
   }
 }
