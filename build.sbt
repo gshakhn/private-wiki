@@ -35,6 +35,7 @@ val sprayVersion = "1.3.2"
 val upickleVersion = "0.2.6"
 val scalatagsVersion = "0.5.1"
 val scalajsReactVersion = "0.8.3"
+val bootstrapVersion = "3.3.4"
 
 val shared = crossProject.in(file(".")).settings(commonSettings:_*)
 
@@ -49,7 +50,7 @@ val client = project.dependsOn(sharedJS)
                       jsDependencies += RuntimeDOM % "test",
                       skip in packageJSDependencies := false,
                       jsDependencies ++= Seq(
-                        "org.webjars" % "bootstrap" % "3.3.1" / "bootstrap.js",
+                        "org.webjars" % "bootstrap" % bootstrapVersion / "bootstrap.js",
                         "org.webjars" % "react" % "0.13.1" / "react-with-addons.js" commonJSName "React"
                       ),
                       libraryDependencies ++= Seq(
@@ -59,7 +60,7 @@ val client = project.dependsOn(sharedJS)
                         "com.lihaoyi" %%% "scalatags" % scalatagsVersion,
                         "be.doeraene" %%% "scalajs-jquery" % "0.8.0",
                         "org.scala-js" %%% "scalajs-dom" % "0.8.0",
-                        "org.webjars" % "bootstrap" % "3.2.0"))
+                        "org.webjars" % "bootstrap" % bootstrapVersion))
 
 val server = project.dependsOn(sharedJVM)
                     .settings(commonSettings:_*)
@@ -72,7 +73,7 @@ val server = project.dependsOn(sharedJVM)
                         "com.lihaoyi" %% "upickle" % upickleVersion,
                         "com.lihaoyi" %% "scalatags" % scalatagsVersion,
                         "com.typesafe.akka" %% "akka-actor" % "2.3.6",
-                        "org.webjars" % "bootstrap" % "3.2.0"),
+                        "org.webjars" % "bootstrap" % bootstrapVersion),
                       managedResources in Compile <<= (managedResources in Compile).dependsOn(fastOptJS in (client, Compile)),
                       // add  in fast opts JS
                       managedResources in Compile += (artifactPath in (client, Compile, fastOptJS)).value,
