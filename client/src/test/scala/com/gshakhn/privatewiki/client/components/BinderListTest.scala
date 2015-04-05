@@ -1,15 +1,16 @@
 package com.gshakhn.privatewiki.client.components
 
-import com.gshakhn.privatewiki.client.{LockedBinder, UnlockedBinder}
 import com.gshakhn.privatewiki.client.Events.UnlockBinder
+import com.gshakhn.privatewiki.client.{Binder, LockedBinder, UnlockedBinder}
 import japgolly.scalajs.react.{React, SyntheticEvent}
 import org.scalajs.dom
-import org.scalajs.dom.HTMLInputElement
+import org.scalajs.dom.raw.HTMLInputElement
 import org.scalajs.jquery._
-import scalatags.JsDom.all._
 import utest._
 import utest.framework.{Test, TestSuite}
 import utest.util.Tree
+
+import scalatags.JsDom.all._
 
 object BinderListTest extends TestSuite {
 
@@ -26,68 +27,73 @@ object BinderListTest extends TestSuite {
 
   def tests: Tree[Test] = TestSuite {
     "with no binders" - {
-      React.render(BinderList(Seq(), noopUnlock), containingDiv)
+      implicit val binders: Seq[Binder] = Seq()
       "unordered list" - {
-        val ul = jQuery("ul")
-        "should exist" - {
+        def ul = jQuery("ul")
+        "should exist" - reactTest(() => {
           assert(ul.length == 1)
-        }
-        "should be styled with bootstrap" - {
+        })
+        "should be styled with bootstrap" - reactTest(() => {
           assert(ul.hasClass("list-group"))
-        }
+        })
         "inner list items" - {
-          val li = ul.find("li")
-          "should not exist" - {
+          def li = ul.find("li")
+          "should not exist" - reactTest(() => {
             assert(li.length == 0)
-          }
+          })
         }
       }
     }
     "with 1 locked binder" - {
-      React.render(BinderList(Seq(LockedBinder("binder1", "")), noopUnlock), containingDiv)
+      implicit val binders: Seq[Binder] = Seq(LockedBinder("binder1", ""))
       "unordered list" - {
-        val ul = jQuery("ul")
-        "should exist" - {
+        def ul = jQuery("ul")
+        "should exist" - reactTest(() => {
           assert(ul.length == 1)
-        }
-        "should be styled with bootstrap" - {
+        })
+        "should be styled with bootstrap" - reactTest(() => {
           assert(ul.hasClass("list-group"))
-        }
+        })
         "inner list items" - {
-          val li = ul.find("li")
-          "should have 1 exist" - {
+          def li = ul.find("li")
+          "should have 1 exist" - reactTest(() => {
             assert(li.length == 1)
-          }
-          "should be styled with bootstrap" - {
+          })
+          "should be styled with bootstrap" - reactTest(() => {
             assert(li.hasClass("list-group-item"))
-          }
-          "should have class binder-list-item" - {
+          })
+          "should have class binder-list-item" - reactTest(() => {
             assert(li.hasClass("binder-list-item"))
-          }
-          "should be marked locked" - {
+          })
+          "should be marked locked" - reactTest(() => {
             val span = li.find("span")
             assert(li.hasClass("locked-binder"))
             assert(span.hasClass("glyphicon"))
             assert(span.hasClass("glyphicon-lock"))
-          }
+          })
         }
       }
     }
     "with 1 unlocked binder" - {
-      React.render(BinderList(Seq(UnlockedBinder("binder1")), noopUnlock), containingDiv)
+      implicit val binders: Seq[Binder] = Seq(UnlockedBinder("binder1"))
       "unordered list" - {
-        val ul = jQuery("ul")
+        def ul = jQuery("ul")
         "inner list items" - {
-          val li = ul.find("li")
-          "should be marked unlocked" - {
+          def li = ul.find("li")
+          "should be marked unlocked" - reactTest(() => {
             val span = li.find("span")
             assert(li.hasClass("unlocked-binder"))
             assert(!span.hasClass("glyphicon"))
             assert(!span.hasClass("glyphicon-lock"))
-          }
+          })
         }
       }
     }
+  }
 
+  def reactTest(x: () => Unit)(implicit binders: Seq[Binder]): Unit = {
+    React.render(BinderList(binders, noopUnlock), containingDiv)
+    x()
+    React.unmountComponentAtNode(containingDiv)
   }
 }

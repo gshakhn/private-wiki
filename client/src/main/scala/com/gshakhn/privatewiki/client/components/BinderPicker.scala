@@ -4,7 +4,6 @@ import com.gshakhn.privatewiki.client.BinderPickerData
 import com.gshakhn.privatewiki.client.Events.{BinderAdd, BinderPasswordChange, BinderNameChange}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
-import org.scalajs.dom.HTMLInputElement
 
 object BinderPicker {
   val binderNameInputId: String = "binder-name-input"
