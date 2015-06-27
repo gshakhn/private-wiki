@@ -18,20 +18,7 @@ val commonSettings = Seq(
   scalacOptions ++= Seq(
    "-feature",
    "-deprecation",
-   "-Xlint:adapted-args",
-   "-Xlint:by-name-right-associative",
-   "-Xlint:delayedinit-select",
-   "-Xlint:doc-detached",
-   "-Xlint:inaccessible",
-   "-Xlint:infer-any",
-   "-Xlint:missing-interpolator",
-   "-Xlint:nullary-override",
-   "-Xlint:nullary-unit",
-   "-Xlint:option-implicit",
-   "-Xlint:package-object-classes",
-   "-Xlint:poly-implicit-overload",
-   "-Xlint:private-shadow",
-   "-Xlint:unsound-match",
+   "-Xlint",
    "-Xfatal-warnings"
   )
 ) ++ linterSettings
