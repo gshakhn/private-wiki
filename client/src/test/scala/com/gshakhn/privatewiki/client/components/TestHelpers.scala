@@ -65,7 +65,7 @@ trait TestHelpers {
   }
 
   def clickUnlockBinder(binderIndex: Int): Unit = {
-    val li = jQuery(".binder-list-item")(0)
+    val li = jQuery(".binder-list-item")(binderIndex)
     ReactTestUtils.Simulate.click(li)
   }
 
