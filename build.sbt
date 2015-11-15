@@ -4,15 +4,11 @@ scalaVersion in ThisBuild := "2.11.6"
 
 organization in ThisBuild := "com.gshakhn"
 
-val linterSettings = Seq(
-  resolvers += "Linter Repository" at "https://hairyfotr.github.io/linteRepo/releases",
-  addCompilerPlugin("com.foursquare.lint" %% "linter" % "0.1.11")
-)
-
 val commonSettings = Seq(
   libraryDependencies += "com.lihaoyi" %% "acyclic" % "0.1.2" % "provided",
   autoCompilerPlugins := true,
   addCompilerPlugin("com.lihaoyi" %% "acyclic" % "0.1.2"),
+  addCompilerPlugin("org.psywerx.hairyfotr" %% "linter" % "0.1.12"),
   libraryDependencies += "com.lihaoyi" %%% "utest" % "0.3.1",
   testFrameworks += new TestFramework("utest.runner.Framework"),
   scalacOptions ++= Seq(
@@ -21,7 +17,7 @@ val commonSettings = Seq(
    "-Xlint",
    "-Xfatal-warnings"
   )
-) ++ linterSettings
+)
 
 val sprayVersion = "1.3.3"
 val upickleVersion = "0.2.8"
