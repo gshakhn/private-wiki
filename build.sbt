@@ -1,6 +1,6 @@
 import spray.revolver.RevolverPlugin.Revolver
 
-scalaVersion in ThisBuild := "2.11.6"
+scalaVersion in ThisBuild := "2.11.7"
 
 organization in ThisBuild := "com.gshakhn"
 
