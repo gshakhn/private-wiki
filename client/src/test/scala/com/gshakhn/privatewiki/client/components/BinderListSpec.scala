@@ -134,7 +134,7 @@ class BinderListSpec extends path.FunSpec with Matchers {
 
   def noopUnlock: LockedBinder => UnlockBinder = {
     b => new UnlockBinder {
-      override def apply(): Callback = Callback(() => Unit)
+      override def apply(): Callback = Callback.empty
     }
   }
 
