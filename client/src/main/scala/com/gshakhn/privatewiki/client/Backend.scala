@@ -61,23 +61,22 @@ class Backend(t: BackendScope[_, State], client : Client) {
     new BinderAdd {
       override def apply(e: ReactEventI): Callback = {
         e.preventDefaultCB >>
-        t.state.map { s =>
-          val binderPickerData = s.binderPickerData
-          if (binderPickerData.hasData) {
-            client.authenticateBinder(AuthenticationRequest(binderPickerData.binderName, binderPickerData.binderPassword)).onComplete {
-              case Failure(_) =>
-              // todo - do something
-              case Success(result) =>
-                result match {
+          t.state.flatMap { s =>
+            val binderPickerData = s.binderPickerData
+            if (binderPickerData.hasData) {
+              Callback.future {
+                client.authenticateBinder(AuthenticationRequest(binderPickerData.binderName, binderPickerData.binderPassword)).map {
                   case WrongPassword =>
                     t.modState(s => s.copy(binderPickerData = s.binderPickerData.copy(wrongPassword = true)))
                   case BinderLoaded(binderName, binderData) =>
                     t.modState(s => s.copy(binderList = s.binderList :+ LockedBinder(binderName, binderData),
                       binderPickerData = BinderPickerData("", "", wrongPassword = false)))
                 }
+              }
+            } else {
+              Callback.empty
             }
           }
-        }
       }
 
     }
