@@ -1,7 +1,7 @@
 package com.gshakhn.privatewiki.client.components
 
 import com.gshakhn.privatewiki.client.BinderPickerData
-import com.gshakhn.privatewiki.client.Events.{BinderAdd, BinderPasswordChange, BinderNameChange}
+import com.gshakhn.privatewiki.client.Events.{BinderAdd, BinderNameChange, BinderPasswordChange}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 
@@ -15,7 +15,7 @@ object BinderPicker {
                                binderAdd: BinderAdd)
 
   private[this] val component = ReactComponentB[BinderPickerProps]("BinderPicker")
-    .render(
+    .render_P(
       props =>
         <.form(
           ^.id := "binder-form",

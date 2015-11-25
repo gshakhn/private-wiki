@@ -1,16 +1,16 @@
 package com.gshakhn.privatewiki.client.components
 
-import com.gshakhn.privatewiki.client.{Binder, LockedBinder, UnlockedBinder}
 import com.gshakhn.privatewiki.client.Events.UnlockBinder
+import com.gshakhn.privatewiki.client.{Binder, LockedBinder, UnlockedBinder}
 import japgolly.scalajs.react.vdom.prefix_<^._
-import japgolly.scalajs.react.{ReactComponentB, ReactComponentU, TopNode}
+import japgolly.scalajs.react._
 
 object BinderList {
   case class BinderListProps(binders: Seq[Binder],
                              unlockBinder: LockedBinder => UnlockBinder)
   
   private[this] val component = ReactComponentB[BinderListProps]("BinderList")
-    .render(
+    .render_P(
       props =>
         <.ul(
           ^.cls := "list-group",
@@ -31,16 +31,17 @@ object LockedBinderComponent {
                                unlockBinder: LockedBinder => UnlockBinder)
 
   private[this] val component = ReactComponentB[LockedBinderProps]("LockedBinder")
-    .render(
-      props =>
+    .render_P(
+      props => {
         <.li(
           ^.cls := "list-group-item binder-list-item locked-binder",
           props.binder.name,
-        ^.onClick ==> props.unlockBinder(props.binder),
-        <.span(
+          ^.onClick --> props.unlockBinder(props.binder)(),
+          <.span(
             ^.cls := "glyphicon glyphicon-lock pull-right"
           )
         )
+      }
     ).build
   
   def apply(binder: LockedBinder,
@@ -52,7 +53,7 @@ object LockedBinderComponent {
 object UnlockedBinderComponent {
   def apply(b: UnlockedBinder): ReactComponentU[UnlockedBinder, Unit, Unit, TopNode] = {
     val component = ReactComponentB[UnlockedBinder]("UnlockedBinder")
-      .render(
+      .render_P(
         binder =>
           <.li(
             ^.cls := "list-group-item binder-list-item unlocked-binder",

@@ -2,8 +2,9 @@ package com.gshakhn.privatewiki.client
 
 import com.gshakhn.privatewiki.client.components.PrivateWiki
 import com.gshakhn.privatewiki.shared.{AuthenticationRequest, AuthenticationResponse}
-import japgolly.scalajs.react.React
+import japgolly.scalajs.react.ReactDOM
 import org.scalajs.dom
+
 import scala.concurrent.Future
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
 import scala.scalajs.js.annotation.JSExport
@@ -15,7 +16,7 @@ object PrivateWikiRenderer {
   def render(): Unit = {
     val mainDiv = div().render
     dom.document.body.appendChild(mainDiv)
-    React.render(PrivateWiki(new Backend(_, ActualClient)), mainDiv)
+    ReactDOM.render(PrivateWiki(new Backend(_, ActualClient)), mainDiv)
   }
 }
 

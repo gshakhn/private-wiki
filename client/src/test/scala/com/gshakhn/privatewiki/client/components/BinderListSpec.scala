@@ -2,9 +2,8 @@ package com.gshakhn.privatewiki.client.components
 
 import com.gshakhn.privatewiki.client.Events.UnlockBinder
 import com.gshakhn.privatewiki.client.{Binder, LockedBinder, UnlockedBinder}
-import japgolly.scalajs.react.{React, SyntheticEvent}
+import japgolly.scalajs.react.{Callback, ReactDOM}
 import org.scalajs.dom
-import org.scalajs.dom.raw.HTMLInputElement
 import org.scalajs.jquery._
 import org.scalatest.{Matchers, path}
 
@@ -131,17 +130,15 @@ class BinderListSpec extends path.FunSpec with Matchers {
 
   }
 
-  React.unmountComponentAtNode(containingDiv)
+  ReactDOM.unmountComponentAtNode(containingDiv)
 
   def noopUnlock: LockedBinder => UnlockBinder = {
     b => new UnlockBinder {
-      override def apply(e: SyntheticEvent[HTMLInputElement]): Unit = {
-
-      }
+      override def apply(): Callback = Callback(() => Unit)
     }
   }
 
   def render(implicit binders: Seq[Binder]): Unit = {
-    React.render(BinderList(binders, noopUnlock), containingDiv)
+    ReactDOM.render(BinderList(binders, noopUnlock), containingDiv)
   }
 }

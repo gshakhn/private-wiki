@@ -1,16 +1,16 @@
 package com.gshakhn.privatewiki.client.components
 
 import com.gshakhn.privatewiki.client.{Backend, BinderPickerData, State}
-import japgolly.scalajs.react.{BackendScope, ReactComponentB, ReactComponentU, TopNode}
 import japgolly.scalajs.react.vdom.prefix_<^._
+import japgolly.scalajs.react.{BackendScope, ReactComponentB, ReactComponentU, TopNode}
 
 object PrivateWiki {
   def apply(backend: BackendScope[_, State] => Backend): ReactComponentU[Unit, State, Backend, TopNode] = {
     val component = ReactComponentB[Unit]("PrivateWiki")
       .initialState(State(Seq(), BinderPickerData("", "", wrongPassword = false)))
       .backend(backend)
-      .render(
-        (_, S, B) => {
+      .renderS(
+        ($, S) => {
           <.div(
             ^.id := "mainContainer",
             ^.cls := "container",
@@ -20,7 +20,7 @@ object PrivateWiki {
               <.div(
                 ^.id := "col-1-1",
                 ^.cls := "col-md-4",
-                BinderPicker(S.binderPickerData, B.newBinderNameChange, B.newBinderPasswordChange, B.newBinderAdd)
+                BinderPicker(S.binderPickerData, $.backend.newBinderNameChange, $.backend.newBinderPasswordChange, $.backend.newBinderAdd)
               )
             ),
             <.div(
@@ -29,7 +29,7 @@ object PrivateWiki {
               <.div(
                 ^.id := "col-2-1",
                 ^.cls := "col-md-4",
-                BinderList(S.binderList, B.unlockBinder)
+                BinderList(S.binderList, $.backend.unlockBinder)
               )
             )
           )}).buildU
