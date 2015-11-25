@@ -2,8 +2,8 @@ package com.gshakhn.privatewiki.client.components
 
 import com.gshakhn.privatewiki.client._
 import com.gshakhn.privatewiki.client.components.PageInteractions._
-import com.gshakhn.privatewiki.shared.{BinderLoaded, WrongPassword, AuthenticationRequest, AuthenticationResponse}
-import japgolly.scalajs.react.React
+import com.gshakhn.privatewiki.shared.{AuthenticationRequest, AuthenticationResponse, BinderLoaded, WrongPassword}
+import japgolly.scalajs.react.ReactDOM
 import org.scalajs.dom
 import org.scalajs.jquery._
 import org.scalatest.{Matchers, path}
@@ -85,7 +85,7 @@ class LoadingBindersSpec extends path.FunSpec with Matchers {
     }
   }
 
-  React.unmountComponentAtNode(containingDiv)
+  ReactDOM.unmountComponentAtNode(containingDiv)
 
   class TestClient extends Client {
     var response: AuthenticationResponse = _
@@ -98,6 +98,6 @@ class LoadingBindersSpec extends path.FunSpec with Matchers {
   }
 
   def render(implicit client: TestClient): Unit = {
-    React.render(PrivateWiki(new Backend(_, client)), containingDiv)
+    ReactDOM.render(PrivateWiki(new Backend(_, client)), containingDiv)
   }
 }
