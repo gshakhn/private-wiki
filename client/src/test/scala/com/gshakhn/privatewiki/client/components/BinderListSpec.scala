@@ -1,13 +1,12 @@
 package com.gshakhn.privatewiki.client.components
 
 import com.gshakhn.privatewiki.client.Events.UnlockBinder
-import com.gshakhn.privatewiki.client.{UnlockedBinder, LockedBinder, Binder}
-import japgolly.scalajs.react.{SyntheticEvent, React}
+import com.gshakhn.privatewiki.client.{Binder, LockedBinder, UnlockedBinder}
+import japgolly.scalajs.react.{React, SyntheticEvent}
 import org.scalajs.dom
 import org.scalajs.dom.raw.HTMLInputElement
 import org.scalajs.jquery._
-import org.scalatest.{path, Matchers}
-import utest._
+import org.scalatest.{Matchers, path}
 
 import scalatags.JsDom.all._
 

@@ -1,12 +1,8 @@
 package com.gshakhn.privatewiki.client.components
 
-import com.gshakhn.privatewiki.client.{Backend, Client}
-import com.gshakhn.privatewiki.shared.{AuthenticationRequest, AuthenticationResponse}
-import japgolly.scalajs.react.React
 import japgolly.scalajs.react.test.{ChangeEventData, ReactTestUtils}
 import org.scalajs.dom
 import org.scalajs.jquery._
-import utest._
 
 object PageInteractions {
 
