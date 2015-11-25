@@ -1,7 +1,7 @@
 package com.gshakhn.privatewiki.client.components
 
 import com.gshakhn.privatewiki.client._
-import com.gshakhn.privatewiki.client.components.TestHelpers2._
+import com.gshakhn.privatewiki.client.components.PageInteractions._
 import com.gshakhn.privatewiki.shared.{BinderLoaded, WrongPassword, AuthenticationRequest, AuthenticationResponse}
 import japgolly.scalajs.react.React
 import org.scalajs.dom

@@ -6,7 +6,7 @@ import japgolly.scalajs.react.React
 import org.scalajs.dom
 import org.scalajs.jquery._
 import org.scalatest.{Matchers, path}
-import TestHelpers2._
+import PageInteractions._
 
 import scala.concurrent.Future
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
