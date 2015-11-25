@@ -10,6 +10,7 @@ val commonSettings = Seq(
   addCompilerPlugin("com.lihaoyi" %% "acyclic" % "0.1.2"),
   addCompilerPlugin("org.psywerx.hairyfotr" %% "linter" % "0.1.12"),
   libraryDependencies += "com.lihaoyi" %%% "utest" % "0.3.1",
+  libraryDependencies += "org.scalatest" %%% "scalatest" % "3.0.0-M11" % "test",
   testFrameworks += new TestFramework("utest.runner.Framework"),
   scalacOptions ++= Seq(
    "-feature",
@@ -48,7 +49,6 @@ val client = project.dependsOn(sharedJS)
                         "com.lihaoyi" %%% "scalatags" % scalatagsVersion,
                         "be.doeraene" %%% "scalajs-jquery" % "0.8.0",
                         "org.scala-js" %%% "scalajs-dom" % "0.8.0",
-                        "org.scalatest" %%% "scalatest" % "3.0.0-M11" % "test",
                         "org.webjars" % "bootstrap" % bootstrapVersion))
 
 val server = project.dependsOn(sharedJVM)
