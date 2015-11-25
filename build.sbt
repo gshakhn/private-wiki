@@ -9,9 +9,7 @@ val commonSettings = Seq(
   autoCompilerPlugins := true,
   addCompilerPlugin("com.lihaoyi" %% "acyclic" % "0.1.2"),
   addCompilerPlugin("org.psywerx.hairyfotr" %% "linter" % "0.1.12"),
-  libraryDependencies += "com.lihaoyi" %%% "utest" % "0.3.1",
   libraryDependencies += "org.scalatest" %%% "scalatest" % "3.0.0-M11" % "test",
-  testFrameworks += new TestFramework("utest.runner.Framework"),
   scalacOptions ++= Seq(
    "-feature",
    "-deprecation",
