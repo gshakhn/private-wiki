@@ -1,6 +1,6 @@
 addSbtPlugin("org.scala-js" % "sbt-scalajs" % "0.6.5")
 
-addSbtPlugin("com.sksamuel.sbt-versions" % "sbt-versions" % "0.2.0")
+addSbtPlugin("com.timushev.sbt" % "sbt-updates" % "0.1.9")
 
 addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "0.7.0")
 
