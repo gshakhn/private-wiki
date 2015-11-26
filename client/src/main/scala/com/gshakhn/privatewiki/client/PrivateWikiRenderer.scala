@@ -4,6 +4,7 @@ import com.gshakhn.privatewiki.client.components.PrivateWiki
 import com.gshakhn.privatewiki.shared.{AuthenticationRequest, AuthenticationResponse}
 import japgolly.scalajs.react.ReactDOM
 import org.scalajs.dom
+import upickle.default._
 
 import scala.concurrent.Future
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
@@ -24,7 +25,7 @@ object ActualClient extends Client {
   def authenticateBinder(request: AuthenticationRequest): Future[AuthenticationResponse] = {
     dom.ext.Ajax.post(
       url = "/authenticateBinder",
-      data = upickle.write(request)
-    ).map(response => upickle.read[AuthenticationResponse](response.responseText))
+      data = write(request)
+    ).map(response => read[AuthenticationResponse](response.responseText))
   }
 }

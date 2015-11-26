@@ -4,6 +4,7 @@ import com.gshakhn.privatewiki.server.interactors.AuthenticationInteractorCompon
 import com.gshakhn.privatewiki.shared.AuthenticationRequest
 import spray.http.HttpResponse
 import spray.routing.{HttpService, Route}
+import upickle.default._
 
 trait AuthenticationService extends HttpService {
   this: AuthenticationInteractorComponent =>
@@ -12,9 +13,9 @@ trait AuthenticationService extends HttpService {
     path("authenticateBinder") {
       extract(_.request.entity.asString) { e =>
         complete {
-          val request = upickle.read[AuthenticationRequest](e)
+          val request = read[AuthenticationRequest](e)
           val response = authenticationInteractor.authenticateBinder(request)
-          HttpResponse(entity = upickle.write(response))
+          HttpResponse(entity = write(response))
         }
       }
     }

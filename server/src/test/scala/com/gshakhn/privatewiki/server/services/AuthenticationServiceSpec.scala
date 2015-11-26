@@ -5,6 +5,7 @@ import com.gshakhn.privatewiki.server.interactors.AuthenticationInteractorCompon
 import com.gshakhn.privatewiki.shared.{AuthenticationRequest, AuthenticationResponse, BinderLoaded, WrongPassword}
 import org.scalatest.{FunSpec, Matchers, OptionValues}
 import spray.testkit.ScalatestRouteTest
+import upickle.default._
 
 class AuthenticationServiceSpec
   extends FunSpec
@@ -21,7 +22,7 @@ class AuthenticationServiceSpec
       val expectedRequest: AuthenticationRequest = AuthenticationRequest("foo", "bar")
 
       it("passes the request to the interactor") {
-        Post("/authenticateBinder", upickle.write(expectedRequest)) ~> authRoute ~> check {
+        Post("/authenticateBinder", write(expectedRequest)) ~> authRoute ~> check {
           lastRequest.value == expectedRequest
         }
       }
@@ -30,8 +31,8 @@ class AuthenticationServiceSpec
         respondWith = WrongPassword
 
         it("returns that response") {
-          Post("/authenticateBinder", upickle.write(expectedRequest)) ~> authRoute ~> check {
-            upickle.read[AuthenticationResponse](responseAs[String]) shouldBe respondWith
+          Post("/authenticateBinder", write(expectedRequest)) ~> authRoute ~> check {
+            read[AuthenticationResponse](responseAs[String]) shouldBe respondWith
           }
         }
       }
@@ -40,8 +41,8 @@ class AuthenticationServiceSpec
         respondWith = BinderLoaded("foo", "bar")
 
         it("returns that response") {
-          Post("/authenticateBinder", upickle.write(expectedRequest)) ~> authRoute ~> check {
-            upickle.read[AuthenticationResponse](responseAs[String]) shouldBe respondWith
+          Post("/authenticateBinder", write(expectedRequest)) ~> authRoute ~> check {
+            read[AuthenticationResponse](responseAs[String]) shouldBe respondWith
           }
         }
       }
