@@ -6,4 +6,4 @@ addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "0.7.0")
 
 addSbtPlugin("io.spray" % "sbt-revolver" % "0.7.2")
 
-addSbtPlugin("com.gilt" % "sbt-dependency-graph-sugar" % "0.7.5-1")
+addSbtPlugin("net.virtual-void" % "sbt-dependency-graph" % "0.8.0")
