@@ -3,18 +3,12 @@ package com.gshakhn.privatewiki.client.components
 import com.gshakhn.privatewiki.client.Events.UnlockBinder
 import com.gshakhn.privatewiki.client.{Binder, LockedBinder, UnlockedBinder}
 import japgolly.scalajs.react.{Callback, ReactDOM}
-import org.scalajs.dom
 import org.scalajs.jquery._
-import org.scalatest.{Matchers, path}
+import org.scalatest.path
 
-import scalatags.JsDom.all._
-
-class BinderListSpec extends path.FunSpec with Matchers {
+class BinderListSpec extends ReactJsBaseSpec {
 
   override def newInstance: path.FunSpecLike = new BinderListSpec
-
-  val containingDiv = div(id := "containingDiv").render
-  dom.document.body.appendChild(containingDiv)
 
   describe("A BinderList") {
     describe("with no binders") {
@@ -127,10 +121,9 @@ class BinderListSpec extends path.FunSpec with Matchers {
         }
       }
     }
-
   }
 
-  ReactDOM.unmountComponentAtNode(containingDiv)
+  tearDown()
 
   def noopUnlock: LockedBinder => UnlockBinder = {
     b => new UnlockBinder {

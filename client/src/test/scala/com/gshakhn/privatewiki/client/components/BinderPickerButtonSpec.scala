@@ -1,27 +1,17 @@
 package com.gshakhn.privatewiki.client.components
 
-import com.gshakhn.privatewiki.client._
 import com.gshakhn.privatewiki.client.components.PageInteractions._
-import com.gshakhn.privatewiki.shared.{AuthenticationRequest, AuthenticationResponse}
-import japgolly.scalajs.react.ReactDOM
-import org.scalajs.dom
 import org.scalajs.jquery._
-import org.scalatest.{Matchers, path}
+import org.scalatest.path
 
-import scala.concurrent.Future
-import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
-import scalatags.JsDom.all._
-
-class BinderPickerButtonSpec extends path.FunSpec with Matchers {
+class BinderPickerButtonSpec extends PrivateWikiBaseSpec {
 
   override def newInstance: path.FunSpecLike = new BinderPickerButtonSpec
-
-  val containingDiv = div(id := "containingDiv").render
-  dom.document.body.appendChild(containingDiv)
 
   describe("A PrivateWiki with a BinderPicker component") {
     implicit val client = new TestClient
     render
+
     describe("with no binder name") {
       enterBinderName("")
 
@@ -63,19 +53,5 @@ class BinderPickerButtonSpec extends path.FunSpec with Matchers {
     }
   }
 
-  ReactDOM.unmountComponentAtNode(containingDiv)
-
-  class TestClient extends Client {
-    var response: AuthenticationResponse = _
-    var requestReceived: AuthenticationRequest = _
-
-    def authenticateBinder(request: AuthenticationRequest): Future[AuthenticationResponse] = {
-      requestReceived = request
-      Future(response)
-    }
-  }
-
-  def render(implicit client: TestClient): Unit = {
-    ReactDOM.render(PrivateWiki(new Backend(_, client)), containingDiv)
-  }
+  tearDown()
 }
