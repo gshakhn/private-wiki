@@ -5,8 +5,8 @@ import com.gshakhn.privatewiki.shared._
 import japgolly.scalajs.react.{BackendScope, Callback, _}
 
 import scala.concurrent.Future
+import scala.language.implicitConversions
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
-import scala.util.{Failure, Success}
 
 case class BinderPickerData(binderName: String, binderPassword: String, wrongPassword: Boolean) {
   def hasData: Boolean = !binderName.isEmpty && !binderPassword.isEmpty
@@ -32,10 +32,15 @@ trait Client {
 }
 
 object Events {
-  trait BinderNameChange extends (ReactEventI => Callback)
-  trait BinderPasswordChange extends (ReactEventI => Callback)
-  trait BinderAdd extends (ReactEventI => Callback)
-  trait UnlockBinder extends (() => Callback)
+  sealed trait EventI extends (ReactEventI => Callback)
+  trait BinderNameChange extends EventI
+  trait BinderPasswordChange extends EventI
+  trait BinderAdd extends EventI
+
+  sealed trait Event extends (() => Callback)
+  implicit def eventToCallback(e: Event): Callback = e()
+
+  trait UnlockBinder extends Event
 }
 
 class Backend(t: BackendScope[_, State], client : Client) {

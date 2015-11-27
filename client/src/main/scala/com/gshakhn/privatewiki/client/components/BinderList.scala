@@ -36,7 +36,7 @@ object LockedBinderComponent {
         <.li(
           ^.cls := "list-group-item binder-list-item locked-binder",
           props.binder.name,
-          ^.onClick --> props.unlockBinder(props.binder)(),
+          ^.onClick --> props.unlockBinder(props.binder),
           <.span(
             ^.cls := "glyphicon glyphicon-lock pull-right"
           )
