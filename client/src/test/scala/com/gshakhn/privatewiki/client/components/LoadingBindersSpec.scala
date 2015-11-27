@@ -49,11 +49,11 @@ class LoadingBindersSpec extends PrivateWikiBaseSpec {
           client.requestReceived shouldBe AuthenticationRequest("binder", "secure")
         }
 
-        it("cleara the binder name") {
+        it("clears the binder name") {
           jQuery(s"#${BinderPicker.binderNameInputId}").value() shouldBe ""
         }
 
-        it("cleara the binder password") {
+        it("clears the binder password") {
           jQuery(s"#${BinderPicker.binderServerPasswordId}").value() shouldBe ""
         }
 
