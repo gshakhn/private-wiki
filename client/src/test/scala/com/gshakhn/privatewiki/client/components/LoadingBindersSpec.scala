@@ -58,17 +58,18 @@ class LoadingBindersSpec extends PrivateWikiBaseSpec {
         }
 
         describe("loads the binder") {
+          val listItems = jQuery(".binder-list-item")
+
           it("into the list") {
-            val listItems = jQuery(".binder-list-item")
             listItems.length shouldBe 1
           }
 
           it("with its name") {
-            pending
+            listItems.eq(0).text() shouldBe "new binder"
           }
 
-          it("unlocked") {
-            pending
+          it("locked") {
+            listItems.eq(0).hasClass("locked-binder") shouldBe true
           }
         }
       }
