@@ -25,7 +25,7 @@ class BinderListSpec extends ReactJsBaseSpec {
           }
 
           it("is styled with bootstrap") {
-            ul.hasClass("list-group") shouldBe true
+            ul should haveClass("list-group")
           }
 
           it("has no list items") {
@@ -50,7 +50,7 @@ class BinderListSpec extends ReactJsBaseSpec {
           }
 
           it("is styled with bootstrap") {
-            ul.hasClass("list-group") shouldBe true
+            ul should haveClass("list-group")
           }
 
           describe("has list items") {
@@ -61,18 +61,18 @@ class BinderListSpec extends ReactJsBaseSpec {
             }
 
             it("styled with bootstrap") {
-              li.hasClass("list-group-item") shouldBe true
+              li should haveClass("list-group-item")
             }
 
             it("with class 'binder-list-item'") {
-              li.hasClass("binder-list-item") shouldBe true
+              li should haveClass("binder-list-item")
             }
 
             it("marked locked") {
-              val span = li.find("span")
-              li.hasClass("locked-binder") shouldBe true
-              span.hasClass("glyphicon") shouldBe true
-              span.hasClass("glyphicon-lock") shouldBe true
+              val span = li.find("span.pull-right")
+              li should haveClass("locked-binder")
+              span should haveClass("glyphicon")
+              span should haveClass("glyphicon-lock")
             }
           }
         }
@@ -93,7 +93,7 @@ class BinderListSpec extends ReactJsBaseSpec {
           }
 
           it("is styled with bootstrap") {
-            ul.hasClass("list-group") shouldBe true
+            ul should haveClass("list-group")
           }
 
           describe("has list items") {
@@ -104,18 +104,18 @@ class BinderListSpec extends ReactJsBaseSpec {
             }
 
             it("styled with bootstrap") {
-              li.hasClass("list-group-item") shouldBe true
+              li should haveClass("list-group-item")
             }
 
             it("with class 'binder-list-item'") {
-              li.hasClass("binder-list-item") shouldBe true
+              li should haveClass("binder-list-item")
             }
 
             it("marked unlocked") {
               val span = li.find("span")
-              li.hasClass("unlocked-binder") shouldBe true
-              span.hasClass("glyphicon") shouldBe false
-              span.hasClass("glyphicon-lock") shouldBe false
+              li should haveClass("unlocked-binder")
+              span shouldNot haveClass("glyphicon")
+              span shouldNot haveClass("glyphicon-lock")
             }
           }
         }

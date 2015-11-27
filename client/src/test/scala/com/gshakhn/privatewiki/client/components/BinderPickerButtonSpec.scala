@@ -19,7 +19,7 @@ class BinderPickerButtonSpec extends PrivateWikiBaseSpec {
         enterBinderPassword("")
 
         it("should disable the button") {
-          jQuery("#binder-button").hasClass("disabled") shouldBe true
+          jQuery("#binder-button") should haveClass("disabled")
         }
       }
 
@@ -27,7 +27,7 @@ class BinderPickerButtonSpec extends PrivateWikiBaseSpec {
         enterBinderPassword("secure")
 
         it("should disable the button") {
-          jQuery("#binder-button").hasClass("disabled") shouldBe true
+          jQuery("#binder-button") should haveClass("disabled")
         }
       }
     }
@@ -39,7 +39,7 @@ class BinderPickerButtonSpec extends PrivateWikiBaseSpec {
         enterBinderPassword("")
 
         it("should disable the button") {
-          jQuery("#binder-button").hasClass("disabled") shouldBe true
+          jQuery("#binder-button") should haveClass("disabled")
         }
       }
 
@@ -47,7 +47,7 @@ class BinderPickerButtonSpec extends PrivateWikiBaseSpec {
         enterBinderPassword("secure")
 
         it("should enable the button") {
-          jQuery("#binder-button").hasClass("disabled") shouldBe false
+          jQuery("#binder-button") shouldNot haveClass("disabled")
         }
       }
     }

@@ -6,7 +6,7 @@ import org.scalatest.{Matchers, path}
 
 import scalatags.JsDom.all._
 
-trait ReactJsBaseSpec extends path.FunSpec with Matchers {
+trait ReactJsBaseSpec extends path.FunSpec with Matchers with CustomMatchers {
 
   val containingDiv = div(id := "containingDiv").render
   dom.document.body.appendChild(containingDiv)

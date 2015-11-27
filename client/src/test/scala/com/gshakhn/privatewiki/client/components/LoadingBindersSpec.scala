@@ -37,7 +37,7 @@ class LoadingBindersSpec extends PrivateWikiBaseSpec {
 
         it("shows an error in the password field") {
           val passwordForm = jQuery(s"#${BinderPicker.binderServerPasswordFormId}")
-          passwordForm.hasClass("has-error") shouldBe true
+          passwordForm should haveClass("has-error")
         }
       }
 
@@ -69,7 +69,7 @@ class LoadingBindersSpec extends PrivateWikiBaseSpec {
           }
 
           it("locked") {
-            listItems.eq(0).hasClass("locked-binder") shouldBe true
+            listItems.eq(0) should haveClass("locked-binder")
           }
         }
       }
