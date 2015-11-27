@@ -2,6 +2,7 @@ package com.gshakhn.privatewiki.client.components
 
 import com.gshakhn.privatewiki.client.Events.UnlockBinder
 import com.gshakhn.privatewiki.client.{Binder, LockedBinder, UnlockedBinder}
+import com.gshakhn.privatewiki.shared.NoEncryption
 import japgolly.scalajs.react.{Callback, ReactDOM}
 import org.scalajs.jquery._
 import org.scalatest.path
@@ -37,7 +38,7 @@ class BinderListSpec extends ReactJsBaseSpec {
     }
 
     describe("with 1 locked binder") {
-      implicit val binders: Seq[Binder] = Seq(LockedBinder("binder1", ""))
+      implicit val binders: Seq[Binder] = Seq(LockedBinder("binder1", NoEncryption, ""))
 
       describe("renders") {
         render
@@ -73,6 +74,10 @@ class BinderListSpec extends ReactJsBaseSpec {
               li should haveClass("locked-binder")
               span should haveClass("glyphicon")
               span should haveClass("glyphicon-lock")
+            }
+
+            it("with data attribute binder-name set to the binder name") {
+              li.data("binder-name") shouldBe "binder1"
             }
           }
         }
@@ -116,6 +121,10 @@ class BinderListSpec extends ReactJsBaseSpec {
               li should haveClass("unlocked-binder")
               span shouldNot haveClass("glyphicon")
               span shouldNot haveClass("glyphicon-lock")
+            }
+
+            it("with data attribute binder-name set to the binder name") {
+              li.data("binder-name") shouldBe "binder1"
             }
           }
         }

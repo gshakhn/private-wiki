@@ -36,6 +36,7 @@ object LockedBinderComponent {
         <.li(
           ^.cls := "list-group-item binder-list-item locked-binder",
           props.binder.name,
+          "data-binder-name".reactAttr := props.binder.name,
           ^.onClick --> props.unlockBinder(props.binder),
           <.span(
             ^.cls := "glyphicon glyphicon-lock pull-right"
@@ -57,7 +58,8 @@ object UnlockedBinderComponent {
         binder =>
           <.li(
             ^.cls := "list-group-item binder-list-item unlocked-binder",
-            binder.name
+            binder.name,
+            "data-binder-name".reactAttr := binder.name
           )
       ).build
     component(b)

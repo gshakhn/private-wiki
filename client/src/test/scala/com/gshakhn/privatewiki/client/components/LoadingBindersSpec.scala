@@ -1,7 +1,7 @@
 package com.gshakhn.privatewiki.client.components
 
 import com.gshakhn.privatewiki.client.components.PageInteractions._
-import com.gshakhn.privatewiki.shared.{AuthenticationRequest, BinderLoaded, WrongPassword}
+import com.gshakhn.privatewiki.shared.{NoEncryption, AuthenticationRequest, BinderLoaded, WrongPassword}
 import org.scalajs.jquery._
 import org.scalatest.path
 
@@ -42,7 +42,7 @@ class LoadingBindersSpec extends PrivateWikiBaseSpec {
       }
 
       describe("with the right password") {
-        client.response = BinderLoaded("binder", "")
+        client.response = BinderLoaded("binder", NoEncryption, "")
         clickLoadBinder()
 
         it("makes the authentication request") {
@@ -78,7 +78,7 @@ class LoadingBindersSpec extends PrivateWikiBaseSpec {
     describe("after a binder is loaded") {
       enterBinderName("binder")
       enterBinderPassword("secure")
-      client.response = BinderLoaded("binder", "")
+      client.response = BinderLoaded("binder", NoEncryption, "")
       clickLoadBinder()
       client.requestReceived = None
 
@@ -86,7 +86,7 @@ class LoadingBindersSpec extends PrivateWikiBaseSpec {
 
         enterBinderName("binder")
         enterBinderPassword("secure")
-        client.response = BinderLoaded("binder", "")
+        client.response = BinderLoaded("binder", NoEncryption, "")
         clickLoadBinder()
 
         it("will not make an authentication request") {

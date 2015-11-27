@@ -1,6 +1,6 @@
 package com.gshakhn.privatewiki.server.interactors
 
-import com.gshakhn.privatewiki.shared.{WrongPassword, BinderLoaded, AuthenticationRequest, AuthenticationResponse}
+import com.gshakhn.privatewiki.shared._
 
 trait AuthenticationInteractorComponent {
   def authenticationInteractor: AuthenticationInteractor
@@ -15,8 +15,8 @@ trait FakeAuthenticationInteractorComponent extends AuthenticationInteractorComp
 
   class FakeAuthenticationInteractor extends AuthenticationInteractor {
     def authenticateBinder(request: AuthenticationRequest): AuthenticationResponse = request match {
-      case AuthenticationRequest("secure", "password") => BinderLoaded("secure", "")
-      case AuthenticationRequest("unsecure", _) => BinderLoaded("unsecure", "")
+      case AuthenticationRequest("secure", "password") => BinderLoaded("secure", NoEncryption, "")
+      case AuthenticationRequest("unsecure", _) => BinderLoaded("unsecure", NoEncryption, "")
       case _ => WrongPassword
     }
   }

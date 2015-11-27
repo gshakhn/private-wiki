@@ -17,7 +17,7 @@ sealed trait Binder {
   def locked: Boolean
 }
 
-case class LockedBinder(name: String, data: String) extends Binder {
+case class LockedBinder(name: String, encryptionType: EncryptionType, data: String) extends Binder {
   def locked: Boolean = true
 }
 
@@ -76,8 +76,8 @@ class Backend(t: BackendScope[_, State], client : Client) {
                   client.authenticateBinder(AuthenticationRequest(binderPickerData.binderName, binderPickerData.binderPassword)).map {
                     case WrongPassword =>
                       t.modState(s => s.copy(binderPickerData = s.binderPickerData.copy(wrongPassword = true)))
-                    case BinderLoaded(binderName, binderData) =>
-                      t.modState(s => s.copy(binderList = s.binderList :+ LockedBinder(binderName, binderData),
+                    case BinderLoaded(binderName, encryptionType, binderData) =>
+                      t.modState(s => s.copy(binderList = s.binderList :+ LockedBinder(binderName, encryptionType, binderData),
                         binderPickerData = BinderPickerData("", "", wrongPassword = false)))
                   }
                 }

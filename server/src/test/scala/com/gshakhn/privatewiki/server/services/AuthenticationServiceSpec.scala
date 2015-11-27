@@ -2,7 +2,7 @@ package com.gshakhn.privatewiki.server.services
 
 import akka.actor.ActorRefFactory
 import com.gshakhn.privatewiki.server.interactors.AuthenticationInteractorComponent
-import com.gshakhn.privatewiki.shared.{AuthenticationRequest, AuthenticationResponse, BinderLoaded, WrongPassword}
+import com.gshakhn.privatewiki.shared._
 import org.scalatest.{FunSpec, Matchers, OptionValues}
 import spray.testkit.ScalatestRouteTest
 import upickle.default._
@@ -38,7 +38,7 @@ class AuthenticationServiceSpec
       }
 
       describe("with a stubbed binder loaded response") {
-        respondWith = BinderLoaded("foo", "bar")
+        respondWith = BinderLoaded("foo", NoEncryption, "bar")
 
         it("returns that response") {
           Post("/authenticateBinder", write(expectedRequest)) ~> authRoute ~> check {

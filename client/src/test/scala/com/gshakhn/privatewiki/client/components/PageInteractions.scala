@@ -11,8 +11,8 @@ object PageInteractions {
     ReactTestUtils.Simulate.click(button)
   }
 
-  def clickUnlockBinder(binderIndex: Int): Unit = {
-    val li = jQuery(".binder-list-item")(binderIndex)
+  def clickUnlockBinder(binderName: String): Unit = {
+    val li = jQuery( s""".binder-list-item[data-binder-name="$binderName"]""").get(0)
     ReactTestUtils.Simulate.click(li)
   }
 
