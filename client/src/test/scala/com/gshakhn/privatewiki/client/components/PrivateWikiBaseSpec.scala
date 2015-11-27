@@ -10,10 +10,10 @@ import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
 trait PrivateWikiBaseSpec extends ReactJsBaseSpec {
   class TestClient extends Client {
     var response: AuthenticationResponse = _
-    var requestReceived: AuthenticationRequest = _
+    var requestReceived: Option[AuthenticationRequest] = None
 
     def authenticateBinder(request: AuthenticationRequest): Future[AuthenticationResponse] = {
-      requestReceived = request
+      requestReceived = Some(request)
       Future(response)
     }
   }

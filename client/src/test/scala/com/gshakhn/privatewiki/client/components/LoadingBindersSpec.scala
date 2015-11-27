@@ -27,10 +27,10 @@ class LoadingBindersSpec extends PrivateWikiBaseSpec {
         clickLoadBinder()
 
         it("makes the authentication request") {
-          client.requestReceived shouldBe AuthenticationRequest("binder", "secure")
+          client.requestReceived.value shouldBe AuthenticationRequest("binder", "secure")
         }
 
-        it("does not load the binder") {
+        it("does not add the binder to the list") {
           val listItems = jQuery(".binder-list-item")
           listItems.length shouldBe 0
         }
@@ -42,11 +42,11 @@ class LoadingBindersSpec extends PrivateWikiBaseSpec {
       }
 
       describe("with the right password") {
-        client.response = BinderLoaded("new binder", "")
+        client.response = BinderLoaded("binder", "")
         clickLoadBinder()
 
         it("makes the authentication request") {
-          client.requestReceived shouldBe AuthenticationRequest("binder", "secure")
+          client.requestReceived.value shouldBe AuthenticationRequest("binder", "secure")
         }
 
         it("clears the binder name") {
@@ -57,7 +57,7 @@ class LoadingBindersSpec extends PrivateWikiBaseSpec {
           jQuery(s"#${BinderPicker.binderServerPasswordId}").value() shouldBe ""
         }
 
-        describe("loads the binder") {
+        describe("adds the binder") {
           val listItems = jQuery(".binder-list-item")
 
           it("into the list") {
@@ -65,12 +65,45 @@ class LoadingBindersSpec extends PrivateWikiBaseSpec {
           }
 
           it("with its name") {
-            listItems.eq(0).text() shouldBe "new binder"
+            listItems.eq(0).text() shouldBe "binder"
           }
 
           it("locked") {
             listItems.eq(0) should haveClass("locked-binder")
           }
+        }
+      }
+    }
+    
+    describe("after a binder is loaded") {
+      enterBinderName("binder")
+      enterBinderPassword("secure")
+      client.response = BinderLoaded("binder", "")
+      clickLoadBinder()
+      client.requestReceived = None
+
+      describe("trying to load the binder again") {
+
+        enterBinderName("binder")
+        enterBinderPassword("secure")
+        client.response = BinderLoaded("binder", "")
+        clickLoadBinder()
+
+        it("will not make an authentication request") {
+          client.requestReceived shouldBe None
+        }
+
+        it("clears the binder name") {
+          jQuery(s"#${BinderPicker.binderNameInputId}").value() shouldBe ""
+        }
+
+        it("clears the binder password") {
+          jQuery(s"#${BinderPicker.binderServerPasswordId}").value() shouldBe ""
+        }
+
+        it("does not add the binder to the list twice") {
+          val listItems = jQuery(".binder-list-item")
+          listItems.length shouldBe 1
         }
       }
     }

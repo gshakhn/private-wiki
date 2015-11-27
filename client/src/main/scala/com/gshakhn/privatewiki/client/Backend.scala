@@ -69,13 +69,17 @@ class Backend(t: BackendScope[_, State], client : Client) {
           t.state.flatMap { s =>
             val binderPickerData = s.binderPickerData
             if (binderPickerData.hasData) {
-              Callback.future {
-                client.authenticateBinder(AuthenticationRequest(binderPickerData.binderName, binderPickerData.binderPassword)).map {
-                  case WrongPassword =>
-                    t.modState(s => s.copy(binderPickerData = s.binderPickerData.copy(wrongPassword = true)))
-                  case BinderLoaded(binderName, binderData) =>
-                    t.modState(s => s.copy(binderList = s.binderList :+ LockedBinder(binderName, binderData),
-                      binderPickerData = BinderPickerData("", "", wrongPassword = false)))
+              if (s.binderList.map(_.name).contains(binderPickerData.binderName)) {
+                t.modState(s => s.copy(binderPickerData = BinderPickerData("", "", wrongPassword = false)))
+              } else {
+                Callback.future {
+                  client.authenticateBinder(AuthenticationRequest(binderPickerData.binderName, binderPickerData.binderPassword)).map {
+                    case WrongPassword =>
+                      t.modState(s => s.copy(binderPickerData = s.binderPickerData.copy(wrongPassword = true)))
+                    case BinderLoaded(binderName, binderData) =>
+                      t.modState(s => s.copy(binderList = s.binderList :+ LockedBinder(binderName, binderData),
+                        binderPickerData = BinderPickerData("", "", wrongPassword = false)))
+                  }
                 }
               }
             } else {
