@@ -85,7 +85,7 @@ class BinderListSpec extends ReactJsBaseSpec {
     }
 
     describe("with 1 unlocked binder") {
-      implicit val binders: Seq[Binder] = Seq(UnlockedBinder("binder1"))
+      implicit val binders: Seq[Binder] = Seq(UnlockedBinder("binder1", Set.empty))
 
       describe("renders") {
         render

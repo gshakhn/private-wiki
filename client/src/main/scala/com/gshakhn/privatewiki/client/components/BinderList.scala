@@ -6,10 +6,10 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 import japgolly.scalajs.react._
 
 object BinderList {
-  case class BinderListProps(binders: Seq[Binder],
+  case class Props(binders: Seq[Binder],
                              unlockBinder: LockedBinder => UnlockBinder)
   
-  private[this] val component = ReactComponentB[BinderListProps]("BinderList")
+  private[this] val component = ReactComponentB[Props]("BinderList")
     .render_P(
       props =>
         <.ul(
@@ -21,8 +21,8 @@ object BinderList {
         )).build
   
   def apply(binders: Seq[Binder],
-            unlockBinder: LockedBinder => UnlockBinder): ReactComponentU[BinderListProps, Unit, Unit, TopNode] = {
-    component(BinderListProps(binders, unlockBinder))
+            unlockBinder: LockedBinder => UnlockBinder): ReactComponentU[Props, Unit, Unit, TopNode] = {
+    component(Props(binders, unlockBinder))
   }
 }
 

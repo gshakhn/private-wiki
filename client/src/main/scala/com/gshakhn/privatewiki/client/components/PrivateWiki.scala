@@ -20,11 +20,20 @@ object PrivateWiki {
               <.div(
                 ^.id := "col-1-1",
                 ^.cls := "col-md-4",
-                BinderPicker(S.binderPickerData, $.backend.newBinderNameChange, $.backend.newBinderPasswordChange, $.backend.newBinderAdd)
+                PaperList(Seq.empty)
               )
             ),
             <.div(
               ^.id := "row-2",
+              ^.cls := "row",
+              <.div(
+                ^.id := "col-1-1",
+                ^.cls := "col-md-4",
+                BinderPicker(S.binderPickerData, $.backend.newBinderNameChange, $.backend.newBinderPasswordChange, $.backend.newBinderAdd)
+              )
+            ),
+            <.div(
+              ^.id := "row-3",
               ^.cls := "row",
               <.div(
                 ^.id := "col-2-1",

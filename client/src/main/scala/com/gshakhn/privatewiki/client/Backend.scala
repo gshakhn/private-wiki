@@ -21,9 +21,11 @@ case class LockedBinder(name: String, encryptionType: EncryptionType, data: Stri
   def locked: Boolean = true
 }
 
-case class UnlockedBinder(name: String) extends Binder {
+case class UnlockedBinder(name: String, papers: Set[Paper]) extends Binder {
   def locked: Boolean = false
 }
+
+case class Paper(name: String)
 
 case class State(binderList: Seq[Binder], binderPickerData: BinderPickerData)
 
@@ -94,7 +96,7 @@ class Backend(t: BackendScope[_, State], client : Client) {
   def unlockBinder(binder: LockedBinder): UnlockBinder = {
     def replaceBinder(binderList: Seq[Binder]): Seq[Binder] = {
       binderList.map {
-        case x if x == binder => UnlockedBinder(x.name)
+        case x if x == binder => UnlockedBinder(x.name, Set.empty)
         case x => x
       }
     }
