@@ -14,8 +14,8 @@ trait AuthenticationInteractorComponent {
 trait FakeAuthenticationInteractorComponent extends AuthenticationInteractorComponent {
   override val authenticationInteractor: AuthenticationInteractor = new FakeAuthenticationInteractor
 
-  private val securePaper = Paper("secure paper")
-  private val unsecurePaper = Paper("unsecure paper")
+  private[this] val securePaper = Paper("secure paper")
+  private[this] val unsecurePaper = Paper("unsecure paper")
 
   class FakeAuthenticationInteractor extends AuthenticationInteractor {
     def authenticateBinder(request: AuthenticationRequest): AuthenticationResponse = request match {
