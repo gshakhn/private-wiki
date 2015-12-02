@@ -8,7 +8,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 object PaperPicker {
 
   case class Props(binders: Seq[UnlockedBinder])
-  case class State(selectedButton: AnyBinderButton)
+  case class State(selectedButton: AnyBinderButton, searchText: String)
 
   trait AnyBinderButton {
     def name: String
@@ -27,11 +27,16 @@ object PaperPicker {
       $.modState(s => s.copy(selectedButton = newSelectedButton))
     }
 
+    def updateSearch(e: ReactEventI): Callback = {
+      $.modState(s => s.copy(searchText = e.target.value))
+    }
+
     def papers(props: Props, state: State): Seq[Paper] = {
-      state.selectedButton match {
+      val papersForBinder = state.selectedButton match {
         case AllBinders => props.binders.flatMap(_.papers)
         case BinderButton(binder) => binder.papers.toSeq
       }
+      papersForBinder.filter(_.name.contains(state.searchText))
     }
 
     def render(props: Props, state: State): ReactElement = {
@@ -50,6 +55,19 @@ object PaperPicker {
             )
           }
         ),
+      <.div(
+        ^.cls := "form-group has-feedback",
+        <.input(
+          ^.id := "paper-picker-search",
+          ^.tpe := "text",
+          ^.cls := "form-control",
+          ^.onChange ==> updateSearch,
+          ^.value := state.searchText
+        ),
+        <.span(
+          ^.cls := "glyphicon glyphicon-search form-control-feedback"
+        )
+      ),
         <.div(
           ^.cls := "paper-list list-group",
           papers(props, state).map{ paper =>
@@ -64,7 +82,7 @@ object PaperPicker {
   }
 
   private[this] val component = ReactComponentB[Props]("PaperList")
-    .initialState(State(AllBinders))
+    .initialState(State(AllBinders, ""))
     .renderBackend[Backend]
     .build
 

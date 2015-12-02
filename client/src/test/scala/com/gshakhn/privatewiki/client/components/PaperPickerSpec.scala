@@ -4,6 +4,8 @@ import com.gshakhn.privatewiki.client.UnlockedBinder
 import com.gshakhn.privatewiki.client.components.PageInteractions._
 import com.gshakhn.privatewiki.shared.Paper
 import japgolly.scalajs.react.ReactDOM
+import japgolly.scalajs.react.test.{ChangeEventData, ReactTestUtils}
+import org.scalajs.dom
 import org.scalajs.jquery._
 import org.scalatest.path
 
@@ -184,6 +186,89 @@ class PaperPickerSpec extends ReactJsBaseSpec {
               }
             }
 
+          }
+        }
+      }
+    }
+
+    describe("with 2 binder with 2 papers each") {
+      implicit val binders: Seq[UnlockedBinder] = Seq(UnlockedBinder("binder1", Set(Paper("paper11"), Paper("paper12"))),
+        UnlockedBinder("binder2", Set(Paper("paper21"), Paper("paper22"))))
+
+      describe("renders") {
+        render
+
+        describe("the main div that") {
+          val div = jQuery("div.paper-picker")
+
+          it("exists") {
+            div.length shouldBe 1
+          }
+
+          describe("has a paper list that") {
+
+            it("exists") {
+              paperList.length shouldBe 1
+            }
+
+            it("is styled with bootstrap") {
+              paperList should haveClass("list-group")
+            }
+
+            describe("has paper list items that") {
+              val papers = paperList.find(".paper-list-item")
+
+              it("have 4 papers") {
+                papers.length shouldBe 4
+              }
+
+              it("are styled with bootstrap") {
+                papers.eq(0) should haveClass("list-group-item")
+                papers.eq(1) should haveClass("list-group-item")
+                papers.eq(2) should haveClass("list-group-item")
+                papers.eq(3) should haveClass("list-group-item")
+              }
+            }
+
+            describe("when the first binder button is clicked") {
+              clickPaperPickerBinder("binder1")
+
+              describe("the paper list items") {
+                val papers = paperList.find(".paper-list-item")
+
+                it("have two papers") {
+                  papers.length shouldBe 2
+                }
+              }
+            }
+
+            describe("has a paper search field that") {
+              val paperPickerSearch = jQuery("#paper-picker-search")
+
+              it("exists") {
+                paperPickerSearch.length shouldBe 1
+              }
+
+              it("has a search icon") {
+                val span = paperPickerSearch.parent().find("span")
+                span should haveClass("glyphicon")
+                span should haveClass("glyphicon-search")
+              }
+
+              it("has no text by default") {
+                paperPickerSearch.text() shouldBe ""
+              }
+
+              describe("when a paper is searched for") {
+                val paperPickerSearchNode = dom.document.getElementById("paper-picker-search")
+                ReactTestUtils.Simulate.change(paperPickerSearchNode, ChangeEventData("paper11"))
+
+                it("filters the papers with that name") {
+                  val papers = paperList.find(".paper-list-item")
+                  papers.length shouldBe 1
+                }
+              }
+            }
           }
         }
       }
