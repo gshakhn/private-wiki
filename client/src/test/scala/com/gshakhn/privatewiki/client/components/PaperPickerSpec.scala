@@ -11,9 +11,9 @@ class PaperPickerSpec extends ReactJsBaseSpec {
 
   override def newInstance: path.FunSpecLike = new PaperPickerSpec
 
-  def mainDiv = jQuery("div.paper-picker")
-  def binderList = mainDiv.find("div.binder-list")
-  def paperList = mainDiv.find("div.paper-list")
+  private[this] def mainDiv = jQuery("div.paper-picker")
+  private[this] def binderList = mainDiv.find("div.binder-list")
+  private[this] def paperList = mainDiv.find("div.paper-list")
 
   describe("A PaperPicker") {
     describe("with no binders") {
