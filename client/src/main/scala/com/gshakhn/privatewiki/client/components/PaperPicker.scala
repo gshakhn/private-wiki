@@ -1,6 +1,7 @@
 package com.gshakhn.privatewiki.client.components
 
-import com.gshakhn.privatewiki.client.{Paper, UnlockedBinder}
+import com.gshakhn.privatewiki.client.UnlockedBinder
+import com.gshakhn.privatewiki.shared.Paper
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 

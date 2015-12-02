@@ -1,8 +1,8 @@
 package com.gshakhn.privatewiki.client.components
 
+import com.gshakhn.privatewiki.client.UnlockedBinder
 import com.gshakhn.privatewiki.client.components.PageInteractions._
-import com.gshakhn.privatewiki.client.{Paper, UnlockedBinder}
-import com.gshakhn.privatewiki.shared.{BinderLoaded, NoEncryption}
+import com.gshakhn.privatewiki.shared.{Paper, BinderLoaded, NoEncryption}
 import org.scalajs.jquery._
 import org.scalatest.path
 import upickle.default._

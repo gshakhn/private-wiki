@@ -26,8 +26,6 @@ case class UnlockedBinder(name: String, papers: Set[Paper]) extends Binder {
   def locked: Boolean = false
 }
 
-case class Paper(name: String)
-
 case class State(binderList: Seq[Binder], binderPickerData: BinderPickerData)
 
 trait Client {
