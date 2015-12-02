@@ -1,6 +1,6 @@
 package com.gshakhn.privatewiki.client.components
 
-import com.gshakhn.privatewiki.client.{Backend, BinderPickerData, State}
+import com.gshakhn.privatewiki.client.{UnlockedBinder, Backend, BinderPickerData, State}
 import japgolly.scalajs.react.vdom.prefix_<^._
 import japgolly.scalajs.react.{BackendScope, ReactComponentB, ReactComponentU, TopNode}
 
@@ -20,7 +20,7 @@ object PrivateWiki {
               <.div(
                 ^.id := "col-1-1",
                 ^.cls := "col-md-4",
-                PaperPicker(Seq.empty)
+                PaperPicker(S.binderList.collect { case b: UnlockedBinder => b })
               )
             ),
             <.div(

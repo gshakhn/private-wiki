@@ -36,18 +36,18 @@ class PaperPickerSpec extends ReactJsBaseSpec {
             }
 
             it("has one binder") {
-              val binders = binderList.find(".btn")
+              val binders = binderList.find(".paper-picker-btn")
               binders.length shouldBe 1
             }
 
             it("has a button titled 'All'") {
-              val binders = binderList.find("div:contains('All').btn")
+              val binders = binderList.find("div:contains('All').paper-picker-btn")
               binders.length shouldBe 1
               binders(0).textContent shouldBe "All"
             }
 
             it("has the 'All' button active") {
-              val binders = binderList.find("div:contains('All').btn")
+              val binders = binderList.find("div:contains('All').paper-picker-btn")
               binders.eq(0) should haveClass("active")
             }
           }
@@ -80,43 +80,43 @@ class PaperPickerSpec extends ReactJsBaseSpec {
             }
 
             it("has 2 binders") {
-              val binders = binderList.find(".btn")
+              val binders = binderList.find(".paper-picker-btn")
               binders.length shouldBe 2
             }
 
             it("has a button titled 'All'") {
-              val binders = binderList.find("div:contains('All').btn")
+              val binders = binderList.find("div:contains('All').paper-picker-btn")
               binders.length shouldBe 1
               binders(0).textContent shouldBe "All"
             }
 
             it("has a button titled with the binder name") {
-              val binders = binderList.find("div:contains('binder').btn")
+              val binders = binderList.find("div:contains('binder').paper-picker-btn")
               binders.length shouldBe 1
               binders(0).textContent shouldBe "binder"
             }
 
             it("has the 'All' button active") {
-              val binders = binderList.find("div:contains('All').btn")
+              val binders = binderList.find("div:contains('All').paper-picker-btn")
               binders.eq(0) should haveClass("active")
             }
 
             it("has the other button not active") {
-              val binders = binderList.find("div:contains('binder').btn")
+              val binders = binderList.find("div:contains('binder').paper-picker-btn")
               binders.eq(0) shouldNot haveClass("active")
             }
 
             describe("when the binder button is clicked") {
-              val binder = binderList.find("div:contains('binder').btn").get(0)
+              val binder = binderList.find("div:contains('binder').paper-picker-btn").get(0)
               ReactTestUtils.Simulate.click(binder)
 
               it("marks the 'All' button inactive") {
-                val binders = binderList.find("div:contains('All').btn")
+                val binders = binderList.find("div:contains('All').paper-picker-btn")
                 binders.eq(0) shouldNot haveClass("active")
               }
 
               it("marks the binder button active") {
-                val binders = binderList.find("div:contains('binder').btn")
+                val binders = binderList.find("div:contains('binder').paper-picker-btn")
                 binders.eq(0) should haveClass("active")
               }
             }

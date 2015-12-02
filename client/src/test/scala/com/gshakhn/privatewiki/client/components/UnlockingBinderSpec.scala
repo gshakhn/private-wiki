@@ -29,6 +29,11 @@ class UnlockingBinderSpec extends PrivateWikiBaseSpec {
           span shouldNot haveClass("glyphicon")
           span shouldNot haveClass("glyphicon-lock")
         }
+
+        it("adds the binder to the paper picker") {
+          val paperPickerButtons = jQuery(".paper-picker-btn")
+          paperPickerButtons.length shouldBe 2 // All and the binder
+        }
       }
     }
   }

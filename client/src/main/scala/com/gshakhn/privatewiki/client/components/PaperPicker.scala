@@ -41,7 +41,7 @@ object PaperPicker {
           ^.cls := "binder-list btn-group",
           binderButtons.map { btn =>
             <.div(
-              ^.classSet1("btn btn-default",
+              ^.classSet1("btn btn-default paper-picker-btn",
                 "active" -> (state.selectedButton == btn)),
               ^.onClick --> selectNewBinder(btn),
               btn.name
@@ -70,5 +70,3 @@ object PaperPicker {
     component(Props(binders))
   }
 }
-
-
