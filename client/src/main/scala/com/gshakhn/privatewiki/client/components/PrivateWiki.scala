@@ -20,7 +20,7 @@ object PrivateWiki {
               <.div(
                 ^.id := "col-1-1",
                 ^.cls := "col-md-4",
-                PaperList(Seq.empty)
+                PaperPicker(Seq.empty)
               )
             ),
             <.div(

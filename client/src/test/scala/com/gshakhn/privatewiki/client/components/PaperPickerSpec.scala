@@ -1,16 +1,16 @@
 package com.gshakhn.privatewiki.client.components
 
-import com.gshakhn.privatewiki.client.UnlockedBinder
+import com.gshakhn.privatewiki.client.{Paper, UnlockedBinder}
 import japgolly.scalajs.react.ReactDOM
 import japgolly.scalajs.react.test.ReactTestUtils
 import org.scalajs.jquery._
 import org.scalatest.path
 
-class PaperListSpec extends ReactJsBaseSpec {
+class PaperPickerSpec extends ReactJsBaseSpec {
 
-  override def newInstance: path.FunSpecLike = new PaperListSpec
+  override def newInstance: path.FunSpecLike = new PaperPickerSpec
 
-  describe("A PaperList") {
+  describe("A PaperPicker") {
     describe("with no binders") {
       implicit val binders: Seq[UnlockedBinder] = Seq.empty
 
@@ -18,7 +18,7 @@ class PaperListSpec extends ReactJsBaseSpec {
         render
 
         describe("the main div that") {
-          val div = jQuery("div.paper-list")
+          val div = jQuery("div.paper-picker")
 
           it("exists") {
             div.length shouldBe 1
@@ -55,14 +55,14 @@ class PaperListSpec extends ReactJsBaseSpec {
       }
     }
 
-    describe("with 1 binder") {
+    describe("with 1 binder with no papers") {
       implicit val binders: Seq[UnlockedBinder] = Seq(UnlockedBinder("binder", Set.empty))
 
       describe("renders") {
         render
 
         describe("the main div that") {
-          val div = jQuery("div.paper-list")
+          val div = jQuery("div.paper-picker")
 
           it("exists") {
             div.length shouldBe 1
@@ -125,11 +125,50 @@ class PaperListSpec extends ReactJsBaseSpec {
       }
     }
 
+    describe("with 1 binder with 1 paper") {
+      implicit val binders: Seq[UnlockedBinder] = Seq(UnlockedBinder("binder", Set(Paper("paper"))))
+
+      describe("renders") {
+        render
+
+        describe("the main div that") {
+          val div = jQuery("div.paper-picker")
+
+          it("exists") {
+            div.length shouldBe 1
+          }
+
+          describe("has a paper list that") {
+            val paperList = div.find("div.paper-list")
+
+            it("exists") {
+              paperList.length shouldBe 1
+            }
+
+            it("is styled with bootstrap") {
+              paperList should haveClass("list-group")
+            }
+
+            describe("has paper list items that") {
+              val papers = paperList.find(".paper-list-item")
+
+              it("have one paper") {
+                papers.length shouldBe 1
+              }
+
+              it("are styled with bootstrap") {
+                papers.eq(0) should haveClass("list-group-item")
+              }
+            }
+          }
+        }
+      }
+    }
   }
 
   tearDown()
 
   def render(implicit binders: Seq[UnlockedBinder]): Unit = {
-    ReactDOM.render(PaperList(binders), containingDiv)
+    ReactDOM.render(PaperPicker(binders), containingDiv)
   }
 }

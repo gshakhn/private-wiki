@@ -1,12 +1,12 @@
 package com.gshakhn.privatewiki.client.components
 
-import com.gshakhn.privatewiki.client.UnlockedBinder
+import com.gshakhn.privatewiki.client.{Paper, UnlockedBinder}
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 
-object PaperList {
+object PaperPicker {
 
-  case class Props(binders: Seq[AnyBinderButton])
+  case class Props(binders: Seq[UnlockedBinder])
   case class State(selectedButton: AnyBinderButton)
 
   trait AnyBinderButton {
@@ -26,17 +26,34 @@ object PaperList {
       $.modState(s => s.copy(selectedButton = newSelectedButton))
     }
 
+    def papers(props: Props, state: State): Seq[Paper] = {
+      state.selectedButton match {
+        case AllBinders => props.binders.flatMap(_.papers)
+        case BinderButton(binder) => Seq.empty
+      }
+    }
+
     def render(props: Props, state: State): ReactElement = {
+      val binderButtons = Seq(AllBinders) ++ props.binders.map(BinderButton.apply)
       <.div(
-        ^.cls := "paper-list",
+        ^.cls := "paper-picker",
         <.div(
           ^.cls := "binder-list btn-group",
-          props.binders.map { btn =>
+          binderButtons.map { btn =>
             <.div(
               ^.classSet1("btn btn-default",
                 "active" -> (state.selectedButton == btn)),
               ^.onClick --> selectNewBinder(btn),
               btn.name
+            )
+          }
+        ),
+        <.div(
+          ^.cls := "paper-list list-group",
+          papers(props, state).map{ paper =>
+            <.div(
+              ^.cls := "list-group-item paper-list-item",
+              paper.name
             )
           }
         )
@@ -50,7 +67,7 @@ object PaperList {
     .build
 
   def apply(binders: Seq[UnlockedBinder]): ReactComponentU[Props, State, Backend, TopNode] = {
-    component(Props(Seq(AllBinders) ++ binders.map(BinderButton.apply)))
+    component(Props(binders))
   }
 }
 
