@@ -16,6 +16,11 @@ object PageInteractions {
     ReactTestUtils.Simulate.click(li)
   }
 
+  def clickPaperPickerBinder(binderName: String): Unit = {
+    val binder = jQuery(s""".paper-picker-btn[data-binder-name="$binderName"]""").get(0)
+    ReactTestUtils.Simulate.click(binder)
+  }
+
   def enterBinderPassword(password: String): Unit = {
     val binderPasswordNode = dom.document.getElementById(BinderPicker.binderServerPasswordId)
     ReactTestUtils.Simulate.change(binderPasswordNode, ChangeEventData(password))

@@ -43,7 +43,8 @@ object PaperPicker {
           binderButtons.map { btn =>
             <.div(
               ^.classSet1("btn btn-default paper-picker-btn",
-                "active" -> (state.selectedButton == btn)),
+              "active" -> (state.selectedButton == btn)),
+              "data-binder-name".reactAttr := btn.name,
               ^.onClick --> selectNewBinder(btn),
               btn.name
             )

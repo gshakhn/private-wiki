@@ -1,9 +1,9 @@
 package com.gshakhn.privatewiki.client.components
 
 import com.gshakhn.privatewiki.client.UnlockedBinder
+import com.gshakhn.privatewiki.client.components.PageInteractions._
 import com.gshakhn.privatewiki.shared.Paper
 import japgolly.scalajs.react.ReactDOM
-import japgolly.scalajs.react.test.ReactTestUtils
 import org.scalajs.jquery._
 import org.scalatest.path
 
@@ -38,20 +38,25 @@ class PaperPickerSpec extends ReactJsBaseSpec {
               binderList should haveClass("btn-group")
             }
 
-            it("has one binder") {
+            describe("has one binder") {
               val binders = binderList.find(".paper-picker-btn")
-              binders.length shouldBe 1
-            }
+              val allBinder = binderList.find("div:contains('All').paper-picker-btn").eq(0)
 
-            it("has a button titled 'All'") {
-              val binders = binderList.find("div:contains('All').paper-picker-btn")
-              binders.length shouldBe 1
-              binders(0).textContent shouldBe "All"
-            }
+              it("and only one binder") {
+                binders.length shouldBe 1
+              }
 
-            it("has the 'All' button active") {
-              val binders = binderList.find("div:contains('All').paper-picker-btn")
-              binders.eq(0) should haveClass("active")
+              it("titled 'All'") {
+                allBinder(0).textContent shouldBe "All"
+              }
+
+              it("marked active") {
+                allBinder should haveClass("active")
+              }
+
+              it("with data attribute binder-name set to `All`") {
+                allBinder.data("binder-name") shouldBe "All"
+              }
             }
           }
         }
@@ -80,36 +85,42 @@ class PaperPickerSpec extends ReactJsBaseSpec {
               binderList should haveClass("btn-group")
             }
 
-            it("has 2 binders") {
+            describe("has 2 binders") {
               val binders = binderList.find(".paper-picker-btn")
-              binders.length shouldBe 2
-            }
+              val allBinder = binderList.find("div:contains('All').paper-picker-btn").eq(0)
+              val regularBinder = binderList.find("div:contains('binder').paper-picker-btn").eq(0)
 
-            it("has a button titled 'All'") {
-              val binders = binderList.find("div:contains('All').paper-picker-btn")
-              binders.length shouldBe 1
-              binders(0).textContent shouldBe "All"
-            }
+              it("and only 2 binders") {
+                binders.length shouldBe 2
+              }
 
-            it("has a button titled with the binder name") {
-              val binders = binderList.find("div:contains('binder').paper-picker-btn")
-              binders.length shouldBe 1
-              binders(0).textContent shouldBe "binder"
-            }
+              it("with one titled 'All'") {
+                allBinder(0).textContent shouldBe "All"
+              }
 
-            it("has the 'All' button active") {
-              val binders = binderList.find("div:contains('All').paper-picker-btn")
-              binders.eq(0) should haveClass("active")
-            }
+              it("with the 'All' binder marked active") {
+                allBinder should haveClass("active")
+              }
 
-            it("has the other button not active") {
-              val binders = binderList.find("div:contains('binder').paper-picker-btn")
-              binders.eq(0) shouldNot haveClass("active")
+              it("with `All` data attribute binder-name set to `All`") {
+                allBinder.data("binder-name") shouldBe "All"
+              }
+
+              it("with one titled with the binder name") {
+                regularBinder(0).textContent shouldBe "binder"
+              }
+
+              it("with the non-All binder not active") {
+                regularBinder shouldNot haveClass("active")
+              }
+
+              it("with non-All data attribute binder-name set to the binder name") {
+                regularBinder.data("binder-name") shouldBe "binder"
+              }
             }
 
             describe("when the binder button is clicked") {
-              val binder = binderList.find("div:contains('binder').paper-picker-btn").get(0)
-              ReactTestUtils.Simulate.click(binder)
+              clickPaperPickerBinder("binder")
 
               it("marks the 'All' button inactive") {
                 val binders = binderList.find("div:contains('All').paper-picker-btn")
@@ -162,8 +173,7 @@ class PaperPickerSpec extends ReactJsBaseSpec {
             }
 
             describe("when the binder button is clicked") {
-              val binder = binderList.find("div:contains('binder').paper-picker-btn").get(0)
-              ReactTestUtils.Simulate.click(binder)
+              clickPaperPickerBinder("binder")
 
               describe("the paper list items") {
                 val papers = paperList.find(".paper-list-item")
