@@ -30,7 +30,7 @@ object PaperPicker {
     def papers(props: Props, state: State): Seq[Paper] = {
       state.selectedButton match {
         case AllBinders => props.binders.flatMap(_.papers)
-        case BinderButton(binder) => Seq.empty
+        case BinderButton(binder) => binder.papers.toSeq
       }
     }
 

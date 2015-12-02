@@ -11,6 +11,10 @@ class PaperPickerSpec extends ReactJsBaseSpec {
 
   override def newInstance: path.FunSpecLike = new PaperPickerSpec
 
+  def mainDiv = jQuery("div.paper-picker")
+  def binderList = mainDiv.find("div.binder-list")
+  def paperList = mainDiv.find("div.paper-list")
+
   describe("A PaperPicker") {
     describe("with no binders") {
       implicit val binders: Seq[UnlockedBinder] = Seq.empty
@@ -26,8 +30,6 @@ class PaperPickerSpec extends ReactJsBaseSpec {
           }
 
           describe("has a binder list that") {
-            val binderList = div.find("div.binder-list")
-
             it("exists") {
               binderList.length shouldBe 1
             }
@@ -63,14 +65,12 @@ class PaperPickerSpec extends ReactJsBaseSpec {
         render
 
         describe("the main div that") {
-          val div = jQuery("div.paper-picker")
 
           it("exists") {
-            div.length shouldBe 1
+            mainDiv.length shouldBe 1
           }
 
           describe("has a binder list that") {
-            val binderList = div.find("div.binder-list")
 
             it("exists") {
               binderList.length shouldBe 1
@@ -140,7 +140,6 @@ class PaperPickerSpec extends ReactJsBaseSpec {
           }
 
           describe("has a paper list that") {
-            val paperList = div.find("div.paper-list")
 
             it("exists") {
               paperList.length shouldBe 1
@@ -161,6 +160,20 @@ class PaperPickerSpec extends ReactJsBaseSpec {
                 papers.eq(0) should haveClass("list-group-item")
               }
             }
+
+            describe("when the binder button is clicked") {
+              val binder = binderList.find("div:contains('binder').paper-picker-btn").get(0)
+              ReactTestUtils.Simulate.click(binder)
+
+              describe("the paper list items") {
+                val papers = paperList.find(".paper-list-item")
+
+                it("have one paper") {
+                  papers.length shouldBe 1
+                }
+              }
+            }
+
           }
         }
       }
