@@ -7,6 +7,7 @@ import japgolly.scalajs.react.{BackendScope, Callback, _}
 import scala.concurrent.Future
 import scala.language.implicitConversions
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
+import upickle.default._
 
 case class BinderPickerData(binderName: String, binderPassword: String, wrongPassword: Boolean) {
   def hasData: Boolean = !binderName.isEmpty && !binderPassword.isEmpty
@@ -96,7 +97,7 @@ class Backend(t: BackendScope[_, State], client : Client) {
   def unlockBinder(binder: LockedBinder): UnlockBinder = {
     def replaceBinder(binderList: Seq[Binder]): Seq[Binder] = {
       binderList.map {
-        case x if x == binder => UnlockedBinder(x.name, Set.empty)
+        case x if x == binder => UnlockedBinder(x.name, read[Set[Paper]](binder.data))
         case x => x
       }
     }

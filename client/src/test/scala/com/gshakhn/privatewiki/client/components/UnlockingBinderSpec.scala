@@ -1,9 +1,11 @@
 package com.gshakhn.privatewiki.client.components
 
 import com.gshakhn.privatewiki.client.components.PageInteractions._
+import com.gshakhn.privatewiki.client.{Paper, UnlockedBinder}
 import com.gshakhn.privatewiki.shared.{BinderLoaded, NoEncryption}
 import org.scalajs.jquery._
 import org.scalatest.path
+import upickle.default._
 
 class UnlockingBinderSpec extends PrivateWikiBaseSpec {
 
@@ -16,7 +18,8 @@ class UnlockingBinderSpec extends PrivateWikiBaseSpec {
     describe("after a binder with NoEncryption is loaded") {
       enterBinderName("binder")
       enterBinderPassword("secure")
-      client.response = BinderLoaded("binder", NoEncryption, "")
+      val papers = Set(Paper("paper"))
+      client.response = BinderLoaded("binder", NoEncryption, write(papers))
       clickLoadBinder()
 
       describe("clicking the binder") {
@@ -32,7 +35,12 @@ class UnlockingBinderSpec extends PrivateWikiBaseSpec {
 
         it("adds the binder to the paper picker") {
           val paperPickerButtons = jQuery(".paper-picker-btn")
-          paperPickerButtons.length shouldBe 2 // All and the binder
+          paperPickerButtons.length shouldBe 2 // 'All' and the binder
+        }
+
+        it("creates an unlocked binder with papers") {
+          val unlockedBinder = rootComponent.state.binderList.collect { case b: UnlockedBinder => b}.head
+          unlockedBinder.papers shouldBe papers
         }
       }
     }
