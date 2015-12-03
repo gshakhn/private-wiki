@@ -1,13 +1,12 @@
 package com.gshakhn.privatewiki.client.components
 
-import com.gshakhn.privatewiki.client.Events.UnlockBinder
 import com.gshakhn.privatewiki.client.{Binder, LockedBinder, UnlockedBinder}
-import japgolly.scalajs.react.vdom.prefix_<^._
 import japgolly.scalajs.react._
+import japgolly.scalajs.react.vdom.prefix_<^._
 
 object BinderList {
   case class Props(binders: Seq[Binder],
-                             unlockBinder: LockedBinder => UnlockBinder)
+                             unlockBinder: LockedBinder => Callback)
   
   private[this] val component = ReactComponentB[Props]("BinderList")
     .render_P(
@@ -21,14 +20,14 @@ object BinderList {
         )).build
   
   def apply(binders: Seq[Binder],
-            unlockBinder: LockedBinder => UnlockBinder): ReactComponentU[Props, Unit, Unit, TopNode] = {
+            unlockBinder: LockedBinder => Callback): ReactComponentU[Props, Unit, Unit, TopNode] = {
     component(Props(binders, unlockBinder))
   }
 }
 
 object LockedBinderComponent {
   case class LockedBinderProps(binder: LockedBinder,
-                               unlockBinder: LockedBinder => UnlockBinder)
+                               unlockBinder: LockedBinder => Callback)
 
   private[this] val component = ReactComponentB[LockedBinderProps]("LockedBinder")
     .render_P(
@@ -46,7 +45,7 @@ object LockedBinderComponent {
     ).build
   
   def apply(binder: LockedBinder,
-            unlockBinder: LockedBinder => UnlockBinder): ReactComponentU[LockedBinderProps, Unit, Unit, TopNode] = {
+            unlockBinder: LockedBinder => Callback): ReactComponentU[LockedBinderProps, Unit, Unit, TopNode] = {
     component(LockedBinderProps(binder, unlockBinder))
   }
 }

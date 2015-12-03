@@ -1,6 +1,5 @@
 package com.gshakhn.privatewiki.client.components
 
-import com.gshakhn.privatewiki.client.Events.UnlockBinder
 import com.gshakhn.privatewiki.client.{Binder, LockedBinder, UnlockedBinder}
 import com.gshakhn.privatewiki.shared.NoEncryption
 import japgolly.scalajs.react.{Callback, ReactDOM}
@@ -134,11 +133,7 @@ class BinderListSpec extends ReactJsBaseSpec {
 
   tearDown()
 
-  def noopUnlock: LockedBinder => UnlockBinder = {
-    b => new UnlockBinder {
-      override def apply(): Callback = Callback.empty
-    }
-  }
+  def noopUnlock: LockedBinder => Callback = _ => Callback.empty
 
   def render(implicit binders: Seq[Binder]): Unit = {
     ReactDOM.render(BinderList(binders, noopUnlock), containingDiv)

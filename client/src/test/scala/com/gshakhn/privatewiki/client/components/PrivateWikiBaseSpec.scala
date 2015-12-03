@@ -1,6 +1,7 @@
 package com.gshakhn.privatewiki.client.components
 
-import com.gshakhn.privatewiki.client.{Backend, Client, State}
+import com.gshakhn.privatewiki.client.Client
+import com.gshakhn.privatewiki.client.components.PrivateWiki.{Backend, Props, State}
 import com.gshakhn.privatewiki.shared.{AuthenticationRequest, AuthenticationResponse}
 import japgolly.scalajs.react.{ReactComponentM, ReactDOM, TopNode}
 
@@ -8,7 +9,7 @@ import scala.concurrent.Future
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
 
 trait PrivateWikiBaseSpec extends ReactJsBaseSpec {
-  var rootComponent: ReactComponentM[Unit, State, Backend, TopNode] = _
+  var rootComponent: ReactComponentM[Props, State, Backend, TopNode] = _
 
   class TestClient extends Client {
     var response: AuthenticationResponse = _
@@ -21,6 +22,6 @@ trait PrivateWikiBaseSpec extends ReactJsBaseSpec {
   }
 
   def render(implicit client: TestClient): Unit = {
-    rootComponent = ReactDOM.render(PrivateWiki(new Backend(_, client)), containingDiv)
+    rootComponent = ReactDOM.render(PrivateWiki(client), containingDiv)
   }
 }
