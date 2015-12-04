@@ -21,7 +21,8 @@ val commonSettings = Seq(
 val sprayVersion = "1.3.3"
 val upickleVersion = "0.3.6"
 val scalatagsVersion = "0.5.3"
-val scalajsReactVersion = "0.10.1"
+val scalajsReactVersion = "0.10.2"
+val reactVersion = "0.14.3"
 val bootstrapVersion = "3.3.5"
 
 val shared = crossProject.in(file(".")).settings(commonSettings:_*)
@@ -38,8 +39,9 @@ val client = project.dependsOn(sharedJS)
                       skip in packageJSDependencies := false,
                       jsDependencies ++= Seq(
                         "org.webjars" % "bootstrap" % bootstrapVersion / "bootstrap.js",
-                        "org.webjars" % "react" % "0.14.2" / "react-with-addons.js" commonJSName "React",
-                        "org.webjars" % "react" % "0.14.2" / "react-dom.js" commonJSName "ReactDOM" dependsOn "react-with-addons.js"
+                        "org.webjars.bower" % "react" % reactVersion / "react-with-addons.js" commonJSName "React",
+                        "org.webjars.bower" % "react" % reactVersion / "react-dom.js" dependsOn "react-with-addons.js" commonJSName "ReactDOM",
+                        "org.webjars.bower" % "react" % reactVersion / "react-dom-server.js" dependsOn "react-dom.js" commonJSName "ReactDOMServer"
                       ),
                       libraryDependencies ++= Seq(
                         "com.github.japgolly.scalajs-react" %%% "core" % scalajsReactVersion,
