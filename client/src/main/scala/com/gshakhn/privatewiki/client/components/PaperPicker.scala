@@ -58,9 +58,8 @@ object PaperPicker {
         ),
       <.div(
         ^.cls := "form-group has-feedback",
-        <.input(
+        <.input.text(
           ^.id := "paper-picker-search",
-          ^.tpe := "text",
           ^.cls := "form-control",
           ^.onChange ==> updateSearch,
           ^.value := state.searchText

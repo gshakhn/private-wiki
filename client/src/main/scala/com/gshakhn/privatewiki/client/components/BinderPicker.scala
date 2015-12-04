@@ -62,9 +62,8 @@ object BinderPicker {
             ^.cls := "control-label",
             "Binder Name"
           ),
-          <.input(
+          <.input.text(
             ^.id := binderNameInputId,
-            ^.tpe := "text",
             ^.cls := "form-control",
             ^.onChange ==> updateBinderName,
             ^.value := state.binderName
@@ -80,9 +79,8 @@ object BinderPicker {
             ^.cls := "control-label",
             "Binder Password"
           ),
-          <.input(
+          <.input.password(
             ^.id := binderServerPasswordId,
-            ^.tpe := "password",
             ^.cls := "form-control",
             ^.onChange ==> updateBinderPassword,
             ^.value := state.binderPassword
