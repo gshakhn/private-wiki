@@ -15,8 +15,8 @@ class PaperSearchingSpec extends PaperPickerBaseSpec {
   describe("A PaperPicker") {
     describe("paper searching") {
       describe("with 2 binder with 2 papers each") {
-        implicit val binders: Seq[UnlockedBinder] = Seq(UnlockedBinder("binder1", Set(Paper("paper11"), Paper("paper12"))),
-          UnlockedBinder("binder2", Set(Paper("paper21"), Paper("paper22"))))
+        implicit val binders: Seq[UnlockedBinder] = Seq(UnlockedBinder("binder1", Set(Paper("paper11", ""), Paper("paper12", ""))),
+          UnlockedBinder("binder2", Set(Paper("paper21", ""), Paper("paper22", ""))))
 
         describe("renders") {
           render

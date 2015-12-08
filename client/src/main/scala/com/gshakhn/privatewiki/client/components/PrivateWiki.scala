@@ -9,7 +9,7 @@ import upickle.default._
 object PrivateWiki {
   case class Props(client: Client)
 
-  case class State(binderList: Seq[Binder])
+  case class State(binderList: Seq[Binder], loadedPapers: Seq[BinderPaperPair])
 
   class Backend($: BackendScope[Props, State]) {
     def unlockBinder(binder: LockedBinder): Callback = {
@@ -21,6 +21,10 @@ object PrivateWiki {
       }
 
       $.modState(s => s.copy(binderList = replaceBinder(s.binderList)))
+    }
+
+    def loadPaper(binderPaperPair: BinderPaperPair): Callback = {
+      $.modState(s => s.copy(loadedPapers = s.loadedPapers :+ binderPaperPair))
     }
 
     def loadBinder(lockedBinder: LockedBinder): Callback = {
@@ -37,7 +41,7 @@ object PrivateWiki {
           <.div(
             ^.id := "col-1-1",
             ^.cls := "col-md-4",
-            PaperPicker(state.binderList.collect { case b: UnlockedBinder => b })
+            PaperPicker(state.binderList.collect { case b: UnlockedBinder => b }, loadPaper)
           )
         ),
         <.div(
@@ -65,7 +69,7 @@ object PrivateWiki {
 
   def apply(client: Client): ReactComponentU[Props, State, Backend, TopNode] = {
     val component = ReactComponentB[Props]("PrivateWiki")
-      .initialState(State(Seq.empty))
+      .initialState(State(Seq.empty, Seq.empty))
       .renderBackend[Backend]
       .build
     component(Props(client))

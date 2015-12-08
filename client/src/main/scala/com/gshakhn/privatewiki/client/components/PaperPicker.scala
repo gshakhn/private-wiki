@@ -1,13 +1,13 @@
 package com.gshakhn.privatewiki.client.components
 
-import com.gshakhn.privatewiki.client.UnlockedBinder
+import com.gshakhn.privatewiki.client.{Binder, BinderPaperPair, UnlockedBinder}
 import com.gshakhn.privatewiki.shared.Paper
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 
 object PaperPicker {
 
-  case class Props(binders: Seq[UnlockedBinder])
+  case class Props(binders: Seq[UnlockedBinder], loadPaper: (BinderPaperPair => Callback))
 
   case class State(selectedButton: AnyBinderButton, searchText: String)
 
@@ -32,12 +32,12 @@ object PaperPicker {
       $.modState(s => s.copy(searchText = e.target.value))
     }
 
-    def papers(props: Props, state: State): Seq[Paper] = {
+    def papers(props: Props, state: State): Seq[(Binder, Paper)] = {
       val papersForBinder = state.selectedButton match {
-        case AllBinders => props.binders.flatMap(_.papers)
-        case BinderButton(binder) => binder.papers.toSeq
+        case AllBinders => props.binders.flatMap{ case binder => binder.papers.map{(binder, _)}}
+        case BinderButton(binder) => binder.papers.map{(binder, _)}
       }
-      papersForBinder.filter(_.name.contains(state.searchText))
+      papersForBinder.filter(_._2.name.contains(state.searchText)).toSeq
     }
 
     def render(props: Props, state: State): ReactElement = {
@@ -70,9 +70,11 @@ object PaperPicker {
       ),
         <.div(
           ^.cls := "paper-list list-group",
-          papers(props, state).map{ paper =>
+          papers(props, state).map{ case (binder, paper) =>
             <.div(
               ^.cls := "list-group-item paper-list-item",
+              "data-paper-name".reactAttr := paper.name,
+              ^.onClick --> props.loadPaper(BinderPaperPair(binder.name, paper.name)),
               paper.name
             )
           }
@@ -86,7 +88,7 @@ object PaperPicker {
     .renderBackend[Backend]
     .build
 
-  def apply(binders: Seq[UnlockedBinder]): ReactComponentU[Props, State, Backend, TopNode] = {
-    component(Props(binders))
+  def apply(binders: Seq[UnlockedBinder], loadPaper: (BinderPaperPair => Callback)): ReactComponentU[Props, State, Backend, TopNode] = {
+    component(Props(binders, loadPaper))
   }
 }

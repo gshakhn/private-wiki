@@ -10,6 +10,8 @@ sealed trait Binder {
   def locked: Boolean
 }
 
+case class BinderPaperPair(binderName: String, paperName: String)
+
 case class LockedBinder(name: String, encryptionType: EncryptionType, data: String) extends Binder {
   def locked: Boolean = true
 }

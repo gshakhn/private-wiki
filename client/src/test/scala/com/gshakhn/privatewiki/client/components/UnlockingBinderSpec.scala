@@ -18,7 +18,7 @@ class UnlockingBinderSpec extends PrivateWikiBaseSpec {
     describe("after a binder with NoEncryption is loaded") {
       enterBinderName("binder")
       enterBinderPassword("secure")
-      val papers = Set(Paper("paper"))
+      val papers = Set(Paper("paper", ""))
       client.response = BinderLoaded("binder", NoEncryption, write(papers))
       clickLoadBinder()
 

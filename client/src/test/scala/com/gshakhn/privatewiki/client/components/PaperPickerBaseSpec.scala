@@ -1,7 +1,7 @@
 package com.gshakhn.privatewiki.client.components
 
 import com.gshakhn.privatewiki.client.UnlockedBinder
-import japgolly.scalajs.react.ReactDOM
+import japgolly.scalajs.react.{Callback, ReactDOM}
 import org.scalajs.jquery._
 
 trait PaperPickerBaseSpec extends ReactJsBaseSpec {
@@ -13,6 +13,6 @@ trait PaperPickerBaseSpec extends ReactJsBaseSpec {
   protected def paperList = mainDiv.find("div.paper-list")
 
   def render(implicit binders: Seq[UnlockedBinder]): Unit = {
-    ReactDOM.render(PaperPicker(binders), containingDiv)
+    ReactDOM.render(PaperPicker(binders, (_) => Callback.empty), containingDiv)
   }
 }

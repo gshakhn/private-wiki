@@ -3,9 +3,6 @@ package com.gshakhn.privatewiki.client.components
 import com.gshakhn.privatewiki.client.UnlockedBinder
 import com.gshakhn.privatewiki.client.components.PageInteractions._
 import com.gshakhn.privatewiki.shared.Paper
-import japgolly.scalajs.react.ReactDOM
-import japgolly.scalajs.react.test.{ChangeEventData, ReactTestUtils}
-import org.scalajs.dom
 import org.scalajs.jquery._
 import org.scalatest.path
 
@@ -136,7 +133,7 @@ class PaperListSpec extends PaperPickerBaseSpec {
     }
 
     describe("with 1 binder with 1 paper") {
-      implicit val binders: Seq[UnlockedBinder] = Seq(UnlockedBinder("binder", Set(Paper("paper"))))
+      implicit val binders: Seq[UnlockedBinder] = Seq(UnlockedBinder("binder", Set(Paper("paper", ""))))
 
       describe("renders") {
         render
@@ -167,6 +164,10 @@ class PaperListSpec extends PaperPickerBaseSpec {
 
               it("are styled with bootstrap") {
                 papers.eq(0) should haveClass("list-group-item")
+              }
+
+              it("with data attribute paper-name set to `paper`") {
+                papers.eq(0).data("paper-name") shouldBe "paper"
               }
             }
 
