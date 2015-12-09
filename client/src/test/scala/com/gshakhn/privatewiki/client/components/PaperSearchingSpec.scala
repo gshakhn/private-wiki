@@ -1,7 +1,8 @@
 package com.gshakhn.privatewiki.client.components
 
 import com.gshakhn.privatewiki.client.UnlockedBinder
-import com.gshakhn.privatewiki.client.components.PageInteractions._
+import com.gshakhn.privatewiki.client.components.testutil.{PaperPickerBaseSpec, PageInteractions}
+import PageInteractions._
 import com.gshakhn.privatewiki.shared.Paper
 import japgolly.scalajs.react.test.{ChangeEventData, ReactTestUtils}
 import org.scalajs.dom

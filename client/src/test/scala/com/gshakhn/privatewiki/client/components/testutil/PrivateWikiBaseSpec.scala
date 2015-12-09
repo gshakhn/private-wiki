@@ -1,6 +1,7 @@
-package com.gshakhn.privatewiki.client.components
+package com.gshakhn.privatewiki.client.components.testutil
 
 import com.gshakhn.privatewiki.client.Client
+import com.gshakhn.privatewiki.client.components.PrivateWiki
 import com.gshakhn.privatewiki.client.components.PrivateWiki.{Backend, Props, State}
 import com.gshakhn.privatewiki.shared.{AuthenticationRequest, AuthenticationResponse}
 import japgolly.scalajs.react.{ReactComponentM, ReactDOM, TopNode}

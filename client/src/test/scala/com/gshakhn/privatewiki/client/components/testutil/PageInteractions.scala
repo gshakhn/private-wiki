@@ -1,5 +1,6 @@
-package com.gshakhn.privatewiki.client.components
+package com.gshakhn.privatewiki.client.components.testutil
 
+import com.gshakhn.privatewiki.client.components.BinderLoader
 import japgolly.scalajs.react.test.{ChangeEventData, ReactTestUtils}
 import org.scalajs.dom
 import org.scalajs.jquery._

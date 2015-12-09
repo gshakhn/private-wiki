@@ -1,6 +1,7 @@
-package com.gshakhn.privatewiki.client.components
+package com.gshakhn.privatewiki.client.components.testutil
 
 import com.gshakhn.privatewiki.client.UnlockedBinder
+import com.gshakhn.privatewiki.client.components.PaperPicker
 import japgolly.scalajs.react.{Callback, ReactDOM}
 import org.scalajs.jquery._
 

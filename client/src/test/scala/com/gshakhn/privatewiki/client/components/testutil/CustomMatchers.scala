@@ -1,4 +1,4 @@
-package com.gshakhn.privatewiki.client.components
+package com.gshakhn.privatewiki.client.components.testutil
 
 import org.scalajs.jquery.JQuery
 import org.scalatest.matchers.{MatchResult, Matcher}

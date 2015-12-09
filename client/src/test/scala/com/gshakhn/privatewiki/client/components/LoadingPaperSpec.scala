@@ -1,7 +1,8 @@
 package com.gshakhn.privatewiki.client.components
 
+import com.gshakhn.privatewiki.client.components.testutil.{PrivateWikiBaseSpec, PageInteractions}
 import com.gshakhn.privatewiki.client.{BinderPaperPair, UnlockedBinder}
-import com.gshakhn.privatewiki.client.components.PageInteractions._
+import PageInteractions._
 import com.gshakhn.privatewiki.shared.{BinderLoaded, NoEncryption, Paper}
 import org.scalatest.path
 import upickle.default._

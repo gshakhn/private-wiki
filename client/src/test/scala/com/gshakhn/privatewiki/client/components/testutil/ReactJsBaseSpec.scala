@@ -1,8 +1,8 @@
-package com.gshakhn.privatewiki.client.components
+package com.gshakhn.privatewiki.client.components.testutil
 
 import japgolly.scalajs.react.ReactDOM
 import org.scalajs.dom
-import org.scalatest.{OptionValues, Matchers, path}
+import org.scalatest.{Matchers, OptionValues, path}
 
 import scalatags.JsDom.all._
 

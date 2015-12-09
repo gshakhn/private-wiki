@@ -1,5 +1,6 @@
 package com.gshakhn.privatewiki.client.components
 
+import com.gshakhn.privatewiki.client.components.testutil.ReactJsBaseSpec
 import com.gshakhn.privatewiki.client.{Binder, LockedBinder, UnlockedBinder}
 import com.gshakhn.privatewiki.shared.NoEncryption
 import japgolly.scalajs.react.{Callback, ReactDOM}

@@ -1,6 +1,7 @@
 package com.gshakhn.privatewiki.client.components
 
-import com.gshakhn.privatewiki.client.components.PageInteractions._
+import com.gshakhn.privatewiki.client.components.testutil.{PrivateWikiBaseSpec, PageInteractions}
+import PageInteractions._
 import org.scalajs.jquery._
 import org.scalatest.path
 
