@@ -38,10 +38,12 @@ val client = project.dependsOn(sharedJS)
                       jsDependencies += RuntimeDOM % "test",
                       skip in packageJSDependencies := false,
                       jsDependencies ++= Seq(
-                        "org.webjars" % "bootstrap" % bootstrapVersion / "bootstrap.js",
+                        "org.webjars" % "jquery" % "2.1.3" / "2.1.3/jquery.js",
+                        "org.webjars" % "bootstrap" % bootstrapVersion / "bootstrap.js" dependsOn "2.1.3/jquery.js",
                         "org.webjars.bower" % "react" % reactVersion / "react-with-addons.js" commonJSName "React",
                         "org.webjars.bower" % "react" % reactVersion / "react-dom.js" dependsOn "react-with-addons.js" commonJSName "ReactDOM",
-                        "org.webjars.bower" % "react" % reactVersion / "react-dom-server.js" dependsOn "react-dom.js" commonJSName "ReactDOMServer"
+                        "org.webjars.bower" % "react" % reactVersion / "react-dom-server.js" dependsOn "react-dom.js" commonJSName "ReactDOMServer",
+                        "org.webjars.npm" % "bootstrap-markdown" % "2.9.0" / "bootstrap-markdown.js"
                       ),
                       libraryDependencies ++= Seq(
                         "com.github.japgolly.scalajs-react" %%% "core" % scalajsReactVersion,
@@ -63,7 +65,8 @@ val server = project.dependsOn(sharedJVM)
                         "com.lihaoyi" %% "upickle" % upickleVersion,
                         "com.lihaoyi" %% "scalatags" % scalatagsVersion,
                         "com.typesafe.akka" %% "akka-actor" % "2.3.6",
-                        "org.webjars" % "bootstrap" % bootstrapVersion),
+                        "org.webjars" % "bootstrap" % bootstrapVersion,
+                        "org.webjars.npm" % "bootstrap-markdown" % "2.9.0"),
                       managedResources in Compile <<= (managedResources in Compile).dependsOn(fastOptJS in (client, Compile)),
                       // add  in fast opts JS
                       managedResources in Compile += (artifactPath in (client, Compile, fastOptJS)).value,

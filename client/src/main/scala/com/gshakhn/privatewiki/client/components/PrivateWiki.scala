@@ -61,7 +61,8 @@ object PrivateWiki {
             ^.cls := "col-md-4",
             BinderList(state.binderList, unlockBinder)
           )
-        )
+        ),
+        PaperDisplay(Paper("some paper", "some text"))
       )
     }
 
