@@ -27,12 +27,12 @@ object PageInteractions {
   }
 
   def enterBinderPassword(password: String): Unit = {
-    val binderPasswordNode = dom.document.getElementById(BinderPicker.binderServerPasswordId)
+    val binderPasswordNode = dom.document.getElementById(BinderLoader.binderServerPasswordId)
     ReactTestUtils.Simulate.change(binderPasswordNode, ChangeEventData(password))
   }
 
   def enterBinderName(name: String): Unit = {
-    val binderNameNode = dom.document.getElementById(BinderPicker.binderNameInputId)
+    val binderNameNode = dom.document.getElementById(BinderLoader.binderNameInputId)
     ReactTestUtils.Simulate.change(binderNameNode, ChangeEventData(name))
   }
 }

@@ -7,7 +7,7 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
 
-object BinderPicker {
+object BinderLoader {
   val binderNameInputId: String = "binder-name-input"
   val binderServerPasswordId: String = "binder-password-input"
   val binderServerPasswordFormId: String = "binder-password-form"
@@ -99,7 +99,7 @@ object BinderPicker {
   }
 
 
-  private[this] val component = ReactComponentB[Props]("BinderPicker")
+  private[this] val component = ReactComponentB[Props]("BinderLoader")
     .initialState(State("", "", wrongPassword = false))
     .renderBackend[Backend]
     .build

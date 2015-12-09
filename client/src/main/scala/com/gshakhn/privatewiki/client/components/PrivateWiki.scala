@@ -50,7 +50,7 @@ object PrivateWiki {
           <.div(
             ^.id := "col-1-1",
             ^.cls := "col-md-4",
-            BinderPicker(props.client, state.binderList, loadBinder)
+            BinderLoader(props.client, state.binderList, loadBinder)
           )
         ),
         <.div(

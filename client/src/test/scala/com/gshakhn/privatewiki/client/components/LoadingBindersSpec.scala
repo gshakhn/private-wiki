@@ -36,7 +36,7 @@ class LoadingBindersSpec extends PrivateWikiBaseSpec {
         }
 
         it("shows an error in the password field") {
-          val passwordForm = jQuery(s"#${BinderPicker.binderServerPasswordFormId}")
+          val passwordForm = jQuery(s"#${BinderLoader.binderServerPasswordFormId}")
           passwordForm should haveClass("has-error")
         }
       }
@@ -50,11 +50,11 @@ class LoadingBindersSpec extends PrivateWikiBaseSpec {
         }
 
         it("clears the binder name") {
-          jQuery(s"#${BinderPicker.binderNameInputId}").value() shouldBe ""
+          jQuery(s"#${BinderLoader.binderNameInputId}").value() shouldBe ""
         }
 
         it("clears the binder password") {
-          jQuery(s"#${BinderPicker.binderServerPasswordId}").value() shouldBe ""
+          jQuery(s"#${BinderLoader.binderServerPasswordId}").value() shouldBe ""
         }
 
         describe("adds the binder") {
@@ -94,11 +94,11 @@ class LoadingBindersSpec extends PrivateWikiBaseSpec {
         }
 
         it("clears the binder name") {
-          jQuery(s"#${BinderPicker.binderNameInputId}").value() shouldBe ""
+          jQuery(s"#${BinderLoader.binderNameInputId}").value() shouldBe ""
         }
 
         it("clears the binder password") {
-          jQuery(s"#${BinderPicker.binderServerPasswordId}").value() shouldBe ""
+          jQuery(s"#${BinderLoader.binderServerPasswordId}").value() shouldBe ""
         }
 
         it("does not add the binder to the list twice") {

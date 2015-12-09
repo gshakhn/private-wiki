@@ -4,11 +4,11 @@ import com.gshakhn.privatewiki.client.components.PageInteractions._
 import org.scalajs.jquery._
 import org.scalatest.path
 
-class BinderPickerButtonSpec extends PrivateWikiBaseSpec {
+class BinderLoaderButtonSpec extends PrivateWikiBaseSpec {
 
-  override def newInstance: path.FunSpecLike = new BinderPickerButtonSpec
+  override def newInstance: path.FunSpecLike = new BinderLoaderButtonSpec
 
-  describe("A PrivateWiki with a BinderPicker component") {
+  describe("A PrivateWiki with a BinderLoader component") {
     implicit val client = new TestClient
     render
 
