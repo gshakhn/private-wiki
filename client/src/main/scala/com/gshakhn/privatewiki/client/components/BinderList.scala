@@ -7,60 +7,76 @@ import japgolly.scalajs.react.vdom.prefix_<^._
 object BinderList {
   case class Props(binders: Seq[Binder],
                              unlockBinder: LockedBinder => Callback)
-  
+
+  class Backend($: BackendScope[Props, Unit]) {
+    def render(props: Props): ReactElement = {
+      <.ul(
+        ^.cls := "list-group",
+        props.binders.map {
+          case b: LockedBinder => LockedBinderComponent(b, props.unlockBinder)
+          case b: UnlockedBinder => UnlockedBinderComponent(b)
+        }
+      )
+    }
+  }
+
   private[this] val component = ReactComponentB[Props]("BinderList")
-    .render_P(
-      props =>
-        <.ul(
-          ^.cls := "list-group",
-          props.binders.map {
-            case b: LockedBinder => LockedBinderComponent(b, props.unlockBinder)
-            case b: UnlockedBinder => UnlockedBinderComponent(b)
-          }
-        )).build
-  
+    .renderBackend[Backend]
+    .build
+
   def apply(binders: Seq[Binder],
-            unlockBinder: LockedBinder => Callback): ReactComponentU[Props, Unit, Unit, TopNode] = {
+            unlockBinder: LockedBinder => Callback): ReactComponentU[Props, Unit, Backend, TopNode] = {
     component(Props(binders, unlockBinder))
   }
 }
 
 object LockedBinderComponent {
-  case class LockedBinderProps(binder: LockedBinder,
-                               unlockBinder: LockedBinder => Callback)
+  case class Props(binder: LockedBinder,
+                   unlockBinder: LockedBinder => Callback)
 
-  private[this] val component = ReactComponentB[LockedBinderProps]("LockedBinder")
-    .render_P(
-      props => {
-        <.li(
-          ^.cls := "list-group-item binder-list-item locked-binder",
-          props.binder.name,
-          "data-binder-name".reactAttr := props.binder.name,
-          ^.onClick --> props.unlockBinder(props.binder),
-          <.span(
-            ^.cls := "glyphicon glyphicon-lock pull-right"
-          )
+  class Backend($: BackendScope[Props, Unit]) {
+    def render(props: Props): ReactElement = {
+      <.li(
+        ^.cls := "list-group-item binder-list-item locked-binder",
+        props.binder.name,
+        "data-binder-name".reactAttr := props.binder.name,
+        ^.onClick --> props.unlockBinder(props.binder),
+        <.span(
+          ^.cls := "glyphicon glyphicon-lock pull-right"
         )
-      }
-    ).build
-  
-  def apply(binder: LockedBinder,
-            unlockBinder: LockedBinder => Callback): ReactComponentU[LockedBinderProps, Unit, Unit, TopNode] = {
-    component(LockedBinderProps(binder, unlockBinder))
+      )
+    }
   }
+
+  private[this] val component = ReactComponentB[Props]("LockedBinder")
+    .renderBackend[Backend]
+    .build
+
+  def apply(binder: LockedBinder,
+            unlockBinder: LockedBinder => Callback): ReactComponentU[Props, Unit, Backend, TopNode] = {
+    component(Props(binder, unlockBinder))
+  }
+
 }
 
 object UnlockedBinderComponent {
-  def apply(b: UnlockedBinder): ReactComponentU[UnlockedBinder, Unit, Unit, TopNode] = {
-    val component = ReactComponentB[UnlockedBinder]("UnlockedBinder")
-      .render_P(
-        binder =>
-          <.li(
-            ^.cls := "list-group-item binder-list-item unlocked-binder",
-            binder.name,
-            "data-binder-name".reactAttr := binder.name
-          )
-      ).build
-    component(b)
+  type Props = UnlockedBinder
+
+  class Backend($: BackendScope[Props, Unit]) {
+    def render(props: Props): ReactElement = {
+      <.li(
+        ^.cls := "list-group-item binder-list-item unlocked-binder",
+        props.name,
+        "data-binder-name".reactAttr := props.name
+      )
+    }
+  }
+
+  private[this] val component = ReactComponentB[Props]("UnlockedBinder")
+    .renderBackend[Backend]
+    .build
+
+  def apply(unlockedBinder: UnlockedBinder): ReactComponentU[Props, Unit, Backend, TopNode] = {
+    component(unlockedBinder)
   }
 }
