@@ -40,7 +40,7 @@ class UnlockingBinderSpec extends PrivateWikiBaseSpec {
         }
 
         it("creates an unlocked binder with papers") {
-          val unlockedBinder = rootComponent.state.binderList.collect { case b: UnlockedBinder => b}.head
+          val unlockedBinder = rootComponent.state.loadedBinders.collect { case b: UnlockedBinder => b}.head
           unlockedBinder.papers shouldBe papers
         }
       }

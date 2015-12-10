@@ -9,7 +9,7 @@ import upickle.default._
 object PrivateWiki {
   case class Props(client: Client)
 
-  case class State(binderList: Seq[Binder], loadedPapers: Seq[BinderPaperPair])
+  case class State(loadedBinders: Seq[Binder], loadedPapers: Seq[BinderPaperPair])
 
   class Backend($: BackendScope[Props, State]) {
     def unlockBinder(binder: LockedBinder): Callback = {
@@ -20,7 +20,7 @@ object PrivateWiki {
         }
       }
 
-      $.modState(s => s.copy(binderList = replaceBinder(s.binderList)))
+      $.modState(s => s.copy(loadedBinders = replaceBinder(s.loadedBinders)))
     }
 
     def loadPaper(binderPaperPair: BinderPaperPair): Callback = {
@@ -28,7 +28,7 @@ object PrivateWiki {
     }
 
     def loadBinder(lockedBinder: LockedBinder): Callback = {
-      $.modState(s => s.copy(binderList = s.binderList :+ lockedBinder))
+      $.modState(s => s.copy(loadedBinders = s.loadedBinders :+ lockedBinder))
     }
 
     def render(props: Props, state: State): ReactElement = {
@@ -41,7 +41,7 @@ object PrivateWiki {
           <.div(
             ^.id := "col-1-1",
             ^.cls := "col-md-4",
-            PaperPicker(state.binderList.collect { case b: UnlockedBinder => b }, loadPaper)
+            PaperPicker(state.loadedBinders.collect { case b: UnlockedBinder => b }, loadPaper)
           )
         ),
         <.div(
@@ -50,7 +50,7 @@ object PrivateWiki {
           <.div(
             ^.id := "col-1-1",
             ^.cls := "col-md-4",
-            BinderLoader(props.client, state.binderList, loadBinder)
+            BinderLoader(props.client, state.loadedBinders, loadBinder)
           )
         ),
         <.div(
@@ -59,7 +59,7 @@ object PrivateWiki {
           <.div(
             ^.id := "col-2-1",
             ^.cls := "col-md-4",
-            BinderList(state.binderList, unlockBinder)
+            BinderList(state.loadedBinders, unlockBinder)
           )
         ),
         PaperDisplay(Paper("some paper", "some text"))

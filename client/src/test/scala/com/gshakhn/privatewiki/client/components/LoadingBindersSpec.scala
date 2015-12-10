@@ -1,5 +1,6 @@
 package com.gshakhn.privatewiki.client.components
 
+import com.gshakhn.privatewiki.client.LockedBinder
 import com.gshakhn.privatewiki.client.components.testutil.{PrivateWikiBaseSpec, PageInteractions}
 import PageInteractions._
 import com.gshakhn.privatewiki.shared.{NoEncryption, AuthenticationRequest, BinderLoaded, WrongPassword}
@@ -29,6 +30,10 @@ class LoadingBindersSpec extends PrivateWikiBaseSpec {
 
         it("makes the authentication request") {
           client.requestReceived.value shouldBe AuthenticationRequest("binder", "secure")
+        }
+
+        it("does not add the binder to the list of loaded binders") {
+          rootComponent.state.loadedBinders shouldBe empty
         }
 
         it("does not add the binder to the list") {
@@ -73,6 +78,11 @@ class LoadingBindersSpec extends PrivateWikiBaseSpec {
             listItems.eq(0) should haveClass("locked-binder")
           }
         }
+
+        it("adds the binder to the list of loaded binders") {
+          rootComponent.state.loadedBinders should matchPattern{case Seq(LockedBinder("binder", _, _)) => }
+        }
+
       }
     }
     
@@ -105,6 +115,10 @@ class LoadingBindersSpec extends PrivateWikiBaseSpec {
         it("does not add the binder to the list twice") {
           val listItems = jQuery(".binder-list-item")
           listItems.length shouldBe 1
+        }
+
+        it("does not add the binder to the list of loaded binders twice") {
+          rootComponent.state.loadedBinders should matchPattern{case Seq(LockedBinder("binder", _, _)) => }
         }
       }
     }
