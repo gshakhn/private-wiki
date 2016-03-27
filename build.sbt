@@ -5,7 +5,7 @@ scalaVersion in ThisBuild := "2.11.7"
 organization in ThisBuild := "com.gshakhn"
 
 val commonSettings = Seq(
-  libraryDependencies += "com.lihaoyi" %% "acyclic" % "0.1.3" % "provided",
+  libraryDependencies += "com.lihaoyi" %% "acyclic" % "0.1.4" % "provided",
   autoCompilerPlugins := true,
   addCompilerPlugin("com.lihaoyi" %% "acyclic" % "0.1.3"),
   addCompilerPlugin("org.psywerx.hairyfotr" %% "linter" % "0.1.12"),
