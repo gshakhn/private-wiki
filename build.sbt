@@ -21,7 +21,7 @@ val commonSettings = Seq(
 val sprayVersion = "1.3.3"
 val upickleVersion = "0.3.6"
 val scalatagsVersion = "0.5.3"
-val scalajsReactVersion = "0.10.2"
+val scalajsReactVersion = "0.10.4"
 val reactVersion = "0.14.3"
 val bootstrapVersion = "3.3.5"
 
