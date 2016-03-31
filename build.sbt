@@ -9,7 +9,7 @@ val commonSettings = Seq(
   autoCompilerPlugins := true,
   addCompilerPlugin("com.lihaoyi" %% "acyclic" % "0.1.4"),
   addCompilerPlugin("org.psywerx.hairyfotr" %% "linter" % "0.1.13"),
-  libraryDependencies += "org.scalatest" %%% "scalatest" % "3.0.0-M11" % "test",
+  libraryDependencies += "org.scalatest" %%% "scalatest" % "3.0.0-M15" % "test",
   scalacOptions ++= Seq(
    "-feature",
    "-deprecation",
