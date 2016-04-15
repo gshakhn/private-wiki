@@ -20,11 +20,12 @@ object BinderLoader {
 
   class Backend($: BackendScope[Props, State])(implicit executionContext: ExecutionContext) {
     def updateBinderName(e: ReactEventI): Callback = {
-      $.modState(s => s.copy(binderName = e.target.value))
+      e.extract(_.target.value){binderName => $.modState(s => s.copy(binderName = binderName))}
+
     }
 
     def updateBinderPassword(e: ReactEventI): Callback = {
-      $.modState(s => s.copy(binderPassword = e.target.value))
+      e.extract(_.target.value){binderPassword => $.modState(s => s.copy(binderPassword = binderPassword))}
     }
 
     def loadBinder(e: ReactEventI): Callback = {

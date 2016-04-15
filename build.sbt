@@ -19,8 +19,8 @@ val commonSettings = Seq(
 val sprayVersion = "1.3.3"
 val upickleVersion = "0.3.9"
 val scalatagsVersion = "0.5.4"
-val scalajsReactVersion = "0.10.4"
-val reactVersion = "0.14.3"
+val scalajsReactVersion = "0.11.0"
+val reactVersion = "15.0.1"
 val bootstrapVersion = "3.3.6"
 
 val shared = crossProject.in(file(".")).settings(commonSettings:_*)

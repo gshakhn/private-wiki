@@ -29,7 +29,7 @@ object PaperPicker {
     }
 
     def updateSearch(e: ReactEventI): Callback = {
-      $.modState(s => s.copy(searchText = e.target.value))
+      e.extract(_.target.value){searchText => $.modState(s => s.copy(searchText = searchText))}
     }
 
     def papers(props: Props, state: State): Seq[(Binder, Paper)] = {
