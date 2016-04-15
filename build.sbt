@@ -1,5 +1,3 @@
-import spray.revolver.RevolverPlugin.Revolver
-
 scalaVersion in ThisBuild := "2.11.8"
 
 organization in ThisBuild := "com.gshakhn"
