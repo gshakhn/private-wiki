@@ -14,7 +14,7 @@ val commonSettings = Seq(
    "-Xlint",
    "-Xfatal-warnings"
   ),
-  scapegoatVersion := "1.2.0"
+  scapegoatVersion := "1.2.1"
 )
 
 val sprayVersion = "1.3.3"
