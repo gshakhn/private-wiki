@@ -8,6 +8,7 @@ object BinderList {
   case class Props(binders: Seq[Binder],
                              unlockBinder: LockedBinder => Callback)
 
+  @SuppressWarnings(Array("UnusedMethodParameter"))
   class Backend($: BackendScope[Props, Unit]) {
     def render(props: Props): ReactElement = {
       <.ul(
@@ -34,6 +35,7 @@ object LockedBinderComponent {
   case class Props(binder: LockedBinder,
                    unlockBinder: LockedBinder => Callback)
 
+  @SuppressWarnings(Array("UnusedMethodParameter"))
   class Backend($: BackendScope[Props, Unit]) {
     def render(props: Props): ReactElement = {
       <.li(
@@ -62,6 +64,7 @@ object LockedBinderComponent {
 object UnlockedBinderComponent {
   type Props = UnlockedBinder
 
+  @SuppressWarnings(Array("UnusedMethodParameter"))
   class Backend($: BackendScope[Props, Unit]) {
     def render(props: Props): ReactElement = {
       <.li(

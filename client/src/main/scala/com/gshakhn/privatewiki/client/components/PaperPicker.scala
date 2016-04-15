@@ -41,7 +41,7 @@ object PaperPicker {
     }
 
     def render(props: Props, state: State): ReactElement = {
-      val binderButtons = Seq(AllBinders) ++ props.binders.map(BinderButton.apply)
+      val binderButtons: Seq[AnyBinderButton] = Seq(AllBinders) ++ props.binders.map(BinderButton.apply)
       <.div(
         ^.cls := "paper-picker",
         <.div(

@@ -22,6 +22,7 @@ object PrivateWikiRenderer {
 }
 
 object ActualClient extends Client {
+  @SuppressWarnings(Array("MethodNames"))
   def authenticateBinder(request: AuthenticationRequest): Future[AuthenticationResponse] = {
     dom.ext.Ajax.post(
       url = "/authenticateBinder",

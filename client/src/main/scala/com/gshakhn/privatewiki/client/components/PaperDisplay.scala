@@ -10,6 +10,7 @@ object PaperDisplay {
 
   case class Props(paper: Paper)
 
+  @SuppressWarnings(Array("UnusedMethodParameter"))
   class Backend($: BackendScope[Props, Unit]) {
     def render(props: Props): ReactElement = {
       <.div(

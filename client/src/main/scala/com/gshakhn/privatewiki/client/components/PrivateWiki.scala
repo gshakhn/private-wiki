@@ -15,6 +15,7 @@ object PrivateWiki {
 
   class Backend($: BackendScope[Props, State])(implicit executionContext: ExecutionContext) {
     def unlockBinder(binder: LockedBinder): Callback = {
+      @SuppressWarnings(Array("MethodNames"))
       def replaceBinder(binderList: Seq[Binder]): Seq[Binder] = {
         binderList.map {
           case x if x == binder => UnlockedBinder(x.name, read[Set[Paper]](binder.data))
