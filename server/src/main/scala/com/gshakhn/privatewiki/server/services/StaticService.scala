@@ -43,11 +43,6 @@ object Template {
             rel := "stylesheet",
             `type` := "text/css",
             href := "META-INF/resources/webjars/bootstrap/3.3.6/css/bootstrap.css"
-          ),
-          link(
-            rel := "stylesheet",
-            `type` := "text/css",
-            href := "META-INF/resources/webjars/bootstrap-markdown/2.9.0/css/bootstrap-markdown.min.css"
           )
         ),
         body(margin := 0, onload := "PrivateWikiRenderer().render()")

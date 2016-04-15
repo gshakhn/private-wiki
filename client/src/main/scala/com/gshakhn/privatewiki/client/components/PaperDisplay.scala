@@ -25,9 +25,6 @@ object PaperDisplay {
 
   private[this] val component = ReactComponentB[Props]("PaperList")
     .renderBackend[Backend]
-    .componentDidMount(scope => Callback {
-      js.Dynamic.global.jQuery(scope.getDOMNode()).find(".foobar").markdown()
-    })
     .build
 
   def apply(paper: Paper): ReactComponentU[Props, Unit, Backend, TopNode] = {
