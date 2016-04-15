@@ -6,12 +6,14 @@ import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 import upickle.default._
 
+import scala.concurrent.ExecutionContext
+
 object PrivateWiki {
   case class Props(client: Client)
 
   case class State(loadedBinders: Seq[Binder], loadedPapers: Seq[BinderPaperPair])
 
-  class Backend($: BackendScope[Props, State]) {
+  class Backend($: BackendScope[Props, State])(implicit executionContext: ExecutionContext) {
     def unlockBinder(binder: LockedBinder): Callback = {
       def replaceBinder(binderList: Seq[Binder]): Seq[Binder] = {
         binderList.map {
@@ -68,7 +70,8 @@ object PrivateWiki {
 
   }
 
-  def apply(client: Client): ReactComponentU[Props, State, Backend, TopNode] = {
+  def apply(client: Client)
+           (implicit executionContext: ExecutionContext) : ReactComponentU[Props, State, Backend, TopNode] = {
     val component = ReactComponentB[Props]("PrivateWiki")
       .initialState(State(Seq.empty, Seq.empty))
       .renderBackend[Backend]

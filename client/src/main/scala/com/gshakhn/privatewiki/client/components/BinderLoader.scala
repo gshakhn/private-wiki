@@ -5,7 +5,7 @@ import com.gshakhn.privatewiki.shared.{AuthenticationRequest, BinderLoaded, Wron
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.prefix_<^._
 
-import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
+import scala.concurrent.ExecutionContext
 
 object BinderLoader {
   val binderNameInputId: String = "binder-name-input"
@@ -18,7 +18,7 @@ object BinderLoader {
     def hasData: Boolean = !binderName.isEmpty && !binderPassword.isEmpty
   }
 
-  class Backend($: BackendScope[Props, State]) {
+  class Backend($: BackendScope[Props, State])(implicit executionContext: ExecutionContext) {
     def updateBinderName(e: ReactEventI): Callback = {
       $.modState(s => s.copy(binderName = e.target.value))
     }
@@ -98,15 +98,14 @@ object BinderLoader {
     }
   }
 
-
-  private[this] val component = ReactComponentB[Props]("BinderLoader")
-    .initialState(State("", "", wrongPassword = false))
-    .renderBackend[Backend]
-    .build
-
   def apply(client: Client,
             currentlyLoadedBinders: Seq[Binder],
-            loadBinderCallback: LockedBinder => Callback): ReactComponentU[Props, State, Backend, TopNode] = {
+            loadBinderCallback: LockedBinder => Callback)(implicit executionContext: ExecutionContext) : ReactComponentU[Props, State, Backend, TopNode] = {
+    val component = ReactComponentB[Props]("BinderLoader")
+      .initialState(State("", "", wrongPassword = false))
+      .renderBackend[Backend]
+      .build
+
     component(Props(client, currentlyLoadedBinders, loadBinderCallback))
   }
 }

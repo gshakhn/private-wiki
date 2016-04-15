@@ -7,7 +7,7 @@ import org.scalajs.dom
 import upickle.default._
 
 import scala.concurrent.Future
-import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
+import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
 import scala.scalajs.js.annotation.JSExport
 import scalatags.JsDom.all._
 

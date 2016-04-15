@@ -7,7 +7,8 @@ import com.gshakhn.privatewiki.shared.{AuthenticationRequest, AuthenticationResp
 import japgolly.scalajs.react.{ReactComponentM, ReactDOM, TopNode}
 
 import scala.concurrent.Future
-import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
+
+import RunNowExecutionContext.runNow
 
 trait PrivateWikiBaseSpec extends ReactJsBaseSpec {
   var rootComponent: ReactComponentM[Props, State, Backend, TopNode] = _
