@@ -49,7 +49,7 @@ val client = project.dependsOn(sharedJS)
                         "com.lihaoyi" %%% "upickle" % upickleVersion,
                         "com.lihaoyi" %%% "scalatags" % scalatagsVersion,
                         "be.doeraene" %%% "scalajs-jquery" % "0.9.0",
-                        "org.scala-js" %%% "scalajs-dom" % "0.8.2",
+                        "org.scala-js" %%% "scalajs-dom" % "0.9.0",
                         "org.webjars" % "bootstrap" % bootstrapVersion))
 
 val server = project.dependsOn(sharedJVM)
