@@ -22,6 +22,7 @@ val scalatagsVersion = "0.5.4"
 val scalajsReactVersion = "0.11.0"
 val reactVersion = "15.0.1"
 val bootstrapVersion = "3.3.6"
+val jQueryVersion = "2.2.3"
 
 val shared = crossProject.in(file(".")).settings(commonSettings:_*)
 
@@ -37,8 +38,8 @@ val client = project.dependsOn(sharedJS)
                       skip in packageJSDependencies := false,
                       scalaJSUseRhino in Global := false,
                       jsDependencies ++= Seq(
-                        "org.webjars" % "jquery" % "2.1.3" / "2.1.3/jquery.js",
-                        "org.webjars" % "bootstrap" % bootstrapVersion / "bootstrap.js" dependsOn "2.1.3/jquery.js",
+                        "org.webjars" % "jquery" % jQueryVersion / s"$jQueryVersion/jquery.js",
+                        "org.webjars" % "bootstrap" % bootstrapVersion / "bootstrap.js" dependsOn s"$jQueryVersion/jquery.js",
                         "org.webjars.bower" % "react" % reactVersion / "react-with-addons.js" commonJSName "React",
                         "org.webjars.bower" % "react" % reactVersion / "react-dom.js" dependsOn "react-with-addons.js" commonJSName "ReactDOM",
                         "org.webjars.bower" % "react" % reactVersion / "react-dom-server.js" dependsOn "react-dom.js" commonJSName "ReactDOMServer",
