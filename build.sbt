@@ -35,6 +35,7 @@ val client = project.dependsOn(sharedJS)
                     .settings(
                       jsDependencies += RuntimeDOM % "test",
                       skip in packageJSDependencies := false,
+                      scalaJSUseRhino in Global := false,
                       jsDependencies ++= Seq(
                         "org.webjars" % "jquery" % "2.1.3" / "2.1.3/jquery.js",
                         "org.webjars" % "bootstrap" % bootstrapVersion / "bootstrap.js" dependsOn "2.1.3/jquery.js",
