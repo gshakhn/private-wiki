@@ -13,3 +13,5 @@ sudo: false
 cache:
   directories:
   - $HOME/.ivy2
+addons:
+  firefox: latest

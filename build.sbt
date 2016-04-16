@@ -38,6 +38,7 @@ val client = project.dependsOn(sharedJS)
                       jsDependencies += RuntimeDOM % "test",
                       skip in packageJSDependencies := false,
                       scalaJSUseRhino in Global := false,
+                      jsEnv in Test := new org.scalajs.jsenv.selenium.SeleniumJSEnv(org.scalajs.jsenv.selenium.Firefox),
                       jsDependencies ++= Seq(
                         "org.webjars" % "jquery" % jQueryVersion / s"$jQueryVersion/jquery.js",
                         "org.webjars" % "bootstrap" % bootstrapVersion / "bootstrap.js" dependsOn s"$jQueryVersion/jquery.js",
