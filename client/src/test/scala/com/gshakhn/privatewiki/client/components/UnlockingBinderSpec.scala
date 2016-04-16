@@ -31,7 +31,7 @@ class UnlockingBinderSpec extends PrivateWikiBaseSpec {
           val span = li.find("span")
           li should haveClass("unlocked-binder")
           span shouldNot haveClass("glyphicon")
-          span shouldNot haveClass("glyphicon-lock")
+          span should haveClass("glyphicon-lock")
         }
 
         it("adds the binder to the paper picker") {
