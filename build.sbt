@@ -1,3 +1,5 @@
+import org.scalajs.sbtplugin.ScalaJSPluginInternal
+
 scalaVersion in ThisBuild := "2.11.8"
 
 organization in ThisBuild := "com.gshakhn"
@@ -25,6 +27,9 @@ val reactVersion = "15.0.1"
 val bootstrapVersion = "3.3.6"
 val jQueryVersion = "2.2.3"
 
+lazy val FirefoxTest = config("firefox") extend Test
+lazy val ChromeTest = config("chrome") extend Test
+
 val shared = crossProject.in(file(".")).settings(commonSettings:_*)
 
 lazy val sharedJVM = shared.jvm
@@ -34,11 +39,11 @@ lazy val sharedJS = shared.js
 val client = project.dependsOn(sharedJS)
                     .settings(commonSettings:_*)
                     .enablePlugins(ScalaJSPlugin)
+                    .configs(FirefoxTest, ChromeTest)
                     .settings(
                       jsDependencies += RuntimeDOM % "test",
                       skip in packageJSDependencies := false,
                       scalaJSUseRhino in Global := false,
-                      jsEnv in Test := new org.scalajs.jsenv.selenium.SeleniumJSEnv(org.scalajs.jsenv.selenium.Firefox),
                       jsDependencies ++= Seq(
                         "org.webjars" % "jquery" % jQueryVersion / s"$jQueryVersion/jquery.js",
                         "org.webjars" % "bootstrap" % bootstrapVersion / "bootstrap.js" dependsOn s"$jQueryVersion/jquery.js",
@@ -54,6 +59,14 @@ val client = project.dependsOn(sharedJS)
                         "be.doeraene" %%% "scalajs-jquery" % "0.9.0",
                         "org.scala-js" %%% "scalajs-dom" % "0.9.0",
                         "org.webjars" % "bootstrap" % bootstrapVersion))
+                      .settings( inConfig(FirefoxTest)(Defaults.testTasks) : _*)
+                      .settings( inConfig(FirefoxTest)(ScalaJSPluginInternal.scalaJSTestSettings) : _*)
+                      .settings( inConfig(ChromeTest)(Defaults.testTasks) : _*)
+                      .settings( inConfig(ChromeTest)(ScalaJSPluginInternal.scalaJSTestSettings) : _*)
+                      .settings( inConfig(FirefoxTest)(
+                        jsEnv := new org.scalajs.jsenv.selenium.SeleniumJSEnv(org.scalajs.jsenv.selenium.Firefox)))
+                      .settings( inConfig(ChromeTest)(
+                        jsEnv := new org.scalajs.jsenv.selenium.SeleniumJSEnv(org.scalajs.jsenv.selenium.Chrome)))
 
 val server = project.dependsOn(sharedJVM)
                     .settings(commonSettings:_*)

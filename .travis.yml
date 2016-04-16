@@ -10,8 +10,8 @@ before_script:
 script:
   - sbt ++$TRAVIS_SCALA_VERSION scalastyle
   - sbt ++$TRAVIS_SCALA_VERSION scapegoat
-  - sbt ++$TRAVIS_SCALA_VERSION 'clean' 'set scalaJSStage in Global := FastOptStage' "client/test"
-  - sbt ++$TRAVIS_SCALA_VERSION 'clean' 'set scalaJSStage in Global := FullOptStage' "client/test"
+  - sbt ++$TRAVIS_SCALA_VERSION 'clean' 'set scalaJSStage in Global := FastOptStage' "client/firefox:test"
+  - sbt ++$TRAVIS_SCALA_VERSION 'clean' 'set scalaJSStage in Global := FullOptStage' "client/firefox:test"
   - sbt ++$TRAVIS_SCALA_VERSION "server/test"
 sudo: false
 cache:
