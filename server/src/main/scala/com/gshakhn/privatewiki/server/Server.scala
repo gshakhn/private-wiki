@@ -10,7 +10,7 @@ object Server extends App with SimpleRoutingApp with StaticService with Authenti
 
   private[this] val defaultPort = 8080
 
-  startServer(interface = "localhost", port = defaultPort) {
+  startServer(interface = "0.0.0.0", port = defaultPort) {
     baseRoute ~ authRoute
   }
 }
