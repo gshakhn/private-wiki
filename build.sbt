@@ -1,3 +1,6 @@
+import org.openqa.selenium.chrome.{ChromeDriverService, ChromeOptions}
+import org.openqa.selenium.remote.RemoteWebDriver
+import org.scalajs.jsenv.selenium.{BrowserDriver, SeleniumBrowser}
 import org.scalajs.sbtplugin.ScalaJSPluginInternal
 
 scalaVersion in ThisBuild := "2.11.8"
@@ -29,6 +32,29 @@ val jQueryVersion = "2.2.3"
 
 lazy val FirefoxTest = config("firefox") extend Test
 lazy val ChromeTest = config("chrome") extend Test
+lazy val ChromeDockerTest = config("chromeDocker") extend Test
+
+// Copied from org.scalajs.jsenv.selenium.SeleniumJSEnv(org.scalajs.jsenv.selenium.Chrome) v0.1.2
+// TODO: Delete once https://github.com/scala-js/scala-js-env-selenium/pull/45 is released
+val ChromeNoSandbox = new SeleniumBrowser {
+  def name: String = "Chrome"
+
+  def newDriver: BrowserDriver = new ChromeDriver
+
+  private class ChromeDriver extends BrowserDriver {
+    protected def newDriver(): RemoteWebDriver = {
+      val options = new ChromeOptions()
+      options.addArguments("--no-sandbox")
+      val service = {
+        /* Activate the silent ChromeDriverService silent mode,
+         * see ChromeDriverService.createDefaultService
+         */
+        new ChromeDriverService.Builder().withSilent(true).usingAnyFreePort.build
+      }
+      new org.openqa.selenium.chrome.ChromeDriver(service, options)
+    }
+  }
+}
 
 val shared = crossProject.in(file(".")).settings(commonSettings:_*)
 
@@ -39,7 +65,7 @@ lazy val sharedJS = shared.js
 val client = project.dependsOn(sharedJS)
                     .settings(commonSettings:_*)
                     .enablePlugins(ScalaJSPlugin)
-                    .configs(FirefoxTest, ChromeTest)
+                    .configs(FirefoxTest, ChromeTest, ChromeDockerTest)
                     .settings(
                       jsDependencies += RuntimeDOM % "test",
                       skip in packageJSDependencies := false,
@@ -63,10 +89,14 @@ val client = project.dependsOn(sharedJS)
                       .settings( inConfig(FirefoxTest)(ScalaJSPluginInternal.scalaJSTestSettings) : _*)
                       .settings( inConfig(ChromeTest)(Defaults.testTasks) : _*)
                       .settings( inConfig(ChromeTest)(ScalaJSPluginInternal.scalaJSTestSettings) : _*)
+                      .settings( inConfig(ChromeDockerTest)(Defaults.testTasks) : _*)
+                      .settings( inConfig(ChromeDockerTest)(ScalaJSPluginInternal.scalaJSTestSettings) : _*)
                       .settings( inConfig(FirefoxTest)(
                         jsEnv := new org.scalajs.jsenv.selenium.SeleniumJSEnv(org.scalajs.jsenv.selenium.Firefox)))
                       .settings( inConfig(ChromeTest)(
                         jsEnv := new org.scalajs.jsenv.selenium.SeleniumJSEnv(org.scalajs.jsenv.selenium.Chrome)))
+                      .settings( inConfig(ChromeDockerTest)(
+                        jsEnv := new org.scalajs.jsenv.selenium.SeleniumJSEnv(ChromeNoSandbox)))
 
 val server = project.dependsOn(sharedJVM)
                     .settings(commonSettings:_*)
