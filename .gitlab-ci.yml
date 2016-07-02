@@ -1,4 +1,4 @@
-image: sbt-firefox-chromium
+image: gshakhn/sbt-firefox-chromium
 
 scalastyle:
   stage: build
