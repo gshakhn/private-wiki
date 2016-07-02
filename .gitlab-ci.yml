@@ -1,0 +1,6 @@
+image: sbt-firefox-chromium
+
+scalastyle:
+  stage: build
+  script:
+    - scalastyle
