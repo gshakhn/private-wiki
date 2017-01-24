@@ -110,7 +110,7 @@ val server = project.dependsOn(sharedJVM)
                         "com.lihaoyi" %% "scalatags" % scalatagsVersion,
                         "com.typesafe.akka" %% "akka-actor" % "2.4.4",
                         "org.webjars" % "bootstrap" % bootstrapVersion),
-                      managedResources in Compile <<= (managedResources in Compile).dependsOn(fastOptJS in (client, Compile)),
+                      managedResources in Compile := (managedResources in Compile).dependsOn(fastOptJS in(client, Compile)).value,
                       // add  in fast opts JS
                       managedResources in Compile += (artifactPath in (client, Compile, fastOptJS)).value,
                       // add source maps - this is based on definition of artifactPath in ScalaJSPluginInternal.scala - VERY HACKY
