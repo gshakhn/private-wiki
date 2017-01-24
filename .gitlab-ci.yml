@@ -13,3 +13,23 @@ scalastyle:
   stage: build
   script:
     - $SBT_PATH/sbt scalastyle
+
+scapegoat:
+  stage: build
+  script:
+    - $SBT_PATH/sbt scapegoat
+
+server_test:
+  stage: test
+  script:
+    - $SBT_PATH/sbt server/test
+
+fast_opt_test:
+  stage: test
+  script:
+    - $SBT_PATH/sbt 'set scalaJSStage in Global := FastOptStage' 'client/test'
+
+full_opt_test:
+  stage: test
+  script:
+    - $SBT_PATH/sbt 'set scalaJSStage in Global := FullOptStage' 'client/test'
