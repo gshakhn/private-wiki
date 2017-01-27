@@ -3,6 +3,7 @@ image: openjdk:8
 variables:
   SBT_VERSION: "0.13.13"
   SBT_PATH: "/opt/sbt-launcher-packaging-${SBT_VERSION}/bin"
+  SBT: sbt -sbt-dir $CI_PROJECT_DIR/cache/.sbt -ivy $CI_PROJECT_DIR/cache/.ivy2
   PHANTOMJS_VERSION: "2.1.1"
   PHANTOMJS_PATH: "/opt/phantomjs-${PHANTOMJS_VERSION}-linux-x86_64/bin"
 
@@ -12,27 +13,31 @@ before_script:
   - export PATH=$PATH:$SBT_PATH
   - export PATH=$PATH:$PHANTOMJS_PATH
 
+cache:
+  paths:
+  - cache/
+
 scalastyle:
   stage: build
   script:
-    - sbt scalastyle
+    - $SBT scalastyle
 
 scapegoat:
   stage: build
   script:
-    - sbt scapegoat
+    - $SBT scapegoat
 
 server_test:
   stage: test
   script:
-    - sbt server/test
+    - $SBT server/test
 
 fast_opt_test:
   stage: test
   script:
-    - sbt 'set scalaJSStage in Global := FastOptStage' 'client/test'
+    - $SBT 'set scalaJSStage in Global := FastOptStage' 'client/test'
 
 full_opt_test:
   stage: test
   script:
-    - sbt 'set scalaJSStage in Global := FullOptStage' 'client/test'
+    - $SBT 'set scalaJSStage in Global := FullOptStage' 'client/test'
