@@ -67,9 +67,9 @@ val client = project.dependsOn(sharedJS)
                     .enablePlugins(ScalaJSPlugin)
                     .configs(FirefoxTest, ChromeTest, ChromeDockerTest)
                     .settings(
+                      jsEnv := PhantomJSEnv().value,
                       jsDependencies += RuntimeDOM % "test",
                       skip in packageJSDependencies := false,
-                      scalaJSUseRhino in Global := false,
                       jsDependencies ++= Seq(
                         "org.webjars" % "jquery" % jQueryVersion / s"$jQueryVersion/jquery.js",
                         "org.webjars" % "bootstrap" % bootstrapVersion / "bootstrap.js" dependsOn s"$jQueryVersion/jquery.js",
