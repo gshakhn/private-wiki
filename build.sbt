@@ -67,7 +67,6 @@ val client = project.dependsOn(sharedJS)
                     .enablePlugins(ScalaJSPlugin)
                     .configs(FirefoxTest, ChromeTest, ChromeDockerTest)
                     .settings(
-                      jsEnv := PhantomJSEnv().value,
                       jsDependencies += RuntimeDOM % "test",
                       skip in packageJSDependencies := false,
                       jsDependencies ++= Seq(

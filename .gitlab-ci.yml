@@ -4,14 +4,13 @@ variables:
   SBT_VERSION: "0.13.13"
   SBT_PATH: "/opt/sbt-launcher-packaging-${SBT_VERSION}/bin"
   SBT: sbt -sbt-dir $CI_PROJECT_DIR/cache/.sbt -ivy $CI_PROJECT_DIR/cache/.ivy2
-  PHANTOMJS_VERSION: "2.1.1"
-  PHANTOMJS_PATH: "/opt/phantomjs-${PHANTOMJS_VERSION}-linux-x86_64/bin"
 
 before_script:
+  - curl -sL https://deb.nodesource.com/setup_7.x | bash
+  - apt-get install -y nodejs
+  - npm install jsdom
   - curl -SL https://dl.bintray.com/sbt/native-packages/sbt/${SBT_VERSION}/sbt-${SBT_VERSION}.tgz | tar xz -C /opt/
-  - curl -SL https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-${PHANTOMJS_VERSION}-linux-x86_64.tar.bz2 | tar xj -C /opt/
   - export PATH=$PATH:$SBT_PATH
-  - export PATH=$PATH:$PHANTOMJS_PATH
 
 cache:
   paths:
