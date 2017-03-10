@@ -7,10 +7,11 @@ variables:
 
 before_script:
   - curl -sL https://deb.nodesource.com/setup_7.x | bash
-  - apt-get install -y nodejs
+  - apt-get install -y nodejs chromium chromedriver xvfb
   - npm install jsdom
   - curl -SL https://dl.bintray.com/sbt/native-packages/sbt/${SBT_VERSION}/sbt-${SBT_VERSION}.tgz | tar xz -C /opt/
   - export PATH=$PATH:$SBT_PATH
+  - export PATH=$PATH:/usr/lib/chromium
 
 cache:
   paths:
@@ -40,3 +41,15 @@ full_opt_test:
   stage: test
   script:
     - $SBT 'set scalaJSStage in Global := FullOptStage' 'client/test'
+
+chromium_fast_opt_test:
+  stage: test
+  script:
+    - Xvfb :1 &
+    - DISPLAY=:1 $SBT 'set scalaJSStage in Global := FastOptStage' 'client/chromeDocker:test'
+
+chromium_full_opt_test:
+  stage: test
+  script:
+    - Xvfb :1 &
+    - DISPLAY=:1 $SBT 'set scalaJSStage in Global := FullOptStage' 'client/chromeDocker:test'

@@ -32,8 +32,9 @@ val jQueryVersion = "2.2.3"
 
 lazy val FirefoxTest = config("firefox") extend Test
 lazy val ChromeTest = config("chrome") extend Test
+lazy val ChromeDockerTest = config("chromeDocker") extend Test
 
-lazy val chromeOptions: ChromeOptions = {
+lazy val chromeDockerOptions: ChromeOptions = {
   val options = new ChromeOptions()
   options.addArguments("--no-sandbox")
   options
@@ -48,7 +49,7 @@ lazy val sharedJS = shared.js
 val client = project.dependsOn(sharedJS)
                     .settings(commonSettings:_*)
                     .enablePlugins(ScalaJSPlugin)
-                    .configs(FirefoxTest, ChromeTest)
+                    .configs(FirefoxTest, ChromeTest, ChromeDockerTest)
                     .settings(
                       jsDependencies += RuntimeDOM % "test",
                       skip in packageJSDependencies := false,
@@ -71,10 +72,14 @@ val client = project.dependsOn(sharedJS)
                       .settings( inConfig(FirefoxTest)(ScalaJSPluginInternal.scalaJSTestSettings) : _*)
                       .settings( inConfig(ChromeTest)(Defaults.testTasks) : _*)
                       .settings( inConfig(ChromeTest)(ScalaJSPluginInternal.scalaJSTestSettings) : _*)
+                      .settings( inConfig(ChromeDockerTest)(Defaults.testTasks) : _*)
+                      .settings( inConfig(ChromeDockerTest)(ScalaJSPluginInternal.scalaJSTestSettings) : _*)
                       .settings( inConfig(FirefoxTest)(
                         jsEnv := new org.scalajs.jsenv.selenium.SeleniumJSEnv(org.scalajs.jsenv.selenium.Firefox())))
                       .settings( inConfig(ChromeTest)(
-                        jsEnv := new org.scalajs.jsenv.selenium.SeleniumJSEnv(org.scalajs.jsenv.selenium.Chrome().withChromeOptions(chromeOptions))))
+                        jsEnv := new org.scalajs.jsenv.selenium.SeleniumJSEnv(org.scalajs.jsenv.selenium.Chrome())))
+                      .settings( inConfig(ChromeDockerTest)(
+                        jsEnv := new org.scalajs.jsenv.selenium.SeleniumJSEnv(org.scalajs.jsenv.selenium.Chrome().withChromeOptions(chromeDockerOptions))))
 
 val server = project.dependsOn(sharedJVM)
                     .settings(commonSettings:_*)
