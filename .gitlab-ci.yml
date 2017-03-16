@@ -6,6 +6,7 @@ variables:
 cache:
   paths:
   - cache/
+  key: "$CI_BUILD_REF_NAME"
 
 scalastyle:
   stage: build
