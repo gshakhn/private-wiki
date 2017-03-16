@@ -30,7 +30,6 @@ val reactVersion = "15.0.1"
 val bootstrapVersion = "3.3.6"
 val jQueryVersion = "2.2.3"
 
-lazy val FirefoxTest = config("firefox") extend Test
 lazy val ChromeTest = config("chrome") extend Test
 lazy val ChromeDockerTest = config("chromeDocker") extend Test
 
@@ -49,7 +48,7 @@ lazy val sharedJS = shared.js
 val client = project.dependsOn(sharedJS)
                     .settings(commonSettings:_*)
                     .enablePlugins(ScalaJSPlugin)
-                    .configs(FirefoxTest, ChromeTest, ChromeDockerTest)
+                    .configs(ChromeTest, ChromeDockerTest)
                     .settings(
                       jsDependencies += RuntimeDOM % "test",
                       skip in packageJSDependencies := false,
@@ -68,14 +67,10 @@ val client = project.dependsOn(sharedJS)
                         "be.doeraene" %%% "scalajs-jquery" % "0.9.0",
                         "org.scala-js" %%% "scalajs-dom" % "0.9.0",
                         "org.webjars" % "bootstrap" % bootstrapVersion))
-                      .settings( inConfig(FirefoxTest)(Defaults.testTasks) : _*)
-                      .settings( inConfig(FirefoxTest)(ScalaJSPluginInternal.scalaJSTestSettings) : _*)
                       .settings( inConfig(ChromeTest)(Defaults.testTasks) : _*)
                       .settings( inConfig(ChromeTest)(ScalaJSPluginInternal.scalaJSTestSettings) : _*)
                       .settings( inConfig(ChromeDockerTest)(Defaults.testTasks) : _*)
                       .settings( inConfig(ChromeDockerTest)(ScalaJSPluginInternal.scalaJSTestSettings) : _*)
-                      .settings( inConfig(FirefoxTest)(
-                        jsEnv := new org.scalajs.jsenv.selenium.SeleniumJSEnv(org.scalajs.jsenv.selenium.Firefox())))
                       .settings( inConfig(ChromeTest)(
                         jsEnv := new org.scalajs.jsenv.selenium.SeleniumJSEnv(org.scalajs.jsenv.selenium.Chrome())))
                       .settings( inConfig(ChromeDockerTest)(
