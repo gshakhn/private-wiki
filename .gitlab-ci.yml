@@ -1,7 +1,10 @@
 image: igeolise/scalajs-test-runner
 
 variables:
-  SBT: sbt -sbt-dir $CI_PROJECT_DIR/cache/.sbt -ivy $CI_PROJECT_DIR/cache/.ivy2
+  SBT: sbt -sbt-dir "$CI_PROJECT_DIR/cache/.sbt" -ivy "$CI_PROJECT_DIR/cache/.ivy2"
+
+before_script:
+  - export COURSIER_CACHE="$CI_PROJECT_DIR/cache/.coursier-cache"
 
 cache:
   paths:
