@@ -8,16 +8,17 @@ scalaVersion in ThisBuild := "2.11.8"
 organization in ThisBuild := "com.gshakhn"
 
 val commonSettings = Seq(
-  libraryDependencies += "com.lihaoyi" %% "acyclic" % "0.1.4" % "provided",
+  libraryDependencies += "com.lihaoyi" %% "acyclic" % "0.1.7" % "provided",
   autoCompilerPlugins := true,
-  addCompilerPlugin("com.lihaoyi" %% "acyclic" % "0.1.4"),
+  addCompilerPlugin("com.lihaoyi" %% "acyclic" % "0.1.7"),
   addCompilerPlugin("org.psywerx.hairyfotr" %% "linter" % "0.1.13"),
   libraryDependencies += "org.scalatest" %%% "scalatest" % "3.0.0-M15" % "test",
   scalacOptions ++= Seq(
    "-feature",
    "-deprecation",
    "-Xlint",
-   "-Xfatal-warnings"
+   "-Xfatal-warnings",
+    "-P:acyclic:force"
   ),
   scapegoatVersion := "1.2.1"
 )
