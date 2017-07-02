@@ -3,7 +3,9 @@ package com.gshakhn.privatewiki.client.components
 import com.gshakhn.privatewiki.client._
 import com.gshakhn.privatewiki.shared.Paper
 import japgolly.scalajs.react._
-import japgolly.scalajs.react.vdom.prefix_<^._
+import japgolly.scalajs.react.component.Js
+import japgolly.scalajs.react.component.Scala.MountedImpure
+import japgolly.scalajs.react.vdom.html_<^._
 import upickle.default._
 
 import scala.concurrent.ExecutionContext
@@ -34,7 +36,7 @@ object PrivateWiki {
       $.modState(s => s.copy(loadedBinders = s.loadedBinders :+ lockedBinder))
     }
 
-    def render(props: Props, state: State): ReactElement = {
+    def render(props: Props, state: State): VdomElement = {
       <.div(
         ^.id := "mainContainer",
         ^.cls := "container",
@@ -72,8 +74,8 @@ object PrivateWiki {
   }
 
   def apply(client: Client)
-           (implicit executionContext: ExecutionContext) : ReactComponentU[Props, State, Backend, TopNode] = {
-    val component = ReactComponentB[Props]("PrivateWiki")
+           (implicit executionContext: ExecutionContext): Js.UnmountedSimple[Props, MountedImpure[Props, State, Backend]] = {
+    val component = ScalaComponent.builder[Props]("PrivateWiki")
       .initialState(State(Seq.empty, Seq.empty))
       .renderBackend[Backend]
       .build

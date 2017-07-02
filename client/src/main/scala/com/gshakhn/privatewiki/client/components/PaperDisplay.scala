@@ -2,9 +2,7 @@ package com.gshakhn.privatewiki.client.components
 
 import com.gshakhn.privatewiki.shared.Paper
 import japgolly.scalajs.react._
-import japgolly.scalajs.react.vdom.prefix_<^._
-
-import scala.scalajs.js
+import japgolly.scalajs.react.vdom.html_<^._
 
 object PaperDisplay {
 
@@ -12,7 +10,7 @@ object PaperDisplay {
 
   @SuppressWarnings(Array("UnusedMethodParameter"))
   class Backend($: BackendScope[Props, Unit]) {
-    def render(props: Props): ReactElement = {
+    def render(props: Props): VdomElement = {
       <.div(
         ^.cls := "barfoo",
         <.div(
@@ -23,11 +21,12 @@ object PaperDisplay {
     }
   }
 
-  private[this] val component = ReactComponentB[Props]("PaperList")
+  private[this] val component = ScalaComponent.builder[Props]("PaperList")
     .renderBackend[Backend]
     .build
 
-  def apply(paper: Paper): ReactComponentU[Props, Unit, Backend, TopNode] = {
+  //noinspection ScalaStyle,TypeAnnotation
+  def apply(paper: Paper) = {
     component(Props(paper))
   }
 }

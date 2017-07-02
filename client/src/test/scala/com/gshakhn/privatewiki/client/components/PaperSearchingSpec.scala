@@ -1,10 +1,10 @@
 package com.gshakhn.privatewiki.client.components
 
 import com.gshakhn.privatewiki.client.UnlockedBinder
-import com.gshakhn.privatewiki.client.components.testutil.{PaperPickerBaseSpec, PageInteractions}
-import PageInteractions._
+import com.gshakhn.privatewiki.client.components.testutil.PageInteractions._
+import com.gshakhn.privatewiki.client.components.testutil.PaperPickerBaseSpec
 import com.gshakhn.privatewiki.shared.Paper
-import japgolly.scalajs.react.test.{ChangeEventData, ReactTestUtils}
+import japgolly.scalajs.react.test.{SimEvent, Simulate}
 import org.scalajs.dom
 import org.scalajs.jquery._
 import org.scalatest.path
@@ -63,7 +63,7 @@ class PaperSearchingSpec extends PaperPickerBaseSpec {
 
                 describe("when a paper is searched for") {
                   val paperPickerSearchNode = dom.document.getElementById("paper-picker-search")
-                  ReactTestUtils.Simulate.change(paperPickerSearchNode, ChangeEventData("paper11"))
+                  Simulate.change(paperPickerSearchNode, SimEvent.Change("paper11"))
 
                   it("filters the papers with that name") {
                     val papers = paperList.find(".paper-list-item")

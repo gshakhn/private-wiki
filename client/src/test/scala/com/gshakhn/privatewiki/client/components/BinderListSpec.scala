@@ -3,7 +3,7 @@ package com.gshakhn.privatewiki.client.components
 import com.gshakhn.privatewiki.client.components.testutil.ReactJsBaseSpec
 import com.gshakhn.privatewiki.client.{Binder, LockedBinder, UnlockedBinder}
 import com.gshakhn.privatewiki.shared.NoEncryption
-import japgolly.scalajs.react.{Callback, ReactDOM}
+import japgolly.scalajs.react.Callback
 import org.scalajs.jquery._
 import org.scalatest.path
 
@@ -137,6 +137,6 @@ class BinderListSpec extends ReactJsBaseSpec {
   def noopUnlock: LockedBinder => Callback = _ => Callback.empty
 
   def render(implicit binders: Seq[Binder]): Unit = {
-    ReactDOM.render(BinderList(binders, noopUnlock), containingDiv)
+    BinderList(binders, noopUnlock).renderIntoDOM(containingDiv)
   }
 }

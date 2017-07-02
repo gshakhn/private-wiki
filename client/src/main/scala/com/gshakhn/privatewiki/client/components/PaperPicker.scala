@@ -3,7 +3,7 @@ package com.gshakhn.privatewiki.client.components
 import com.gshakhn.privatewiki.client.{Binder, BinderPaperPair, UnlockedBinder}
 import com.gshakhn.privatewiki.shared.Paper
 import japgolly.scalajs.react._
-import japgolly.scalajs.react.vdom.prefix_<^._
+import japgolly.scalajs.react.vdom.html_<^._
 
 object PaperPicker {
 
@@ -28,29 +28,31 @@ object PaperPicker {
       $.modState(s => s.copy(selectedButton = newSelectedButton))
     }
 
-    def updateSearch(e: ReactEventI): Callback = {
+    def updateSearch(e: ReactEventFromInput): Callback = {
       e.extract(_.target.value){searchText => $.modState(s => s.copy(searchText = searchText))}
     }
 
     def papers(props: Props, state: State): Seq[(Binder, Paper)] = {
       val papersForBinder = state.selectedButton match {
-        case AllBinders => props.binders.flatMap{ case binder => binder.papers.map{(binder, _)}}
+        case AllBinders => props.binders.flatMap(binder => binder.papers.map {
+          (binder, _)
+        })
         case BinderButton(binder) => binder.papers.map{(binder, _)}
       }
       papersForBinder.filter(_._2.name.contains(state.searchText)).toSeq
     }
 
-    def render(props: Props, state: State): ReactElement = {
+    def render(props: Props, state: State): VdomElement = {
       val binderButtons: Seq[AnyBinderButton] = Seq(AllBinders) ++ props.binders.map(BinderButton.apply)
       <.div(
         ^.cls := "paper-picker",
         <.div(
           ^.cls := "binder-list btn-group",
-          binderButtons.map { btn =>
+          binderButtons.toTagMod { btn =>
             <.div(
               ^.classSet1("btn btn-default paper-picker-btn",
               "active" -> (state.selectedButton == btn)),
-              "data-binder-name".reactAttr := btn.name,
+              VdomAttr("data-binder-name") := btn.name,
               ^.onClick --> selectNewBinder(btn),
               btn.name
             )
@@ -70,10 +72,10 @@ object PaperPicker {
       ),
         <.div(
           ^.cls := "paper-list list-group",
-          papers(props, state).map{ case (binder, paper) =>
+          papers(props, state).toTagMod{ case (binder, paper) =>
             <.div(
               ^.cls := "list-group-item paper-list-item",
-              "data-paper-name".reactAttr := paper.name,
+              VdomAttr("data-paper-name") := paper.name,
               ^.onClick --> props.loadPaper(BinderPaperPair(binder.name, paper.name)),
               paper.name
             )
@@ -83,12 +85,13 @@ object PaperPicker {
     }
   }
 
-  private[this] val component = ReactComponentB[Props]("PaperList")
+  private[this] val component = ScalaComponent.builder[Props]("PaperList")
     .initialState(State(AllBinders, ""))
     .renderBackend[Backend]
     .build
 
-  def apply(binders: Seq[UnlockedBinder], loadPaper: (BinderPaperPair => Callback)): ReactComponentU[Props, State, Backend, TopNode] = {
+  //noinspection ScalaStyle,TypeAnnotation
+  def apply(binders: Seq[UnlockedBinder], loadPaper: (BinderPaperPair => Callback)) = {
     component(Props(binders, loadPaper))
   }
 }

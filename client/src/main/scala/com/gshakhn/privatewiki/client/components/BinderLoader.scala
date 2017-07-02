@@ -3,7 +3,8 @@ package com.gshakhn.privatewiki.client.components
 import com.gshakhn.privatewiki.client.{Binder, Client, LockedBinder}
 import com.gshakhn.privatewiki.shared.{AuthenticationRequest, BinderLoaded, WrongPassword}
 import japgolly.scalajs.react._
-import japgolly.scalajs.react.vdom.prefix_<^._
+import japgolly.scalajs.react.component.Scala.Unmounted
+import japgolly.scalajs.react.vdom.html_<^._
 
 import scala.concurrent.ExecutionContext
 
@@ -19,16 +20,16 @@ object BinderLoader {
   }
 
   class Backend($: BackendScope[Props, State])(implicit executionContext: ExecutionContext) {
-    def updateBinderName(e: ReactEventI): Callback = {
+    def updateBinderName(e: ReactEventFromInput): Callback = {
       e.extract(_.target.value){binderName => $.modState(s => s.copy(binderName = binderName))}
 
     }
 
-    def updateBinderPassword(e: ReactEventI): Callback = {
+    def updateBinderPassword(e: ReactEventFromInput): Callback = {
       e.extract(_.target.value){binderPassword => $.modState(s => s.copy(binderPassword = binderPassword))}
     }
 
-    def loadBinder(e: ReactEventI): Callback = {
+    def loadBinder(e: ReactEventFromInput): Callback = {
       e.preventDefaultCB >>
         $.state.zip($.props).flatMap { case (state, props) =>
           if (state.hasData) {
@@ -52,7 +53,7 @@ object BinderLoader {
     }
 
 
-    def render(state: State): ReactElement = {
+    def render(state: State): VdomElement = {
       <.form(
         ^.id := "binder-form",
         ^.onSubmit ==> loadBinder,
@@ -101,8 +102,8 @@ object BinderLoader {
 
   def apply(client: Client,
             currentlyLoadedBinders: Seq[Binder],
-            loadBinderCallback: LockedBinder => Callback)(implicit executionContext: ExecutionContext) : ReactComponentU[Props, State, Backend, TopNode] = {
-    val component = ReactComponentB[Props]("BinderLoader")
+            loadBinderCallback: LockedBinder => Callback)(implicit executionContext: ExecutionContext): Unmounted[Props, State, Backend] = {
+    val component = ScalaComponent.builder[Props]("BinderLoader")
       .initialState(State("", "", wrongPassword = false))
       .renderBackend[Backend]
       .build
