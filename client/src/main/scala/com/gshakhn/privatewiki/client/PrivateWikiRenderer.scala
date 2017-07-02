@@ -8,10 +8,10 @@ import upickle.default._
 
 import scala.concurrent.Future
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
-import scala.scalajs.js.annotation.JSExport
+import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
 import scalatags.JsDom.all._
 
-@JSExport("PrivateWikiRenderer")
+@JSExportTopLevel("PrivateWikiRenderer")
 object PrivateWikiRenderer {
   @JSExport
   def render(): Unit = {

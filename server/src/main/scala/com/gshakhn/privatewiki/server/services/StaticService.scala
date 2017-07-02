@@ -45,6 +45,6 @@ object Template {
             href := "META-INF/resources/webjars/bootstrap/3.3.6/css/bootstrap.css"
           )
         ),
-        body(margin := 0, onload := "PrivateWikiRenderer().render()")
+        body(margin := 0, onload := "PrivateWikiRenderer.render()")
       )
 }
